@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MDUtils;
+import com.example.demo.common.webContext;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
@@ -40,7 +42,8 @@ public class LoginController {
 	}
 
 	@GetMapping("/index")
-	public String index() {
+	public String index(HttpSession session) {
+		System.err.println(session.getAttribute(Constants.SESSION_USER));
 		return "index";
 	}
 
@@ -72,7 +75,10 @@ public class LoginController {
 				msg = Constants.RESULT_SUCCESS_DESCRIPTION;
 
 				// 存放user相关信息进入session
-				session.setAttribute(Constants.SESSION_USER, user);
+				webContext webContext = new webContext();
+				webContext.setUserId(user.getId());
+				webContext.setUserName(user.getUserName());
+				session.setAttribute(Constants.SESSION_USER, webContext);
 			}
 		}
 
@@ -80,5 +86,21 @@ public class LoginController {
 		result.put("msg", msg);
 		result.put("code", code);
 		return result;
+	}
+
+	/**
+	 * 登出
+	 * 
+	 * @return
+	 */
+	@GetMapping("/loginOut")
+	public String loginOut(HttpSession session) {
+		// 清除session
+		Enumeration<String> em = session.getAttributeNames();
+		while (em.hasMoreElements()) {
+			session.removeAttribute(em.nextElement());
+		}
+
+		return "redirect:/login";
 	}
 }

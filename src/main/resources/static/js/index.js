@@ -61,6 +61,6 @@ layui.config({
 })
 
 //打开新窗口
-function addTab(_this){
+function addTab(_this) {
 	tab.tabAdd(_this);
 }

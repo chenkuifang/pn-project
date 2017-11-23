@@ -49,7 +49,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		//super.postHandle(request, response, handler, modelAndView);
+		super.postHandle(request, response, handler, modelAndView);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if (!Objects.isNull(ex)) {
 			System.err.println("服务器响应出现异常");
 		}
-		//super.afterCompletion(request, response, handler, ex);
+		super.afterCompletion(request, response, handler, ex);
 	}
 
 }

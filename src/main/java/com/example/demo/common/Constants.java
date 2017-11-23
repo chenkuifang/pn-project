@@ -29,5 +29,5 @@ public interface Constants {
 	 * 前端拦截放行访问路径，不需要进行session判断
 	 * 
 	 */
-	String NO_INTERCEPTOR_PATH = ".*/((login)|(logout)|(code)).*";
+	String NO_INTERCEPTOR_PATH = ".*/((login)|(loginOut)|(code)).*";
 }
