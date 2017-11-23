@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8" />
+<title>用户管理界面</title>
+<link rel="stylesheet" th:href="@{/index.css}" />
+<link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}" />
+
+<script th:href="@{/index.js}"></script>
+<script th:href="@{/js/jquery-1.9.0.min.js}"></script>
+<script th:href="@{/js/bootstrap/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="col-sm-12">
+			<div class="ibox">
+				<div class="ibox-body">
+					<div id="exampleToolbar" role="group">
+						<div class="form-group col-sm-6">
+							<input id="searchName" type="text" class="form-control" placeholder="用户名" />
+						</div>
+						<button class="btn btn-success btn-sm" onclick="reLoad()">查询</button>
+						<a class="btn btn-primary btn-sm" th:href="@{/user/add}" role="button">增加</a>
+						<button type="button" class="btn  btn-danger btn-sm"
+							onclick="batchRemove()">
+							<i class="fa fa-trash " aria-hidden="true"></i>删除
+						</button>
+					</div>
+					<table id="exampleTable" data-mobile-responsive="true">
+						<tr>
+							<th>编号</th>
+							<th>姓名</th>
+							<th>性别</th>
+							<th>操作</th>
+						</tr>
+						<tr th:each="obj:${data}" >
+							<td th:text="${obj.id}"></td>
+							<td ><a th:href="@{/user/edit(id=${obj.id})}"><span th:text="${obj.userName}"></span></a></td>
+							<td th:text="${obj.sex}"></td>
+							<td><a th:href="@{/user/remove(id=${obj.id})}">删除</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
