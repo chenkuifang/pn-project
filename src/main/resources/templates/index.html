@@ -33,11 +33,11 @@
 			    	</li>
 					<li class="layui-nav-item" >
 						<a href="javascript:;">
-							<cite>管理员</cite>
+							<cite th:text="${webContext.userNike}"></cite>
 						</a>
 						<dl class="layui-nav-child">
 							<dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-							<dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+							<dd><a href="javascript:;" data-url="/changePwd"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
 						</dl>
 					</li>
 				</ul>

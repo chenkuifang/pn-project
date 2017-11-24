@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MDUtils;
-import com.example.demo.common.webContext;
+import com.example.demo.common.StringUtils;
+import com.example.demo.common.WebContext;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
@@ -41,9 +43,16 @@ public class LoginController {
 		return "login";
 	}
 
+	/**
+	 * 访问首页
+	 * 
+	 * @param session
+	 * @return
+	 */
 	@GetMapping("/index")
-	public String index(HttpSession session) {
-		System.err.println(session.getAttribute(Constants.SESSION_USER));
+	public String index(HttpSession session, Model model) {
+		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+		model.addAttribute("webContext", webContext);
 		return "index";
 	}
 
@@ -75,9 +84,10 @@ public class LoginController {
 				msg = Constants.RESULT_SUCCESS_DESCRIPTION;
 
 				// 存放user相关信息进入session
-				webContext webContext = new webContext();
+				WebContext webContext = new WebContext();
 				webContext.setUserId(user.getId());
 				webContext.setUserName(user.getUserName());
+				webContext.setUserNike(user.getUserNike());
 				session.setAttribute(Constants.SESSION_USER, webContext);
 			}
 		}
@@ -102,5 +112,52 @@ public class LoginController {
 		}
 
 		return "redirect:/login";
+	}
+
+	/**
+	 * 获取修改密码View
+	 * 
+	 * @return
+	 */
+	@GetMapping("/changePwd")
+	public String changePwd(HttpSession session, Model model) {
+		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+		model.addAttribute("userName", webContext.getUserName());
+		return "user/changePwd";
+	}
+
+	/**
+	 * 获取修改密码操作
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@GetMapping("/changePwdPost")
+	public String changePwdPost(@RequestParam String userName, @RequestParam String oldPwd, @RequestParam String newPwd,
+			Model model) throws Exception {
+		String result = "";
+		String viewName = "user/changePwd";
+
+		if (StringUtils.isBlank(oldPwd) || StringUtils.isBlank(newPwd)) {
+			result = "密码不能为空！";
+			model.addAttribute("result", result);
+			return viewName;
+		}
+
+		// 根据用户名获取用户信息
+		User user = UserService.getByUserName(userName);
+		String encodePwd = MDUtils.encodeMD5(oldPwd);
+		if (user != null && user.getPassword().equals(encodePwd)) {
+			User newUser = new User();
+			newUser.setId(user.getId());
+			newUser.setPassword(newPwd);
+			int flag = UserService.update(newUser);
+			result = flag >= 1 ? "修改成功" : "修改失败";
+		} else {
+			result = "用户名或密码错误,请重新输入！";
+		}
+
+		model.addAttribute("result", result);
+		return viewName;
 	}
 }

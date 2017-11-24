@@ -14,6 +14,9 @@ public class User implements Serializable {
 	private Integer id;
 	private String userName;
 	private String password;
+	private String userNike;
+	private Integer departmentId;
+	private Integer roleId;
 	private String mobile;
 	private String sex;
 	private String status;
@@ -70,10 +73,35 @@ public class User implements Serializable {
 		this.status = status;
 	}
 
+	public String getUserNike() {
+		return userNike;
+	}
+
+	public void setUserNike(String userNike) {
+		this.userNike = userNike;
+	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", mobile=" + mobile + ", sex="
-				+ sex + ", status=" + status + "]";
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", userNike=" + userNike
+				+ ", departmentId=" + departmentId + ", roleId=" + roleId + ", mobile=" + mobile + ", sex=" + sex
+				+ ", status=" + status + "]";
 	}
 
 }

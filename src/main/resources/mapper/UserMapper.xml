@@ -4,11 +4,14 @@
 		<id column="id" property="id" />
 		<result column="user_name" property="userName" />
 		<result column="password" property="password" />
+		<result column="user_nike" property="userNike" />
+		<result column="department_id" property="departmentId" />
+		<result column="role_id" property="roleId" />
 		<result column="mobile" property="mobile" />
 		<result column="sex" property="sex" />
 		<result column="status" property="status" />
 	</resultMap>
-	<sql id="columnSet">a.id,a.user_name,a.password,a.mobile,a.sex,a.status</sql>
+	<sql id="columnSet">a.id,a.user_name,a.password,a.user_nike,a.department_id,a.mobile,a.sex,a.status</sql>
 
 	<select id="get" resultMap="usermap" parameterType="java.lang.Integer">
 		select
@@ -56,7 +59,12 @@
 		<trim prefix="set" suffixOverrides=",">
 			<if test="userName!=null">user_name=#{userName},</if>
 			<if test="password!=null">password=#{password},</if>
+			<if test="user_nike!=null">user_nike=#{user_nike},</if>
+			<if test="department_id!=null">department_id=#{department_id},</if>
+			<if test="role_id!=null">role_id=#{role_id},</if>
+			<if test="mobile!=null">mobile=#{mobile},</if>
 			<if test="sex!=null">sex=#{sex},</if>
+			<if test="status!=null">status=#{status},</if>
 		</trim>
 		where id=#{id}
 	</update>
