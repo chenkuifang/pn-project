@@ -9,8 +9,8 @@
 	<link rel="stylesheet" href="../../css/user.css" media="all" />
 </head>
 <body class="childrenBody">
-	<form class="layui-form changePwd" action="/changePwdPost">
-		<div style="margin:0 0 15px 110px;color:#f00;">旧密码请输入“123456”，新密码必须两次输入一致才能提交</div>
+	<form class="layui-form changePwd" action="/changePwdPost" method="post" >
+		<div style="margin:0 0 15px 110px;color:#f00;" th:text="${result}"></div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label">用户名</label>
 		    <div class="layui-input-block">

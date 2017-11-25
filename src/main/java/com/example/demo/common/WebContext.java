@@ -19,6 +19,10 @@ public class WebContext {
 	 * 当前登陆用户昵称
 	 */
 	private String userNike;
+	/**
+	 * 当前用户角色id
+	 */
+	private Integer roleId;
 
 	public Integer getUserId() {
 		return userId;
@@ -44,9 +48,18 @@ public class WebContext {
 		this.userNike = userNike;
 	}
 
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+
 	@Override
 	public String toString() {
-		return "webContext [userId=" + userId + ", userName=" + userName + ", userNike=" + userNike + "]";
+		return "WebContext [userId=" + userId + ", userName=" + userName + ", userNike=" + userNike + ", roleId="
+				+ roleId + "]";
 	}
 
 }

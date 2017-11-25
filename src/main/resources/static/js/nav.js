@@ -42,4 +42,4 @@ var navs = [{
 			"spread" : false
 		}
 	]
-}]
+}];

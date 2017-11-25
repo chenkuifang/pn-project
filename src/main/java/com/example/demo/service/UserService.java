@@ -22,7 +22,7 @@ public interface UserService {
 	int remove(Integer id);
 
 	/**
-	 * 根据主键ID更新单个对象
+	 * 根据主键ID更新用户信息
 	 * 
 	 * @param user
 	 *            需要更新的对象
@@ -31,7 +31,7 @@ public interface UserService {
 	int update(User user);
 
 	/**
-	 * 新增
+	 * 新增信息
 	 * 
 	 * @param user
 	 * @return
@@ -39,7 +39,7 @@ public interface UserService {
 	int save(User user);
 
 	/**
-	 * 根据主键获取单个对象
+	 * 根据主键获取用户信息
 	 * 
 	 * @param id
 	 *            编号
@@ -48,7 +48,7 @@ public interface UserService {
 	User get(Integer id);
 
 	/**
-	 * 根据用户名获取单个对象
+	 * 根据用户名获取用户信息
 	 * 
 	 * @param userName
 	 *            用户名
@@ -57,7 +57,7 @@ public interface UserService {
 	User getByUserName(String userName);
 
 	/**
-	 * 根据手机号码获取单个对象
+	 * 根据手机号码获取用户信息
 	 * 
 	 * @param mobile
 	 *            手机号码
@@ -66,7 +66,7 @@ public interface UserService {
 	User getByMobile(String mobile);
 
 	/**
-	 * 根据条件获取列表
+	 * 根据条件获取用户列表
 	 * 
 	 * @param params
 	 * @return

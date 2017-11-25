@@ -1,37 +1,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.UserMapper">
 	<resultMap type="User" id="usermap">
-		<id column="id" property="id" />
-		<result column="user_name" property="userName" />
-		<result column="password" property="password" />
-		<result column="user_nike" property="userNike" />
-		<result column="department_id" property="departmentId" />
-		<result column="role_id" property="roleId" />
-		<result column="mobile" property="mobile" />
-		<result column="sex" property="sex" />
-		<result column="status" property="status" />
+		<id property="id" column="id" jdbcType="NUMERIC"/>
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="password" column="password" jdbcType="VARCHAR"/>
+		<result property="departmentId" column="department_id" jdbcType="NUMERIC"/>
+		<result property="roleId" column="role_id" jdbcType="NUMERIC"/>
+		<result property="userNike" column="user_nike" jdbcType="VARCHAR"/>
+		<result property="email" column="email" jdbcType="VARCHAR"/>
+		<result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+		<result property="sex" column="sex" jdbcType="VARCHAR"/>
+		<result property="createId" column="create_id" jdbcType="NUMERIC"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		<result property="status" column="status" jdbcType="NUMERIC"/>
+		<!-- 角色一对一映射关系 -->
+		<!-- <association property="role" javaType="Role">   
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+        </association> -->
 	</resultMap>
-	<sql id="columnSet">a.id,a.user_name,a.password,a.user_nike,a.department_id,a.mobile,a.sex,a.status</sql>
+	<sql id="columnSet">a.id,a.user_name,a.user_nike,a.department_id,
+		a.role_id,a.mobile,a.email,a.sex,a.create_id,a.create_time,a.update_time,a.status
+	</sql>
 
 	<select id="get" resultMap="usermap" parameterType="java.lang.Integer">
 		select
-		<include refid="columnSet" />
+		<include refid="columnSet" />,a.password
 		from pn_user a
-		where a.id = #{id} and a.status='1'
+		where a.id = #{id} and a.status = 1
 	</select>
 	
-	<select id="getByUserName" resultMap="usermap" parameterType="java.lang.String">
+	<select id="getByUserName" resultMap="java.util.Map" parameterType="java.lang.String">
+		select
+		<include refid="columnSet" />,a.password
+		from pn_user a
+		<!-- left join pn_role b on a.role_id = b.role_id and b.status = 1 -->
+		where a.user_name = #{userName} and a.status = 1
+	</select>
+	
+	<select id="getByMobile" resultType="User" parameterType="java.lang.String">
 		select
 		<include refid="columnSet" />
 		from pn_user a
-		where a.user_name = #{userName} and a.status='1'
-	</select>
-	
-	<select id="getByMobile" resultMap="usermap" parameterType="java.lang.String">
-		select
-		<include refid="columnSet" />
-		from pn_user a
-		where a.mobile = #{mobile} and a.status='1'
+		where a.mobile = #{mobile} and a.status = 1
 	</select>
 
 	<select id="list" resultMap="usermap" parameterType="java.util.Map">
@@ -51,20 +63,53 @@
 
 	<insert id="save" parameterType="User">
 		insert into pn_user
-		(user_name,password,sex) values (#{userName}, #{password}, #{sex})
+			(<include refid="columnSet" />,a.password) 
+		values (
+			#{id}, #{userName,}, #{departmentId}, #{roleId}, 
+			#{userNike}, #{email}, #{mobile}, #{sex}, #{createId}, 
+			#{createTime}, #{updateTime}, #{status}, #{password}
+		)
 	</insert>
 
 	<update id="update" parameterType="User">
 		update pn_user
 		<trim prefix="set" suffixOverrides=",">
-			<if test="userName!=null">user_name=#{userName},</if>
-			<if test="password!=null">password=#{password},</if>
-			<if test="user_nike!=null">user_nike=#{user_nike},</if>
-			<if test="department_id!=null">department_id=#{department_id},</if>
-			<if test="role_id!=null">role_id=#{role_id},</if>
-			<if test="mobile!=null">mobile=#{mobile},</if>
-			<if test="sex!=null">sex=#{sex},</if>
-			<if test="status!=null">status=#{status},</if>
+	            <if test="userName!=null">
+				user_name=#{userName,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="password!=null">
+				password=#{password,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="departmentId!=null">
+				departmentId=#{departmentId,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="roleId!=null">
+				role_id=#{roleId,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="userNike!=null">
+				user_nike=#{userNike,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="email!=null">
+				email=#{email,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="mobile!=null">
+				mobile=#{mobile,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="sex!=null">
+				sex=#{sex,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="createId!=null">
+				create_id=#{createId,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="createTime!=null">
+				create_time=#{createTime,jdbcType=TIMESTAMP},
+	            </if>		
+	            <if test="updateTime!=null">
+				update_time=#{updateTime,jdbcType=TIMESTAMP},
+	            </if>		
+	            <if test="status!=null">
+				status=#{status,jdbcType=VARCHAR},
+	            </if>		
 		</trim>
 		where id=#{id}
 	</update>

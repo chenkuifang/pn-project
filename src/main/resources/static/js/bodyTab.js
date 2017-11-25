@@ -16,7 +16,14 @@ layui.define(["element","jquery"],function(exports){
 				tabFilter : "bodyTab"
 			}
 		};
-
+		
+		//异步读取左边菜单数据
+		$(document).ready(function() {
+//			$.post("/listMenu",function(data){
+//				alert(data);
+//			},"json");
+		});
+		
 	//显示左侧菜单
 	if($(".navBar").html() == ''){
 		var _this = this;
@@ -29,6 +36,8 @@ layui.define(["element","jquery"],function(exports){
 			$(".navBar").height($(window).height()-230);
 		})
 	}
+	
+	
 
 	//参数设置
 	Tab.prototype.set = function(option) {

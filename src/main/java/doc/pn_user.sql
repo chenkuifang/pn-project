@@ -18,12 +18,12 @@ CREATE TABLE `pn_user` (
   `create_id` bigint(20) DEFAULT NULL COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` varchar(2) DEFAULT '1' COMMENT '状态 1 正常, 0 停用',
+  `status` int DEFAULT 1 COMMENT '状态 1 正常, 0 停用',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- 增加默认用户
-insert into pn_user (user_name,password,department_id,role_id,name) values ('admin','e10adc3949ba59abbe56e057f20f883e',1,1,'管理员');
+insert into pn_user (user_name,password,department_id,role_id,user_nike) values ('admin','e10adc3949ba59abbe56e057f20f883e',1,1,'管理员');
 
 -- 系统操作日志 --
 DROP TABLE IF EXISTS `pn_log`;
@@ -42,7 +42,7 @@ CREATE TABLE `pn_log` (
 -- 系统菜单管理 -- 
 DROP TABLE IF EXISTS `pn_menu`;
 CREATE TABLE `pn_menu` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `menu_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `parent_id` bigint(20) DEFAULT NULL COMMENT '父菜单ID，一级菜单为0',
   `name` varchar(50) DEFAULT NULL COMMENT '菜单名称',
   `url` varchar(200) DEFAULT NULL COMMENT '菜单URL',
@@ -57,19 +57,19 @@ CREATE TABLE `pn_menu` (
 -- 用户角色 -- 
 DROP TABLE IF EXISTS `pn_role`;
 CREATE TABLE `pn_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(100) DEFAULT NULL COMMENT '角色名称',
   `remark` varchar(100) DEFAULT NULL COMMENT '备注',
   `create_user_id` bigint(255) DEFAULT NULL COMMENT '创建用户id',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` varchar(2) DEFAULT '1' COMMENT '状态  1:正常, 0:停用',
+  `status` int DEFAULT 1 COMMENT '状态  1:正常, 0:停用',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色';
 
-insert into `pn_role` values ('1', '超级用户角色', '拥有最高权限', '1', '2017-11-24 00:00:00', '2017-11-24 00:00:00','1');
+insert into `pn_role` values ('1', '超级用户角色', '拥有最高权限', '1', '2017-11-24 00:00:00', '2017-11-24 00:00:00',1);
 
---角色与系统菜单关系表 -- 
+-- 角色与系统菜单关系表 -- 
 DROP TABLE IF EXISTS `pn_role_menu`;
 CREATE TABLE `pn_role_menu` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

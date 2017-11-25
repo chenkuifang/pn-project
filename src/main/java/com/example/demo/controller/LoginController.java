@@ -44,19 +44,6 @@ public class LoginController {
 	}
 
 	/**
-	 * 访问首页
-	 * 
-	 * @param session
-	 * @return
-	 */
-	@GetMapping("/index")
-	public String index(HttpSession session, Model model) {
-		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
-		model.addAttribute("webContext", webContext);
-		return "index";
-	}
-
-	/**
 	 * 登陆校验
 	 * 
 	 * @param userName
@@ -88,6 +75,7 @@ public class LoginController {
 				webContext.setUserId(user.getId());
 				webContext.setUserName(user.getUserName());
 				webContext.setUserNike(user.getUserNike());
+				webContext.setRoleId(user.getRoleId());
 				session.setAttribute(Constants.SESSION_USER, webContext);
 			}
 		}
@@ -123,6 +111,7 @@ public class LoginController {
 	public String changePwd(HttpSession session, Model model) {
 		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
 		model.addAttribute("userName", webContext.getUserName());
+		model.addAttribute("result", "");
 		return "user/changePwd";
 	}
 
@@ -132,7 +121,7 @@ public class LoginController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping("/changePwdPost")
+	@PostMapping("/changePwdPost")
 	public String changePwdPost(@RequestParam String userName, @RequestParam String oldPwd, @RequestParam String newPwd,
 			Model model) throws Exception {
 		String result = "";
@@ -150,13 +139,13 @@ public class LoginController {
 		if (user != null && user.getPassword().equals(encodePwd)) {
 			User newUser = new User();
 			newUser.setId(user.getId());
-			newUser.setPassword(newPwd);
+			newUser.setPassword(MDUtils.encodeMD5(newPwd));
 			int flag = UserService.update(newUser);
 			result = flag >= 1 ? "修改成功" : "修改失败";
 		} else {
 			result = "用户名或密码错误,请重新输入！";
 		}
-
+		model.addAttribute("userName", userName);
 		model.addAttribute("result", result);
 		return viewName;
 	}

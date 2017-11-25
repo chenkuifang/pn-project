@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.MenuMapper">
+	<resultMap id="menuMap" type="Menu">
+		<id property="menuId" column="menu_id" jdbcType="NUMERIC"/>
+		<result property="parentId" column="parent_id" jdbcType="NUMERIC"/>
+		<result property="name" column="name" jdbcType="VARCHAR"/>
+		<result property="url" column="url" jdbcType="VARCHAR"/>
+		<result property="type" column="type" jdbcType="NUMERIC"/>
+		<result property="icon" column="icon" jdbcType="VARCHAR"/>
+		<result property="orderNum" column="order_num" jdbcType="NUMERIC"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<sql id="columns">
+		menu_id,parent_id,name,url,type,icon,order_num,create_time,update_time
+	</sql>
+	
+	<insert id="save" parameterType="Menu">
+		insert into pn_menu
+			(<include refid="columns"/>)
+		values 
+			(#{menuId,jdbcType=NUMERIC}, #{parentId,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, 
+			#{url,jdbcType=VARCHAR}, #{type,jdbcType=NUMERIC}, #{icon,jdbcType=VARCHAR}, 
+			#{orderNum,jdbcType=NUMERIC}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="get" parameterType="java.lang.Integer" resultMap="Menu">
+		select <include refid="columns"/> 
+		from pn_menu 
+		where 
+		menu_id=#{menuId}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="menuMap">
+		select <include refid="columns"/> 
+		from pn_menu
+		<where>
+			<if test="whereSql!=null">
+				${whereSql}
+			</if>
+		</where>
+		<choose>
+			<when test="orderSql!=null">
+                order by ${orderSql}
+			</when>
+			<otherwise>
+                order by menu_id DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="listByRoleId" parameterType="java.lang.Integer" resultMap="menuMap">
+		select <include refid="columns"/> 
+		from pn_menu a
+		right join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
+	</select>
+	
+	<update id="update" parameterType="Menu">
+		update pn_menu
+		<trim prefix="set" suffixOverrides=",">
+	            <if test="parentId!=null">
+				parent_id=#{parentId,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="name!=null">
+				name=#{name,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="url!=null">
+				url=#{url,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="type!=null">
+				type=#{type,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="icon!=null">
+				icon=#{icon,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="orderNum!=null">
+				order_num=#{orderNum,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="createTime!=null">
+				create_time=#{createTime,jdbcType=TIMESTAMP},
+	            </if>		
+	            <if test="updateTime!=null">
+				update_time=#{updateTime,jdbcType=TIMESTAMP},
+	            </if>		
+		</trim>
+		where
+		menu_id=#{menuId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.Integer">
+		delete from pn_menu 
+		where
+		menu_id=#{menuId}
+	</delete>
+	
+</mapper>
