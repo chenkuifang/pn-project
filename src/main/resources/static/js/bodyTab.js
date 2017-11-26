@@ -17,28 +17,25 @@ layui.define(["element","jquery"],function(exports){
 			}
 		};
 		
-		//异步读取左边菜单数据
-		$(document).ready(function() {
-//			$.post("/listMenu",function(data){
-//				alert(data);
-//			},"json");
-		});
-		
-	//显示左侧菜单
-	if($(".navBar").html() == ''){
-		var _this = this;
-		//读取数据
-		var navInfo = navBar(navs);
-		$(".navBar").html(navInfo).height($(window).height()-230);
-		
-		element.init();  //初始化页面元素
-		$(window).resize(function(){
-			$(".navBar").height($(window).height()-230);
-		})
-	}
+	//异步读取左边菜单数据
+	$(document).ready(function() {
+		$.get("/listMenu",function(data){
+			if( data != undefined) {
+				if($(".navBar").html() == '') {
+					var _this = this;
+					//读取数据
+					var navInfo = navBar(data);
+					$(".navBar").html(navInfo).height($(window).height()-230);
+					
+					element.init();  //初始化页面元素
+					$(window).resize(function(){
+						$(".navBar").height($(window).height()-230);
+					})
+				}
+			}
+		},"json");
+	});
 	
-	
-
 	//参数设置
 	Tab.prototype.set = function(option) {
 		var _this = this;

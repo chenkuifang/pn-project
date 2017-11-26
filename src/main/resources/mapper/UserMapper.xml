@@ -15,10 +15,10 @@
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 		<result property="status" column="status" jdbcType="NUMERIC"/>
 		<!-- 角色一对一映射关系 -->
-		<!-- <association property="role" javaType="Role">   
+		<association property="role" javaType="Role">   
             <id property="roleId" column="role_id"/>
             <result property="roleName" column="role_name"/>
-        </association> -->
+        </association>
 	</resultMap>
 	<sql id="columnSet">a.id,a.user_name,a.user_nike,a.department_id,
 		a.role_id,a.mobile,a.email,a.sex,a.create_id,a.create_time,a.update_time,a.status
@@ -31,15 +31,15 @@
 		where a.id = #{id} and a.status = 1
 	</select>
 	
-	<select id="getByUserName" resultMap="java.util.Map" parameterType="java.lang.String">
+	<select id="getByUserName" resultMap="usermap" parameterType="java.lang.String">
 		select
 		<include refid="columnSet" />,a.password
 		from pn_user a
-		<!-- left join pn_role b on a.role_id = b.role_id and b.status = 1 -->
+		left join pn_role b on a.role_id = b.role_id and b.status = 1
 		where a.user_name = #{userName} and a.status = 1
 	</select>
 	
-	<select id="getByMobile" resultType="User" parameterType="java.lang.String">
+	<select id="getByMobile" resultMap="usermap" parameterType="java.lang.String">
 		select
 		<include refid="columnSet" />
 		from pn_user a

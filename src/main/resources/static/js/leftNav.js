@@ -1,62 +1,58 @@
 /**
  * 左边导航的显示格式HTML
- * <p>参数格式：{
-	"title" : "系统基本参数",
-	"icon" : "&#xe631;",
-	"href" : "page/systemParameter/systemParameter.html",
-	"spread" : false
-},{
-	"title" : "二级菜单演示",
-	"icon" : "&#xe61c;",
-	"href" : "",
-	"spread" : false,
-	"children" : [
-		{
-			"title" : "二级菜单1",
-			"icon" : "&#xe631;",
-			"href" : "",
-			"spread" : false
-		}
-	]
-}</p>
- * @param data json格式数据包括{title,icon,href,spread,children}key值
+ * @param data json格式数据
  * @returns
  */
 function navBar(data){
 	var ulHtml = '<ul class="layui-nav layui-nav-tree">';
-	for(var i=0; i<data.length; i++){
-		if(data[i].spread){
-			ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
-		}else{
-			ulHtml += '<li class="layui-nav-item">';
-		}
-		if(data[i].children != undefined && data[i].children.length > 0){
-			ulHtml += '<a href="javascript:;">';
-			if(data[i].icon != undefined && data[i].icon != ''){
-				if(data[i].icon.indexOf("icon-") != -1){
-					ulHtml += '<i class="iconfont '+data[i].icon+'" data-icon="'+data[i].icon+'"></i>';
-				}else{
-					ulHtml += '<i class="layui-icon" data-icon="'+data[i].icon+'">'+data[i].icon+'</i>';
+	var childData = data;
+	
+	for(var i=0,len1=data.length; i<len1; i++){
+		var flag = 0;
+		ulHtml += '<li class="layui-nav-item">';
+		//根目录
+		if(data[i].parentId == 0){
+			for(var j=0,len2=childData.length;j<len2;j++){
+				if(data[i].menuId != childData[j].parentId) {
+					continue;
 				}
-			}
-			ulHtml += '<cite>'+data[i].title+'</cite>';
-			ulHtml += '<span class="layui-nav-more"></span>';
-			ulHtml += '</a>'
-			ulHtml += '<dl class="layui-nav-child">';
-			for(var j=0;j<data[i].children.length;j++){
-				ulHtml += '<dd><a href="javascript:;" data-url="'+data[i].children[j].href+'">';
-				if(data[i].children[j].icon != undefined && data[i].children[j].icon != ''){
-					if(data[i].children[j].icon.indexOf("icon-") != -1){
-						ulHtml += '<i class="iconfont '+data[i].children[j].icon+'" data-icon="'+data[i].children[j].icon+'"></i>';
+				
+				flag += 1;
+				if(flag == 1){
+					ulHtml += '<a href="javascript:;">';
+					//图标
+					if(data[i].icon != undefined && data[i].icon != ''){
+						if(data[i].icon.indexOf("icon-") != -1){
+							ulHtml += '<i class="iconfont '+data[i].icon+'" data-icon="'+data[i].icon+'"></i>';
+						}else{
+							ulHtml += '<i class="layui-icon" data-icon="'+data[i].icon+'">'+data[i].icon+'</i>';
+						}
+					}
+					ulHtml += '<cite>'+data[i].name+'</cite>';
+					ulHtml += '<span class="layui-nav-more"></span>';
+					ulHtml += '</a>'
+					ulHtml += '<dl class="layui-nav-child">';
+				}
+				
+				ulHtml += '<dd><a href="javascript:;" data-url="'+childData[j].url+'">';
+				//子集图标
+				if(childData[j].icon != undefined && childData[j].icon != ''){
+					if(childData[j].icon.indexOf("icon-") != -1){
+						ulHtml += '<i class="iconfont '+childData[j].icon+'" data-icon="'+childData[j].icon+'"></i>';
 					}else{
-						ulHtml += '<i class="layui-icon" data-icon="'+data[i].children[j].icon+'">'+data[i].children[j].icon+'</i>';
+						ulHtml += '<i class="layui-icon" data-icon="'+childData[j].icon+'">'+data[i].children[j].icon+'</i>';
 					}
 				}
-				ulHtml += '<cite>'+data[i].children[j].title+'</cite></a></dd>';
+				ulHtml += '<cite>'+childData[j].name+'</cite></a></dd>';
 			}
 			ulHtml += "</dl>"
-		}else{
-			ulHtml += '<a href="javascript:;" data-url="'+data[i].href+'">';
+		}else{ 
+			//去除子集作为根目录展示(随便一个>1的数)
+			flag = 99;
+		}
+		//无子集的根目录
+		if(flag == 0){
+			ulHtml += '<a href="javascript:;" data-url="'+data[i].url+'">';
 			if(data[i].icon != undefined && data[i].icon != ''){
 				if(data[i].icon.indexOf("icon-") != -1){
 					ulHtml += '<i class="iconfont '+data[i].icon+'" data-icon="'+data[i].icon+'"></i>';
@@ -64,8 +60,9 @@ function navBar(data){
 					ulHtml += '<i class="layui-icon" data-icon="'+data[i].icon+'">'+data[i].icon+'</i>';
 				}
 			}
-			ulHtml += '<cite>'+data[i].title+'</cite></a>';
+			ulHtml += '<cite>'+data[i].name+'</cite></a>';
 		}
+		
 		ulHtml += '</li>'
 	}
 	ulHtml += '</ul>';

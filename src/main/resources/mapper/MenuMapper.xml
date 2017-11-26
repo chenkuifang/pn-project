@@ -14,7 +14,7 @@
 	</resultMap>
 	
 	<sql id="columns">
-		menu_id,parent_id,name,url,type,icon,order_num,create_time,update_time
+		a.menu_id,a.parent_id,a.name,a.url,a.type,a.icon,a.order_num,a.create_time,a.update_time
 	</sql>
 	
 	<insert id="save" parameterType="Menu">
@@ -26,7 +26,7 @@
 			#{orderNum,jdbcType=NUMERIC}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
 	</insert>
 	
-	<select id="get" parameterType="java.lang.Integer" resultMap="Menu">
+	<select id="get" parameterType="java.lang.Integer" resultMap="menuMap">
 		select <include refid="columns"/> 
 		from pn_menu 
 		where 
