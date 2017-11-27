@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.entity.Menu;
+
 /**
  * @Description: 系统菜单映射接口
  * @author QuiFar
@@ -51,7 +52,10 @@ public interface MenuMapper {
 	/**
 	 * 根据条件获取菜单列表(非外链)
 	 * 
-	 * @param params
+	 * @param whereSql
+	 *            不为空 则根据该条件过滤
+	 * @param orderSql
+	 *            不为空 则根据该条件排序
 	 * @return
 	 */
 	List<Menu> list(Map<String, Object> params);

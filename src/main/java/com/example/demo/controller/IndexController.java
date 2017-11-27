@@ -49,7 +49,6 @@ public class IndexController {
 		// 当前登录信息
 		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
 		int roleId = webContext.getRoleId();
-		System.err.println(menuService.listByRoleId(roleId).toString());
 		// 获取该角色的系统菜单列表
 		return menuService.listByRoleId(roleId);
 	}

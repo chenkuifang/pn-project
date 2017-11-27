@@ -49,7 +49,10 @@ public interface MenuService {
 	/**
 	 * 根据条件获取菜单列表(非外链)
 	 * 
-	 * @param params
+	 * @param whereSql
+	 *            不为空 则根据该条件过滤
+	 * @param orderSql
+	 *            不为空 则根据该条件排序
 	 * @return
 	 */
 	List<Menu> list(Map<String, Object> params);
