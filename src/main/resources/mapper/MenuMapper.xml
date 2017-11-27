@@ -28,14 +28,14 @@
 	
 	<select id="get" parameterType="java.lang.Integer" resultMap="menuMap">
 		select <include refid="columns"/> 
-		from pn_menu 
+		from pn_menu a
 		where 
 		menu_id=#{menuId}
 	</select>
 	
 	<select id="list" parameterType="java.util.Map" resultMap="menuMap">
 		select <include refid="columns"/> 
-		from pn_menu
+		from pn_menu a
 		<where>
 			<if test="whereSql!=null">
 				${whereSql}

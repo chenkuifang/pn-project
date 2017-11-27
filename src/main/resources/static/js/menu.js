@@ -1,6 +1,4 @@
-layui.config({
-	base : "js/"
-}).use(['form','layer','jquery','table'],function(){
+layui.use(['form','layer','jquery','table'],function(){
 	var form = layui.form(),
 		layer = parent.layer === undefined ? layui.layer : parent.layer,
 		table = layui.table,
@@ -9,11 +7,11 @@ layui.config({
 	// 数据渲染
 	var tableInis = table.render({
 		elem: '#dataTable'
-	    ,url:'/menu/list'
+	    ,url:'/menu/listData'
 	    // 设置表头
 	    ,cols: [[
 	      {type:'checkbox'}
-	      ,{field:'id', width:80, title: 'ID'}
+	      ,{field:'menuId', width:80, title: 'ID'}
 	      ,{field:'name', width:80, title: '菜单名称'}
 	      ,{field:'url', width:80, title: '链接地址'}
 	      ,{field:'type', width:80, title: '类型'}

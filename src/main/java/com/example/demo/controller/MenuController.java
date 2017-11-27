@@ -8,9 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.Menu;
 import com.example.demo.service.MenuService;
@@ -29,10 +30,30 @@ public class MenuController {
 	private MenuService menuService;
 
 	@RequestMapping(path = "/list", method = { RequestMethod.GET, RequestMethod.POST })
-	public void list(HttpSession session, Model model) {
-		Map<String,Object> params = new HashMap<String, Object>();
+	public String list() {
+		// Map<String,Object> params = new HashMap<String, Object>();
+		// params.put("orderSql", "order_num");
+		// List<Menu> list = menuService.list(params);
+		// model.addAttribute("dataList", list);
+		System.err.println(123);
+		return "/menu/list";
+	}
+	
+	@GetMapping("/listData")
+	@ResponseBody
+	public Map<String, Object> listData(HttpSession session) {
+		System.err.println(122);
+		Map<String, Object> resultMap = new HashMap<>();
+		
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("orderSql", "order_num");
 		List<Menu> list = menuService.list(params);
-		model.addAttribute("dataList", list);
+		
+		resultMap.put("code", 0);
+		resultMap.put("msg", "ok");
+		resultMap.put("count", 20);
+		resultMap.put("data", list);
+		return resultMap;
 	}
+
 }
