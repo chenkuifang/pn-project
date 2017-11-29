@@ -5,7 +5,6 @@
  * version  : 1.0
  * author   : QuiFar
  * date     : 2017-11-22
- * modify   :
  */
 
 var g = {};
@@ -161,48 +160,3 @@ g = {
         return ret;
     }
 };
-
-/* 公用函数 */
-function g_qty(o) {
-    return g.getQty(o);
-}
-
-/**
- * 返回金钱格式
- * @param o
- * @returns
- */
-function g_money(o) {
-    return g.getMoney(o);
-}
-
-/**
- * 根据时间戳，返回日期格式
- * 
- * @param o
- * @returns 返回格式如：2017-10-29
- */
-function g_dateFormat(o) {
-    if (o == null || o == '') {
-        return null;
-    }
-
-    return g.dateFormat(o);
-}
-
-/**
- * 根据时间戳，返回日期格式
- * 
- * @param o
- * @returns 返回格式如：2017-10-29
- */
-function g_isEmpty(o) {
-    return g.isEmpty(o);
-}
-
-/* 每个页面如果存在page_init函数，都会首先执行 */
-$(document).ready(function () {
-    if ($.isFunction(window.page_init)) {
-        page_init();
-    }
-});

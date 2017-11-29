@@ -1,7 +1,6 @@
 /**
  * 	定义bodyTab模块(请不要更新layui的版本,因为layui的模块可能有些版本不兼容)特别是modules/layer不能换
- *  1.如果点击左边的导航没反应，刷新下再试一下
- *  2.在快速多次刷新的情况下，左边的导航点击没有反应，过一下刷新再试一下
+ *  1.如果使用element.js的压缩版会引起左边菜菜单有时候失效，但如果引入未压缩版就没问题。why?
  *  @author: QuiFar 
 */
 var tabFilter,menu=[],liIndex,curNav,delMenu;
