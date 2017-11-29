@@ -56,4 +56,10 @@ public class MenuController {
 		return resultMap;
 	}
 
+	@GetMapping("/table")
+	public String table() {
+
+		return "/table";
+	}
+
 }

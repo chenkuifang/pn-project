@@ -1,3 +1,8 @@
+/**
+ * 没用 到时候删除
+ * @returns
+ */
+
 layui.config({
 	base : "js/"
 }).use(['form','element','layer','jquery'],function(){

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.common.Constants;
+import com.example.demo.common.WebContext;
+import com.example.demo.entity.Menu;
 import com.example.demo.entity.User;
+import com.example.demo.service.MenuService;
 import com.example.demo.service.UserService;
 
 /**
@@ -31,6 +37,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MenuService menuService;
 
 	/**
 	 * 列表展示
@@ -116,5 +124,16 @@ public class UserController {
 		// userService.remove(id);
 		return "redirect:/user/list";
 	}
+	
+	@GetMapping("/listMenu")
+	@ResponseBody
+	public List<Menu> listMenu(HttpSession session) {
+		// 当前登录信息
+		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+		int roleId = webContext.getRoleId();
+		// 获取该角色的系统菜单列表
+		return menuService.listByRoleId(roleId);
+	}
+
 
 }

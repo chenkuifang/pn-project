@@ -1,8 +1,8 @@
-/*
- *	@Author: QuiFar
- *	@Time: 2017-11-22
- *	@Tittle: tab
- *  @Description: 点击对应按钮添加新窗口
+/**
+ * 	定义bodyTab模块(请不要更新layui的版本,因为layui的模块可能有些版本不兼容)
+ *  1.如果点击左边的导航没反应，刷新下再试一下
+ *  2.在快速多次刷新的情况下，左边的导航点击没有反应，过一下刷新再试一下
+ *  @author: QuiFar 
 */
 var tabFilter,menu=[],liIndex,curNav,delMenu;
 layui.define(["element","jquery"],function(exports){
@@ -19,7 +19,7 @@ layui.define(["element","jquery"],function(exports){
 		
 	//异步读取左边菜单数据
 	$(document).ready(function() {
-		$.get("/listMenu",function(data){
+		$.get("/user/listMenu",function(data){
 			if( data != undefined) {
 				if($(".navBar").html() == '') {
 					var _this = this;
@@ -120,6 +120,7 @@ layui.define(["element","jquery"],function(exports){
 			}
 		// })
 	}
+	
 	$("body").on("click",".top_tab li",function(){
 		//切换后获取当前窗口的内容
 		var curmenu = '';

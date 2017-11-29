@@ -1,5 +1,6 @@
 /**
  * 左边导航的显示格式HTML
+ * @author QuiFar
  * @param data json格式数据
  * @returns
  */
