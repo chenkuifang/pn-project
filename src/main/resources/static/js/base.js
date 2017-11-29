@@ -36,7 +36,7 @@ g = {
             return num;
         return num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
     },
-
+    // 时间戳转换格式 如：2017-12-1 12：12
     dateTimeFormat: function (o) {
         var d = new Date(o);
         if (isNaN(d)) {

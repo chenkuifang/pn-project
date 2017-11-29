@@ -1,26 +1,26 @@
-layui.use(['form','layer','jquery','table'],function(){
-	var form = layui.form(),
-		layer = parent.layer === undefined ? layui.layer : parent.layer,
+layui.use(['layer','jquery','table'],function(){
+	var layer = parent.layer === undefined ? layui.layer : parent.layer,
 		table = layui.table,
 		$ = layui.jquery;
 	
 	// 数据渲染
 	var tableInis = table.render({
-		elem: '#dataTable'
-	    ,url:'/menu/listData'
+		elem: '#dataTable',
+	    url:'/menu/listData',
+	    id:'menuId',
 	    // 设置表头
-	    ,cols: [[
-	      {type:'checkbox'}
-	      ,{field:'menuId', width:80, title: 'ID'}
-	      ,{field:'name', width:80, title: '菜单名称'}
-	      ,{field:'url', width:80, title: '链接地址'}
-	      ,{field:'type', width:80, title: '类型'}
-	      ,{field:'orderNmu', title: '排序', minWidth: 100}
-	      ,{field:'crateTime', width:80, title: '创建时间'}
-	      ,{field:'updateTime', width:80, title: '最后修改时间'}
-	      ,{width:80, title: '操作',templet : '#operationTemplet'}
-	    ]]
-	    ,page: true
+	    cols: [[
+	      {type:'checkbox',widht:'5%'}
+	      //,{field:'menuId', title: 'ID',width:40}
+	      ,{field:'name',title:'菜单名称',width:'10%'}
+	      ,{field:'url',title:'链接地址',width:'20%'}
+	      ,{field:'type',title:'类型', width:'5%'}
+	      ,{field:'orderNum',title:'排序',width:'5%'}
+	      ,{field:'createTime',title:'创建时间',width:'20%',templet:'<div>{{g.dateTimeFormat(1511841600000)}}</div>'}
+	      ,{field:'updateTime',title: '最后修改时间',width:'20%'}
+	      ,{title: '操作',templet : '#operationTemplet',width:'15%'}
+	    ]],
+	    page: true
 	});
 
 	//添加
@@ -62,4 +62,4 @@ layui.use(['form','layer','jquery','table'],function(){
 		});
 	})
 
-})
+});
