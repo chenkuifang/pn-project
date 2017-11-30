@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.RoleMapper">
+	<resultMap id="roleMap" type="Role">
+		<id property="roleId" column="role_id" jdbcType="NUMERIC"/>
+		<result property="roleName" column="role_name" jdbcType="VARCHAR"/>
+		<result property="remark" column="remark" jdbcType="VARCHAR"/>
+		<result property="createId" column="create_id" jdbcType="NUMERIC"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		<result property="status" column="status" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<sql id="columns">
+		a.role_id,a.role_name,a.remark,a.create_id,a.create_time,a.update_time,a.status
+	</sql>
+	
+	<insert id="save" parameterType="Role">
+		insert into pn_role
+			(<include refid="columns"/>)
+		values 
+			(#{roleId,jdbcType=NUMERIC}, #{roleName,jdbcType=VARCHAR}, 
+			#{remark,jdbcType=VARCHAR}, #{createId,jdbcType=NUMERIC},
+			#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=NUMERIC})
+	</insert>
+	
+	<select id="get" parameterType="java.lang.Integer" resultMap="roleMap">
+		select <include refid="columns"/> 
+		from pn_role a
+		where 
+		role_id=#{roleId}
+	</select>
+	
+	<select id="list" parameterType="java.util.Map" resultMap="roleMap">
+		select <include refid="columns"/> 
+		from pn_role a
+		<where>
+			<if test="whereSql!=null">
+				${whereSql}
+			</if>
+		</where>
+		<choose>
+			<when test="orderSql!=null">
+                order by ${orderSql}
+			</when>
+			<otherwise>
+                order by role_id DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="listPage" parameterType="java.util.Map" resultMap="roleMap">
+		select <include refid="columns"/> 
+		from pn_role a
+		<where>
+			<if test="roleName != null and roleName != ''">
+				a.role_name like '%${roleName}%'
+			</if>
+		</where>
+		<choose>
+			<when test="orderSql!=null">
+                order by ${orderSql}
+			</when>
+			<otherwise>
+                order by a.role_id
+			</otherwise>
+		</choose>
+		limit ${offset},${limit}
+	</select>
+	
+	<update id="update" parameterType="Role">
+		update pn_role
+		<trim prefix="set" suffixOverrides=",">
+	            <if test="roleName!=null and roleName!=''">
+				role_name=#{roleName,jdbcType=VARCHAR},
+	            </if>		
+	            <if test="remark!=null and remark!=''">
+				remark=#{remark,jdbcType=VARCHAR},
+	            </if>
+	            <if test="createId!=null and createId!=''">
+				create_id=#{createId,jdbcType=NUMERIC},
+	            </if>		
+	            <if test="createTime!=null and createTime!=''">
+				create_time=#{createTime,jdbcType=TIMESTAMP},
+	            </if>		
+	            <if test="updateTime!=null and updateTime!=''">
+				update_time=#{updateTime,jdbcType=TIMESTAMP},
+	            </if>
+	            <if test="status!=null and status!=''">
+				status=#{status,jdbcType=NUMERIC},
+	            </if>			
+		</trim>
+		where
+		role_id=#{roleId}
+	</update>
+	
+	<delete id="remove" parameterType="java.lang.Integer">
+		delete from pn_role 
+		where
+		role_id=#{roleId}
+	</delete>
+	
+</mapper>

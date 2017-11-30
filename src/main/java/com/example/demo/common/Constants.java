@@ -30,4 +30,10 @@ public interface Constants {
 	 * 
 	 */
 	String NO_INTERCEPTOR_PATH = ".*/((login)|(loginOut)|(code)).*";
+
+	/**
+	 * 翻页参数拦截路径
+	 * 
+	 */
+	String PAGE_INTERCEPTOR_PATH = ".*/(listPage)*";
 }

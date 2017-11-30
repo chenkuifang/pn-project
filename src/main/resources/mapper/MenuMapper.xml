@@ -51,6 +51,25 @@
 		</choose>
 	</select>
 	
+	<select id="listPage" parameterType="java.util.Map" resultMap="menuMap">
+		select <include refid="columns"/> 
+		from pn_menu a
+		<where>
+			<if test="name != null and name != ''">
+				a.name like '%${name}%'
+			</if>
+		</where>
+		<choose>
+			<when test="orderSql!=null">
+                order by ${orderSql}
+			</when>
+			<otherwise>
+                order by a.menu_id,a.order_num
+			</otherwise>
+		</choose>
+		limit ${offset},${limit}
+	</select>
+	
 	<select id="listByRoleId" parameterType="java.lang.Integer" resultMap="menuMap">
 		select <include refid="columns"/> 
 		from pn_menu a

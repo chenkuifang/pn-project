@@ -3,10 +3,10 @@ layui.use(['layer','jquery','table'],function(){
 		table = layui.table,
 		$ = layui.jquery;
 	
-	// 数据渲染
+	// 数据渲染(templet遵守laytpl 模板规则 )
 	var tableIns = table.render({
 		elem: '#dataTable',
-	    url:'/menu/listData',
+	    url:'/menu/listPage',
 	    cols: [[
 	      {type:'checkbox',widht:'5%'}
 	      //,{field:'menuId', title: 'ID',widht:'5%'}
@@ -16,12 +16,12 @@ layui.use(['layer','jquery','table'],function(){
 	      ,{field:'orderNum',title:'排序',width:'5%'}
 	      ,{field:'createTime',title:'创建时间',width:'20%',templet:'<div>{{g.dateTimeFormat(d.createTime)}}</div>'}
 	      ,{field:'updateTime',title: '最后修改时间',width:'20%',templet:'<div>{{g.dateTimeFormat(d.updateTime)}}</div>'}
-	      ,{title: '操作',templet : '#operationTemplet',width:'15%'}//templet遵守laytpl 模板规则 
+	      ,{title: '操作',templet : '#operationTemplet',width:'15%'}
 	    ]],
 	    page: true
 	});
 	
-	//添加
+	// 添加
 	$(".add").click(function(){
 		var index = layui.layer.open({
 			title : "添加会员",
@@ -33,7 +33,7 @@ layui.use(['layer','jquery','table'],function(){
 				});
 			}
 		})
-		//改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
+		// 改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
 		$(window).resize(function(){
 			layui.layer.full(index);
 		})
@@ -47,11 +47,15 @@ layui.use(['layer','jquery','table'],function(){
 	
 	// 搜索
 	$("body").on("click",".searchBtn",function(){
-		//layer.alert('sss',{icon:6, title:'文章编辑'});
-		tableIns.reload("#dataTable");
+		var menuName = $("#menuName").val();
+		tableIns.reload({
+			where : {
+				name : menuName
+			}
+		});
 	});
 
-	// 删除操作
+	// 单个删除操作
 	$("body").on("click",".remove",function(){
 		var _this = $(this);
 		layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
@@ -65,10 +69,15 @@ layui.use(['layer','jquery','table'],function(){
 			layer.close(index);
 		});
 	})
+	
+	// 批量删除
+	$("body").on("click",".removeBatch",function(){
+		
+	});
 
 });
 
-// 类型格式
+// 类型格式转换
 function typeFormat(o) {
 	var result = '未知';
 	if (o == 0) {

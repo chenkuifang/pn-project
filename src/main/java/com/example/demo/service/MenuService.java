@@ -58,6 +58,15 @@ public interface MenuService {
 	List<Menu> list(Map<String, Object> params);
 
 	/**
+	 * 根据条件获取菜单列表(分页用)
+	 * 
+	 * @param params
+	 *            必须参数page、limit
+	 * @return
+	 */
+	List<Menu> listPage(Map<String, Object> params);
+
+	/**
 	 * 根据角色ID获取菜单列表 (获取该角色所属的菜单列表)
 	 * 
 	 * @param params

@@ -52,4 +52,9 @@ public class MenuServiceImpl implements MenuService {
 		return menuMapper.listByRoleId(roleId);
 	}
 
+	@Override
+	public List<Menu> listPage(Map<String, Object> params) {
+		return menuMapper.listPage(params);
+	}
+
 }

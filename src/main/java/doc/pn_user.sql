@@ -60,7 +60,7 @@ CREATE TABLE `pn_role` (
   `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `role_name` varchar(100) DEFAULT NULL COMMENT '角色名称',
   `remark` varchar(100) DEFAULT NULL COMMENT '备注',
-  `create_user_id` bigint(255) DEFAULT NULL COMMENT '创建用户id',
+  `create_id` bigint(20) DEFAULT NULL COMMENT '创建用户id',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `status` int DEFAULT 1 COMMENT '状态  1:正常, 0:停用',

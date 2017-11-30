@@ -12,29 +12,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.common.ResultBean;
-import com.example.demo.entity.Menu;
-import com.example.demo.service.MenuService;
+import com.example.demo.entity.Role;
+import com.example.demo.service.RoleService;
 
 /**
- * @Description: 菜单管理控制器
+ * @Description: 角色设置控制器
  * @author QuiFar
- * @date 2017年11月26日 上午10:32:27
+ * @date 2017年11月26日 上午21:32:27
  * @version V1.0
  */
 @Controller
-@RequestMapping("/menu")
-public class MenuController {
+@RequestMapping("/role")
+public class RoleController {
 
 	@Autowired
-	private MenuService menuService;
+	private RoleService roleService;
 
-	@RequestMapping(path = "/list", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list() {
-		return "/menu/list";
+		return "/role/list";
 	}
 
 	/**
-	 * 根据条件获取菜单列表
+	 * 根据条件获取角色列表
 	 * 
 	 * @param params
 	 *            页面请求参数
@@ -46,7 +46,7 @@ public class MenuController {
 		double page = Double.parseDouble(params.get("page").toString());
 		double limit = Double.parseDouble(params.get("limit").toString());
 		params.put("offset", (int) ((page - 1) * limit));
-		List<Menu> list = menuService.listPage(params);
+		List<Role> list = roleService.listPage(params);
 
 		// 返回数据
 		ResultBean resultBean = ResultBean.getInstance();
@@ -55,8 +55,8 @@ public class MenuController {
 		return resultBean;
 	}
 
-	@GetMapping("/table")
-	public String table() {
-		return "/table";
+	@GetMapping("/add")
+	public String add() {
+		return "/role/add";
 	}
 }
