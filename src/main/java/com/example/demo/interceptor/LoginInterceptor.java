@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.example.demo.common.Constants;
+import com.example.demo.common.WebContext;
+import com.example.demo.common.util.StringUtils;
 
 /**
  * @Description: 登陆拦截器
@@ -38,7 +40,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				response.sendRedirect(request.getContextPath() + "/login.html");
 				return false;
 			}
-
+			// 当前登录信息
+			WebContext webContext = (WebContext) obj;
+			if (webContext.getRoleId() == null || StringUtils.isBlank(webContext.getRoleId().toString())) {
+				response.sendRedirect(request.getContextPath() + "/login.html");
+				return false;
+			}
 		}
 		return true;
 	}

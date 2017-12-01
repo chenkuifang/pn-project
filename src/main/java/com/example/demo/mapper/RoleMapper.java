@@ -39,7 +39,7 @@ public interface RoleMapper {
 	 * @param role
 	 * @return
 	 */
-	int save(Role role);
+	int add(Role role);
 
 	/**
 	 * 根据主键获取角色

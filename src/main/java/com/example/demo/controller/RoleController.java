@@ -1,18 +1,27 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.common.Constants;
+import com.example.demo.common.R;
 import com.example.demo.common.ResultBean;
+import com.example.demo.common.util.WebContextUitls;
 import com.example.demo.entity.Role;
+import com.example.demo.service.CommonService;
 import com.example.demo.service.RoleService;
 
 /**
@@ -27,6 +36,8 @@ public class RoleController {
 
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private CommonService commonService;
 
 	@RequestMapping(value = "/list", method = { RequestMethod.GET, RequestMethod.POST })
 	public String list() {
@@ -55,8 +66,85 @@ public class RoleController {
 		return resultBean;
 	}
 
+	/**
+	 * 新增初始化视图 （参数验证的时候必须包括action字段）
+	 * 
+	 * @param model
+	 * @return 包含action判断页面是add/edit动作
+	 */
 	@GetMapping("/add")
-	public String add() {
-		return "/role/add";
+	public String add(Model model) {
+		model.addAttribute("action", "add");
+		return "/role/edit";
+	}
+
+	/**
+	 * 编辑初始化视图
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/edit")
+	public String edit(Model model) {
+		model.addAttribute("action", "edit");
+		return "/role/edit";
+	}
+
+	/**
+	 * 保存
+	 * 
+	 * @param role
+	 * @return
+	 */
+	@PostMapping("/save")
+	@ResponseBody
+	public R save(HttpSession session, Role role) {
+		R r = R.getInstance();
+		int flag = 0;
+		// 新增
+		if (role.getRoleId() == null) {
+			int roleId = commonService.getTableNewId("pn_role", "role_id", 10001);
+			role.setRoleId(roleId);
+			role.setCreateId(WebContextUitls.getCurrentUserId(session));
+			role.setCreateTime(new Date());
+			role.setUpdateTime(new Date());
+			flag = roleService.add(role);
+		} else {
+			flag = roleService.update(role);
+		}
+
+		// 结果返回
+		if (flag > 0) {
+			r.setCode(Constants.RESULT_CODE_SUCCESS);
+			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+		} else {
+			r.setCode(Constants.RESULT_CODE_FAIL);
+			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+		}
+		return r;
+	}
+
+	/**
+	 * 根据ID移除单个对象
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/remove")
+	@ResponseBody
+	public R remove(@RequestParam("roleId") Integer roleId) {
+		R r = R.getInstance();
+
+		int flag = roleService.remove(roleId);
+
+		// 结果返回
+		if (flag > 0) {
+			r.setCode(Constants.RESULT_CODE_SUCCESS);
+			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+		} else {
+			r.setCode(Constants.RESULT_CODE_FAIL);
+			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+		}
+		return r;
 	}
 }

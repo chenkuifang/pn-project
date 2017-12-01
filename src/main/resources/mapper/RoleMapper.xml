@@ -9,15 +9,19 @@
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 		<result property="status" column="status" jdbcType="NUMERIC"/>
+		<!-- one to one -->
+		<association property="user" column="createId" javaType="User">
+		    <result property="userName" column="create_name"/>
+	  	</association>
 	</resultMap>
 	
 	<sql id="columns">
 		a.role_id,a.role_name,a.remark,a.create_id,a.create_time,a.update_time,a.status
 	</sql>
 	
-	<insert id="save" parameterType="Role">
-		insert into pn_role
-			(<include refid="columns"/>)
+	<insert id="add" parameterType="Role">
+		insert into pn_role 
+			(role_id,role_name,remark,create_id,create_time,update_time,status)
 		values 
 			(#{roleId,jdbcType=NUMERIC}, #{roleName,jdbcType=VARCHAR}, 
 			#{remark,jdbcType=VARCHAR}, #{createId,jdbcType=NUMERIC},
@@ -50,8 +54,10 @@
 	</select>
 	
 	<select id="listPage" parameterType="java.util.Map" resultMap="roleMap">
-		select <include refid="columns"/> 
+		select <include refid="columns"/>
+			,b.user_name as create_name
 		from pn_role a
+		left join pn_user b on a.create_id = b.id
 		<where>
 			<if test="roleName != null and roleName != ''">
 				a.role_name like '%${roleName}%'

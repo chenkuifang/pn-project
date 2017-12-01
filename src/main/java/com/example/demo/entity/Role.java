@@ -12,14 +12,22 @@ import java.util.Date;
 public class Role implements Serializable {
 
 	private static final long serialVersionUID = -7938927706797685893L;
-
+	/** 角色编码 */
 	private Integer roleId;
+	/** 角色名称 */
 	private String roleName;
+	/** 备注 */
 	private String remark;
+	/** 创建人 */
 	private Integer createId;
+	/** 创建时间 */
 	private Date createTime;
+	/** 最后更改 */
 	private Date updateTime;
+	/** 状态 0：停用，1：使用中 */
 	private Integer status;
+
+	private User user;
 
 	public Integer getRoleId() {
 		return roleId;
@@ -79,6 +87,14 @@ public class Role implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

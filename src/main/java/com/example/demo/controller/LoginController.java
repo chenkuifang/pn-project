@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MDUtils;
-import com.example.demo.common.StringUtils;
 import com.example.demo.common.WebContext;
+import com.example.demo.common.util.MDUtils;
+import com.example.demo.common.util.StringUtils;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 

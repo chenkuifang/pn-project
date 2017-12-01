@@ -33,8 +33,8 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public int save(Role role) {
-		return roleMapper.save(role);
+	public int add(Role role) {
+		return roleMapper.add(role);
 	}
 
 	@Override
