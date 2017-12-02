@@ -25,6 +25,15 @@ public interface MenuMapper {
 	int remove(Integer id);
 
 	/**
+	 * 根据主键数据批量菜单
+	 * 
+	 * @param id
+	 *            主键
+	 * @return
+	 */
+	int removeBatch(String[] ids);
+
+	/**
 	 * 根据主键ID更新菜单,Menu对象必须包括ID值
 	 * 
 	 * @param menu
@@ -39,7 +48,7 @@ public interface MenuMapper {
 	 * @param menu
 	 * @return
 	 */
-	int save(Menu menu);
+	int add(Menu menu);
 
 	/**
 	 * 根据主键获取菜单
@@ -67,6 +76,14 @@ public interface MenuMapper {
 	 * @return
 	 */
 	List<Menu> listPage(Map<String, Object> params);
+
+	/**
+	 * 根据条件获取菜单列表总行数(一般分页用)
+	 * 
+	 * @param params
+	 * @return
+	 */
+	int countPage(Map<String, Object> params);
 
 	/**
 	 * 根据角色ID获取菜单列表 (获取该角色所属的菜单列表)

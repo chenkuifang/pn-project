@@ -80,7 +80,7 @@ layui.use(['layer','jquery','table','form'],function(){
 	        });
 		});
 		
-	})
+	});
 	
 	// 批量删除
 	$("body").on("click",".removeBatch",function(){

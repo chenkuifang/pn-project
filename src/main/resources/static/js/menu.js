@@ -1,5 +1,6 @@
-layui.use(['layer','jquery','table'],function(){
+layui.use(['form','layer','jquery','table'],function(){
 	var layer = parent.layer === undefined ? layui.layer : parent.layer,
+		form = layui.form,
 		table = layui.table,
 		$ = layui.jquery;
 	
@@ -23,17 +24,12 @@ layui.use(['layer','jquery','table'],function(){
 	
 	// 添加
 	$(".add").click(function(){
+		//当前层索引
 		var index = layui.layer.open({
-			title : "添加会员",
+			title : "添加菜单信息",
 			type : 2,
-			content : "addUser.html",
-			success : function(layero, index){
-				layui.layer.tips('点击此处返回文章列表', '.layui-layer-setwin .layui-layer-close', {
-					tips: 3
-				});
-			}
+			content : "/menu/add"
 		})
-		// 改变窗口大小时，重置弹窗的高度，防止超出可视区域（如F12调出debug的操作）
 		$(window).resize(function(){
 			layui.layer.full(index);
 		})
@@ -42,7 +38,16 @@ layui.use(['layer','jquery','table'],function(){
 
 	// 编辑操作
 	$("body").on("click",".edit",function(){
-		layer.alert('您点击了会员编辑按钮，由于是纯静态页面，所以暂时不存在编辑内容，后期会添加，敬请谅解。。。',{icon:6, title:'文章编辑'});
+		var id = $(this).attr("data-id");
+		var index = layui.layer.open({
+			title : "编辑菜单信息",
+			type : 2,
+			content : "/menu/edit/"+id
+		})
+		$(window).resize(function(){
+			layui.layer.full(index);
+		})
+		layui.layer.full(index);
 	});
 	
 	// 搜索
@@ -57,24 +62,105 @@ layui.use(['layer','jquery','table'],function(){
 
 	// 单个删除操作
 	$("body").on("click",".remove",function(){
-		var _this = $(this);
-		layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
-			//_this.parents("tr").remove();
-//			for(var i=0;i<usersData.length;i++){
-//				if(usersData[i].usersId == _this.attr("data-id")){
-//					usersData.splice(i,1);
-//					usersList(usersData);
-//				}
-//			}
-			layer.close(index);
+		var id = $(this).attr("data-id");
+		var index = layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
+			$.ajax({
+	             type:"post",
+	             url:"/menu/remove",
+	             data:{menuId : id},
+	             success:function(result){
+	                 if(result["code"]===g.successCode){
+	                     window.location.reload();
+	                     layer.close(index);
+	                 }
+	                 if(result["code"]===g.failCode){
+	                	 layer.msg(result["msg"]);
+	                 }
+	             }
+	        });
 		});
-	})
+	});
 	
 	// 批量删除
 	$("body").on("click",".removeBatch",function(){
+		// 获取表格选中的所有行数据数组
+		var checkStatus = table.checkStatus('dataTable');
+		var data = checkStatus.data;
+		var ids = [];
+		$.each(data,function(i,item){
+			ids.push(item['menuId']);
+		});
+		//alert(JSON.stringify(checkStatus.data));
+		
+		if(ids == null || ids.length == 0){
+			return;
+		}
+		
+		var index = layer.confirm('确定删除吗?',{icon:3, title:g.title},function(index){
+			$.ajax({
+	             type:"post",
+	             url:"/menu/removeBatch",
+	             async:false,
+	             contentType:"application/json; charset=utf-8",
+	             data:JSON.stringify(ids),
+	             traditional:true, //防止深度序列化
+	             success:function(result){
+	                 if(result["code"]==g.successCode){
+	                     window.location.reload();
+	                     layer.close(index);
+	                 }
+	                 if(result["code"]==g.failCode){
+	                	 layer.msg(result["msg"]);
+	                 }
+	             }
+	        });
+		});
 		
 	});
-
+	
+	// 添加提交
+	$("body").on("click",".addSubmit",function(){
+		if(!checkData()){
+			return false;
+		}
+		$.ajax({
+             type:"post",
+             url:"/menu/save",
+             data: $("form").serialize(),//表单数据
+             success:function(result){
+                 if(result["code"]==g.successCode){
+                     layer.closeAll();
+                     window.parent.location.reload();
+                 }
+                 if(result["code"]==g.failCode){
+                	 layer.msg(result["msg"]);
+                 }
+             }
+        });
+	});
+	
+	function checkData(){
+		var name = $("#name").val();
+		var parentId = $("#parentId").val();
+		var orderNum = $("#orderNum").val();
+		
+		if(g.isEmpty(name)){
+			layer.msg("名称不能为空！");
+			return false;
+		}
+		
+		if(g.isEmpty(parentId) || !g.isNumber(parentId)){
+			layer.msg("菜单父级输入格式不正确！");
+			return false;
+		}
+		
+		if(g.isEmpty(orderNum) || !g.isNumber(orderNum)){
+			layer.msg("排序输入格式不正确！");
+			return false;
+		}
+		return true;
+	}
+	
 });
 
 // 类型格式转换

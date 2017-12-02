@@ -33,8 +33,8 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public int save(Menu menu) {
-		return menuMapper.save(menu);
+	public int add(Menu menu) {
+		return menuMapper.add(menu);
 	}
 
 	@Override
@@ -55,6 +55,16 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public List<Menu> listPage(Map<String, Object> params) {
 		return menuMapper.listPage(params);
+	}
+
+	@Override
+	public int countPage(Map<String, Object> params) {
+		return menuMapper.countPage(params);
+	}
+
+	@Override
+	public int removeBatch(String[] ids) {
+		return menuMapper.removeBatch(ids);
 	}
 
 }

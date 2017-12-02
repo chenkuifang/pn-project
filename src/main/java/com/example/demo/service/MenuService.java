@@ -22,6 +22,15 @@ public interface MenuService {
 	int remove(Integer id);
 
 	/**
+	 * 根据主键数据批量删除菜单
+	 * 
+	 * @param ids
+	 *            主键数组
+	 * @return
+	 */
+	int removeBatch(String[] ids);
+
+	/**
 	 * 根据主键ID更新菜单,Menu对象必须包括ID值
 	 * 
 	 * @param menu
@@ -36,7 +45,7 @@ public interface MenuService {
 	 * @param menu
 	 * @return
 	 */
-	int save(Menu menu);
+	int add(Menu menu);
 
 	/**
 	 * 根据主键获取菜单
@@ -67,10 +76,19 @@ public interface MenuService {
 	List<Menu> listPage(Map<String, Object> params);
 
 	/**
+	 * 根据条件获取菜单列表总行数(一般分页用)
+	 * 
+	 * @param params
+	 * @return
+	 */
+	int countPage(Map<String, Object> params);
+
+	/**
 	 * 根据角色ID获取菜单列表 (获取该角色所属的菜单列表)
 	 * 
 	 * @param params
 	 * @return
 	 */
 	List<Menu> listByRoleId(Integer roleId);
+
 }
