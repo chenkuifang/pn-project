@@ -28,6 +28,11 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	public int removeBatch(String[] ids) {
+		return roleMapper.removeBatch(ids);
+	}
+
+	@Override
 	public int update(Role role) {
 		return roleMapper.update(role);
 	}
@@ -50,6 +55,11 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public List<Role> listPage(Map<String, Object> params) {
 		return roleMapper.listPage(params);
+	}
+
+	@Override
+	public int countPage(Map<String, Object> params) {
+		return roleMapper.countPage(params);
 	}
 
 }

@@ -74,6 +74,26 @@
 		limit ${offset},${limit}
 	</select>
 	
+	<!-- 根据条件获取所有行数，一般提供列表翻页使用，这一步也可以在mybatis拦截器中完成 -->
+	<select id="countPage" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1)
+		from pn_role a
+		left join pn_user b on a.create_id = b.id
+		<where>
+			<if test="roleName != null and roleName != ''">
+				a.role_name like '%${roleName}%'
+			</if>
+		</where>
+		<choose>
+			<when test="orderSql!=null">
+                order by ${orderSql}
+			</when>
+			<otherwise>
+                order by a.role_id
+			</otherwise>
+		</choose>
+	</select>
+	
 	<update id="update" parameterType="Role">
 		update pn_role
 		<trim prefix="set" suffixOverrides=",">
@@ -92,7 +112,8 @@
 	            <if test="updateTime!=null and updateTime!=''">
 				update_time=#{updateTime,jdbcType=TIMESTAMP},
 	            </if>
-	            <if test="status!=null and status!=''">
+	            <!-- !=''是用来判断String类型的，如果Integer=0的情况下 ==''是一致的 -->
+	            <if test="status!=null">
 				status=#{status,jdbcType=NUMERIC},
 	            </if>			
 		</trim>
@@ -104,6 +125,14 @@
 		delete from pn_role 
 		where
 		role_id=#{roleId}
+	</delete>
+	
+	<delete id="removeBatch" parameterType="java.lang.String">
+		delete from pn_role 
+		where role_id in
+		 <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
 	</delete>
 	
 </mapper>

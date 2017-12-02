@@ -11,12 +11,11 @@ var g = {};
 
 /* 公共 */
 g = {
-    title: 'XXXXX管理系统',
-
+	// js 常量
+    title: 'phonepn管理系统',
+    successCode : '100',
+    failCode : '101',
     is_debug: true,
-
-    precision_qty: 0,
-    precision_money: 2,
 
     setCookie: function (key, value) {
         var expires = new Date();

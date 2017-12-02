@@ -25,6 +25,15 @@ public interface RoleMapper {
 	int remove(Integer id);
 
 	/**
+	 * 根据主键数据批量删除角色
+	 * 
+	 * @param id
+	 *            主键
+	 * @return
+	 */
+	int removeBatch(String[] ids);
+
+	/**
 	 * 根据主键ID更新角色,role对象必须包括ID值
 	 * 
 	 * @param role
@@ -68,4 +77,11 @@ public interface RoleMapper {
 	 */
 	List<Role> listPage(Map<String, Object> params);
 
+	/**
+	 * 根据条件获取角色列表总行数(一般提供分页使用)
+	 * 
+	 * @param params
+	 * @return
+	 */
+	int countPage(Map<String, Object> params);
 }

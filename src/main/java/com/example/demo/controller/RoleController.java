@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +63,7 @@ public class RoleController {
 
 		// 返回数据
 		ResultBean resultBean = ResultBean.getInstance();
-		resultBean.setCount(list.size());
+		resultBean.setCount(roleService.countPage(params));
 		resultBean.setData(list);
 		return resultBean;
 	}
@@ -74,6 +76,10 @@ public class RoleController {
 	 */
 	@GetMapping("/add")
 	public String add(Model model) {
+		// 初始值
+		Role role = new Role();
+		role.setStatus(1);
+		model.addAttribute("role", role);
 		model.addAttribute("action", "add");
 		return "/role/edit";
 	}
@@ -84,9 +90,11 @@ public class RoleController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/edit")
-	public String edit(Model model) {
+	@GetMapping("/edit/{id}")
+	public String edit(@PathVariable("id") int roleId, Model model) {
+		Role role = roleService.get(roleId);
 		model.addAttribute("action", "edit");
+		model.addAttribute("role", role);
 		return "/role/edit";
 	}
 
@@ -100,6 +108,7 @@ public class RoleController {
 	@ResponseBody
 	public R save(HttpSession session, Role role) {
 		R r = R.getInstance();
+
 		int flag = 0;
 		// 新增
 		if (role.getRoleId() == null) {
@@ -110,6 +119,7 @@ public class RoleController {
 			role.setUpdateTime(new Date());
 			flag = roleService.add(role);
 		} else {
+			//role.setUpdateTime(new Date());
 			flag = roleService.update(role);
 		}
 
@@ -136,6 +146,29 @@ public class RoleController {
 		R r = R.getInstance();
 
 		int flag = roleService.remove(roleId);
+
+		// 结果返回
+		if (flag > 0) {
+			r.setCode(Constants.RESULT_CODE_SUCCESS);
+			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+		} else {
+			r.setCode(Constants.RESULT_CODE_FAIL);
+			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+		}
+		return r;
+	}
+
+	/**
+	 * id数组批量删除
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	@PostMapping("/removeBatch")
+	@ResponseBody
+	public R removeBatch(@RequestBody String[] ids) {
+		R r = R.getInstance();
+		int flag = roleService.removeBatch(ids);
 
 		// 结果返回
 		if (flag > 0) {
