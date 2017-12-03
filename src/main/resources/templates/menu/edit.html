@@ -6,9 +6,8 @@
 	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
 	
 	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
-	<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
-	<script type="text/javascript" src="/js/base.js"></script>
 	<script type="text/javascript" src="/js/menu.js"></script>
+	<script type="text/javascript" src="/js/base.js"></script>
 </head>
 <body class="childrenBody">
 	<form class="layui-form" style="width:80%;">
@@ -32,9 +31,13 @@
 			
 			<div class="layui-form-item">
 				<div class="layui-col-md4">
-					<label class="layui-form-label">父级菜单</label>
+					<label class="layui-form-label">上级菜单</label>
 					<div class="layui-input-block">
-						<input type="text" id="parentId" name="parentId" th:value="${menu.parentId}" class="layui-input" />
+						<select name="parentId" id="parentId">
+							 <option value="0" th:selected="${menu.parentId == 0 ? 'true' : 'false'}">根目录</option>
+						  	 <option th:each="item : ${parentMenus}" th:value="${item.menuId}" th:text="${item.name}"
+						  	 	th:selected="${menu.parentId == item.menuId ? 'true' : 'false'}"></option>
+						</select>
 					</div>
 				</div>
 				<div class="layui-col-md4">

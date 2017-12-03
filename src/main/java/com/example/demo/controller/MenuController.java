@@ -79,7 +79,11 @@ public class MenuController {
 		Menu menu = new Menu();
 		menu.setIcon("icon-text");
 		menu.setType(1);
+
+		// 父级菜单列表
+		List<Menu> parentMenus = menuService.listByParentId(0);
 		model.addAttribute("menu", menu);
+		model.addAttribute("parentMenus", parentMenus);
 		model.addAttribute("action", "add");
 		return "/menu/edit";
 	}
@@ -93,8 +97,12 @@ public class MenuController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int menuId, Model model) {
 		Menu menu = menuService.get(menuId);
+		// 父级菜单列表
+		List<Menu> parentMenus = menuService.listByParentId(0);
+		
+		model.addAttribute("menu", menu);
+		model.addAttribute("parentMenus", parentMenus);
 		model.addAttribute("action", "edit");
-		model.addAttribute("role", menu);
 		return "/menu/edit";
 	}
 

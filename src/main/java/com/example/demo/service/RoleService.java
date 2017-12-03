@@ -67,6 +67,15 @@ public interface RoleService {
 	List<Role> list(Map<String, Object> params);
 
 	/**
+	 * 根据状态获取角色列表
+	 * 
+	 * @param status
+	 *            状态值 0:暂停,1:使用中
+	 * @return
+	 */
+	List<Role> listByStatus(int status);
+
+	/**
 	 * 根据条件获取角色列表(分页用)
 	 * 
 	 * @param params

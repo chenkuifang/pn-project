@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,14 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public int removeBatch(String[] ids) {
 		return menuMapper.removeBatch(ids);
+	}
+
+	@Override
+	public List<Menu> listByParentId(int parentId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("whereSql", "a.parent_id = #{parentId}");
+		params.put("parentId", parentId);
+		return menuMapper.list(params);
 	}
 
 }

@@ -1,7 +1,8 @@
+var $; // 该jquery 同时提供给base.js 使用，所以引入base.js必须要在menu.js后面
 layui.use(['form','layer','jquery','table'],function(){
 	var layer = parent.layer === undefined ? layui.layer : parent.layer,
 		form = layui.form,
-		table = layui.table,
+		table = layui.table;
 		$ = layui.jquery;
 	
 	// 数据渲染(templet遵守laytpl 模板规则 )

@@ -1,27 +1,131 @@
-var areaData = address;
 var $form;
 var form;
 var $;
-layui.config({
-	base : "../../js/"
-}).use(['form','layer','upload','laydate'],function(){
-	form = layui.form();
-	var layer = parent.layer === undefined ? layui.layer : parent.layer;
+layui.use(['form','layer','table','laydate'],function(){
+	var layer = parent.layer === undefined ? layui.layer : parent.layer,
+		table = layui.table;
+	
+		form = layui.form;
 		$ = layui.jquery;
 		$form = $('form');
-		laydate = layui.laydate;
-        loadProvince();
-        layui.upload({
-        	url : "../../json/userface.json",
-        	success: function(res){
-        		var num = parseInt(4*Math.random());  //生成0-4的随机数
-        		//随机显示一个头像信息
-		    	userFace.src = res.data[num].src;
-		    	window.sessionStorage.setItem('userFace',res.data[num].src);
-		    }
-        });
 
-        //添加验证规则
+        // 数据渲染(templet遵守laytpl 模板规则 )
+    	var tableIns = table.render({
+    		elem: '#dataTable',
+    	    url:'/user/listPage',
+    	    cols: [[
+    	      {type:'checkbox',widht:'5%'}
+    	      ,{field:'userName',title:'用户名称',width:'10%'}
+    	      ,{field:'userNike',title:'昵称',width:'10%'}
+    	      ,{title:'角色',width:'10%',templet:'<div>{{d.role.roleName}}</div>'}
+    	      ,{field:'mobile',title:'手机号码',width:'10%'}
+    	      ,{title:'创建人', width:'10%',templet:'<div>{{d.user.userName}}</div>'}
+    	      ,{field:'createTime',title:'创建时间',width:'15%',templet:'<div>{{g.dateTimeFormat(d.createTime)}}</div>'}
+    	      ,{field:'updateTime',title: '最后修改时间',width:'15%',templet:'<div>{{g.dateTimeFormat(d.updateTime)}}</div>'}
+    	      ,{field:'status',title:'状态',width:'5%',templet:'<div>{{statusFormat(d.status)}}</div>'}
+    	      ,{title: '操作',templet : '#operationTemplet',width:'10%'}
+    	    ]],
+    	    page: true
+    	});
+    	
+    	// 添加
+    	$(".add").click(function(){
+    		//当前层索引
+    		var index = layui.layer.open({
+    			title : "添加用户信息",
+    			type : 2,
+    			content : "/user/add"
+    		})
+    		$(window).resize(function(){
+    			layui.layer.full(index);
+    		})
+    		layui.layer.full(index);
+    	})
+
+    	// 编辑操作
+    	$("body").on("click",".edit",function(){
+    		var id = $(this).attr("data-id");
+    		var index = layui.layer.open({
+    			title : "编辑用户信息",
+    			type : 2,
+    			content : "/user/edit/"+id
+    		})
+    		$(window).resize(function(){
+    			layui.layer.full(index);
+    		})
+    		layui.layer.full(index);
+    	});
+    	
+    	// 搜索
+    	$("body").on("click",".searchBtn",function(){
+    		var userName = $("#userName").val();
+    		tableIns.reload({
+    			where : {
+    				userName : userName
+    			}
+    		});
+    	});
+
+    	// 单个删除操作
+    	$("body").on("click",".remove",function(){
+    		var id = $(this).attr("data-id");
+    		var index = layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
+    			$.ajax({
+    	             type:"post",
+    	             url:"/user/remove",
+    	             data:{id : id},
+    	             success:function(result){
+    	                 if(result["code"]===g.successCode){
+    	                     window.location.reload();
+    	                     layer.close(index);
+    	                 }
+    	                 if(result["code"]===g.failCode){
+    	                	 layer.msg(result["msg"]);
+    	                 }
+    	             }
+    	        });
+    		});
+    		
+    	});
+    	
+    	// 批量删除
+    	$("body").on("click",".removeBatch",function(){
+    		// 获取表格选中的所有行数据数组
+    		var checkStatus = table.checkStatus('dataTable');
+    		var data = checkStatus.data;
+    		var ids = [];
+    		$.each(data,function(i,item){
+    			ids.push(item.id);
+    		});
+    		//layer.alert(JSON.stringify(checkStatus.data));
+    		
+    		if(ids == null || ids.length == 0){
+    			return;
+    		}
+    		
+    		var index = layer.confirm('确定删除吗?',{icon:3, title:g.title},function(index){
+    			$.ajax({
+    	             type:"post",
+    	             url:"/user/removeBatch",
+    	             async:false,
+    	             contentType:"application/json; charset=utf-8",
+    	             data:JSON.stringify(ids),
+    	             traditional:true, //防止深度序列化
+    	             success:function(result){
+    	                 if(result["code"]==g.successCode){
+    	                     window.location.reload();
+    	                     layer.close(index);
+    	                 }
+    	                 if(result["code"]==g.failCode){
+    	                	 layer.msg(result["msg"]);
+    	                 }
+    	             }
+    	        });
+    		});
+    		
+    	});
+
+    	//添加验证规则
         form.verify({
             newPwd : function(value){
                 if(value.length < 6){
@@ -33,83 +137,38 @@ layui.config({
                     return "两次输入密码不一致，请重新输入！";
                 }
             }
-        })
-
-        //判断是否修改过头像，如果修改过则显示修改后的头像，否则显示默认头像
-        if(window.sessionStorage.getItem('userFace')){
-        	$("#userFace").attr("src",window.sessionStorage.getItem('userFace'));
-        }else{
-        	$("#userFace").attr("src","../../images/face.jpg");
-        }
-
-        //提交个人资料提交
-        form.on("submit(changeUser)",function(data){
-        	var index = layer.msg('提交中，请稍候',{icon: 16,time:false,shade:0.8});
-            setTimeout(function(){
-                layer.close(index);
-                layer.msg("提交成功！");
-            },2000);
-        	//return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        })
-
+        });
+        
+        // 添加提交
+    	$("body").on("click",".addSubmit",function(){
+    		$.ajax({
+                 type:"post",
+                 url:"/user/save",
+                 data: $("form").serialize(),//表单数据
+                 success:function(result){
+                     if(result["code"]==g.successCode){
+                         layer.close(layer.index);
+                         window.parent.location.reload();
+                     }
+                     if(result["code"]==g.failCode){
+                    	 layer.msg(result["msg"]);
+                     }
+                 }
+            });
+    	});
+        
         //监听submit事件,修改密码提交
         form.on("submit(changePwd)");
 
-})
+});
 
- //加载省数据
-function loadProvince() {
-    var proHtml = '';
-    for (var i = 0; i < areaData.length; i++) {
-        proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
-    }
-    //初始化省数据
-    $form.find('select[name=province]').append(proHtml);
-    form.render();
-    form.on('select(province)', function(data) {
-        $form.find('select[name=area]').html('<option value="">请选择县/区</option>');
-        var value = data.value;
-        var d = value.split('_');
-        var code = d[0];
-        var count = d[1];
-        var index = d[2];
-        if (count > 0) {
-            loadCity(areaData[index].mallCityList);
-        } else {
-            $form.find('select[name=city]').attr("disabled","disabled");
-        }
-    });
-}
- //加载市数据
-function loadCity(citys) {
-    var cityHtml = '<option value="">请选择市</option>';
-    for (var i = 0; i < citys.length; i++) {
-        cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
-    }
-    $form.find('select[name=city]').html(cityHtml).removeAttr("disabled");
-    form.render();
-    form.on('select(city)', function(data) {
-        var value = data.value;
-        var d = value.split('_');
-        var code = d[0];
-        var count = d[1];
-        var index = d[2];
-        if (count > 0) {
-            loadArea(citys[index].mallAreaList);
-        } else {
-            $form.find('select[name=area]').attr("disabled","disabled");
-        }
-    });
-}
- //加载县/区数据
-function loadArea(areas) {
-    var areaHtml = '<option value="">请选择县/区</option>';
-    for (var i = 0; i < areas.length; i++) {
-        areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
-    }
-    $form.find('select[name=area]').html(areaHtml).removeAttr("disabled");
-    form.render();
-    form.on('select(area)', function(data) {
-        //console.log(data);
-    });
+//状态转换
+function statusFormat(o) {
+	var value = "未知";
+	if(o == 0) {
+		value = "暂停";
+	}else if(o == 1) {
+		value = "启用";
+	}
+	return value;
 }

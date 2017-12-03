@@ -7,7 +7,6 @@
 function navBar(data){
 	var ulHtml = '<ul class="layui-nav layui-nav-tree">';
 	var childData = data;
-	
 	for(var i=0,len1=data.length; i<len1; i++){
 		var flag = 0;
 		ulHtml += '<li class="layui-nav-item">';

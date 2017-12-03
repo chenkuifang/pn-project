@@ -22,7 +22,7 @@ public class User implements Serializable {
 	private String userNike; /* 昵称 */
 	private String email; /* 电子邮件 */
 	private String mobile; /* 手机 */
-	private String sex; /* 性别 */
+	private Integer sex; /* 性别 1 男, 0 女*/
 	private Integer createId; /* 创建者 */
 	private java.util.Date createTime; /* 创建时间 */
 	private java.util.Date updateTime; /* 修改时间 */
@@ -30,6 +30,9 @@ public class User implements Serializable {
 
 	// 用户角色一对一映射关系
 	private Role role;
+
+	// 创建者
+	private User user;
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -135,7 +138,7 @@ public class User implements Serializable {
 		return this.mobile;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 
@@ -144,7 +147,7 @@ public class User implements Serializable {
 	 * 
 	 * @return
 	 */
-	public String getSex() {
+	public Integer getSex() {
 		return this.sex;
 	}
 
@@ -210,6 +213,14 @@ public class User implements Serializable {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**

@@ -23,6 +23,15 @@ public interface UserMapper {
 	 * @return
 	 */
 	int remove(Integer id);
+	
+	/**
+	 * 根据主键数据批量删除用户
+	 * 
+	 * @param id
+	 *            主键
+	 * @return
+	 */
+	int removeBatch(String[] ids);
 
 	/**
 	 * 根据主键ID更新单个对象
@@ -39,7 +48,7 @@ public interface UserMapper {
 	 * @param user
 	 * @return
 	 */
-	int save(User user);
+	int add(User user);
 
 	/**
 	 * 根据主键获取单个对象
@@ -74,5 +83,21 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<User> list(Map<String, Object> params);
+
+	/**
+	 * 根据条件获取用户列表(分页)
+	 * 
+	 * @param 1.过滤条件、2.分页参数必须包含page,limit
+	 * @return
+	 */
+	List<User> listPage(Map<String, Object> params);
+
+	/**
+	 * 根据条件获取用户列表总行数(一般提供分页使用)
+	 * 
+	 * @param params
+	 * @return
+	 */
+	int countPage(Map<String, Object> params);
 
 }

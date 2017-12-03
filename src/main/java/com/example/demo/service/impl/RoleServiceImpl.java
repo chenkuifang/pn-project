@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,14 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public int countPage(Map<String, Object> params) {
 		return roleMapper.countPage(params);
+	}
+
+	@Override
+	public List<Role> listByStatus(int status) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("whereSql", "a.status = #{status}");
+		params.put("status", status);
+		return roleMapper.list(params);
 	}
 
 }

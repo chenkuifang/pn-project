@@ -22,7 +22,7 @@
 			<div class="layui-inline" th:if="${action == 'edit'}">
 				<label class="layui-form-label">创建时间</label>
 				<div class="layui-input-block">
-					<input type="text" th:value="${#dates.format(role.createTime,'yyyy-MM-dd HH:mm:ss')}" th:readonly="true"  class="layui-input layui-disabled" />
+					<input type="text" th:value="${#dates.format(role.createTime,'yyyy-MM-dd HH:mm:ss')}" th:readonly="true" class="layui-input layui-disabled" />
 				</div>
 			</div>
 			

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>用户添加</title>
+	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
+	
+	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/js/base.js"></script>
+	<script type="text/javascript" src="/js/user/user.js"></script>
+</head>
+<body class="childrenBody">
+	<form class="layui-form" style="width:80%;">
+		<div class="layui-row" style="margin-top: 20px;">
+		
+			<div class="layui-form-item">
+				<div class="layui-col-md4">
+					<label class="layui-form-label">用户名称</label>
+					<div class="layui-input-block">
+						<input type="hidden" id="Id" name="Id" th:value="${user.Id}" />
+						<input type="text" th:if="${action == 'add'}" id="userName" name="userName" th:value="${user.userName}" class="layui-input" />
+						<input type="text" th:if="${action == 'edit'}" id="userName" name="userName" th:value="${user.userName}" 
+							th:readonly="true" class="layui-input layui-disabled" />
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<label class="layui-form-label">用户昵称</label>
+					<div class="layui-input-block">
+						<input type="text" id="userNike" name="userNike" th:value="${user.userNike}" class="layui-input"/>
+					</div>
+				</div>
+				
+				<div class="layui-col-md4">
+					<label class="layui-form-label">用户角色</label>
+					<div class="layui-input-block">
+						<select name="roleId" id="roleId">
+						  	 <option th:each="item : ${roles}" th:value="${item.roleId}" th:text="${item.roleName}"
+						  	 	th:selected="${user.roleId == item.roleId ? 'true' : 'false'}"></option>
+						</select>
+					</div>	
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-col-md4">
+					<label class="layui-form-label">手机号码</label>
+					<div class="layui-input-block">
+						<input type="text" id="mobile" name="mobile" th:value="${user.mobile}" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<label class="layui-form-label">电子邮件</label>
+					<div class="layui-input-block">
+						<input type="text" id="email" name="email" th:value="${user.email}" class="layui-input" />
+					</div>
+					 
+				</div>
+				
+				<div class="layui-col-md4">
+					<label class="layui-form-label">性别</label>
+				    <div class="layui-input-block">
+				      	<input type="radio" name="sex" value="1" title="男" th:checked="${user.sex == 1 ? 'true' : 'false'}" />
+				      	<input type="radio" name="sex" value="0" title="女" th:checked="${user.sex == 0 ? 'true' : 'false'}" />
+				    </div>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-col-md4" th:if="${action == 'edit'}">
+				    <label class="layui-form-label">创建人</label>
+				    <div class="layui-input-block">
+				      	<input type="text" th:value="${user.user.userName}" th:readonly="true"  class="layui-input layui-disabled" />
+				    </div>
+		    	</div>
+				
+				<div class="layui-col-md4" th:if="${action == 'edit'}">
+					<label class="layui-form-label">创建时间</label>
+					<div class="layui-input-block">
+						<input type="text" th:value="${#dates.format(user.createTime,'yyyy-MM-dd HH:mm:ss')}" th:readonly="true"  class="layui-input layui-disabled" />
+					</div>
+				</div>
+			
+				<div class="layui-col-md4" th:if="${action == 'edit'}">
+					<label class="layui-form-label">修改时间</label>
+					<div class="layui-input-block">
+						<input type="text" th:value="${#dates.format(user.updateTime,'yyyy-MM-dd HH:mm:ss')}" th:readonly="true" class="layui-input layui-disabled" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-col-md4">
+				    <label class="layui-form-label">状态</label>
+				    <div class="layui-input-block">
+				      	<input type="radio" name="status" value="1" title="启用" th:checked="${user.status == 1 ? 'true' : 'false'}" />
+				      	<input type="radio" name="status" value="0" title="暂停" th:checked="${user.status == 0 ? 'true' : 'false'}" />
+				    </div>
+		    	</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn addSubmit">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			    </div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

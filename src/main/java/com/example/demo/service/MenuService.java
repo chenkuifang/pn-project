@@ -67,6 +67,15 @@ public interface MenuService {
 	List<Menu> list(Map<String, Object> params);
 
 	/**
+	 * 根据父级Id获取菜单列表
+	 * 
+	 * @param parentId
+	 *            父级id
+	 * @return
+	 */
+	List<Menu> listByParentId(int parentId);
+
+	/**
 	 * 根据条件获取菜单列表(分页用)
 	 * 
 	 * @param params

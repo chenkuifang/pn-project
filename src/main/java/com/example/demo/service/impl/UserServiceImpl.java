@@ -28,6 +28,11 @@ public class UserServiceImpl implements UserService {
 		// 2.操作删除
 		return userMapper.remove(id);
 	}
+	
+	@Override
+	public int removeBatch(String[] ids) {
+		return userMapper.removeBatch(ids);
+	}
 
 	@Override
 	public int update(User user) {
@@ -35,8 +40,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int save(User user) {
-		return userMapper.save(user);
+	public int add(User user) {
+		return userMapper.add(user);
 	}
 
 	@Override
@@ -57,6 +62,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getByMobile(String mobile) {
 		return userMapper.getByMobile(mobile);
+	}
+
+	@Override
+	public List<User> listPage(Map<String, Object> params) {
+		return userMapper.list(params);
+	}
+
+	@Override
+	public int countPage(Map<String, Object> params) {
+		return userMapper.countPage(params);
 	}
 
 }

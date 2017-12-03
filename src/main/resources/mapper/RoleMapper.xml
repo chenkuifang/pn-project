@@ -48,7 +48,7 @@
                 order by ${orderSql}
 			</when>
 			<otherwise>
-                order by role_id DESC
+                order by role_id
 			</otherwise>
 		</choose>
 	</select>
