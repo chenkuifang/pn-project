@@ -91,6 +91,7 @@
 		from pn_menu a
 		right join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
 		where a.status &lt; 64
+		order by a.order_num
 	</select>
 	
 	<update id="update" parameterType="Menu">

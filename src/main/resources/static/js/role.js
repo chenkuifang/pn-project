@@ -12,12 +12,12 @@ layui.use(['layer','jquery','table','form'],function(){
 	      {type:'checkbox',widht:'5%'}
 	      //,{field:'menuId', title: 'ID',widht:'5%'}
 	      ,{field:'roleName',title:'角色名称',width:'10%'}
-	      ,{field:'remark',title:'备注',width:'20%'}
+	      ,{field:'remark',title:'备注',width:'15%'}
 	      ,{title:'创建人', width:'10%',templet:'<div>{{d.user.userName}}</div>'}
 	      ,{field:'createTime',title:'创建时间',width:'20%',templet:'<div>{{g.dateTimeFormat(d.createTime)}}</div>'}
 	      ,{field:'updateTime',title: '最后修改时间',width:'20%',templet:'<div>{{g.dateTimeFormat(d.updateTime)}}</div>'}
 	      ,{field:'status',title:'状态',width:'5%',templet:'<div>{{statusFormat(d.status)}}</div>'}
-	      ,{title: '操作',templet : '#operationTemplet',width:'10%'}
+	      ,{title: '操作',templet : '#operationTemplet',width:'15%'}
 	    ]],
 	    page: true
 	});
@@ -49,6 +49,20 @@ layui.use(['layer','jquery','table','form'],function(){
 		})
 		layui.layer.full(index);
 	});
+
+	// 菜单设置
+    $("body").on("click",".setMenu",function(){
+        var id = $(this).attr("data-id");
+        var index = layui.layer.open({
+            title : "编辑角色菜单信息",
+            type : 2,
+            content : "/role/editMenu/"+id
+        })
+        $(window).resize(function(){
+            layui.layer.full(index);
+        })
+        layui.layer.full(index);
+    });
 	
 	// 搜索
 	$("body").on("click",".searchBtn",function(){
