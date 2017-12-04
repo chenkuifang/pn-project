@@ -23,7 +23,8 @@ CREATE TABLE `pn_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- 增加默认用户
-insert into pn_user (user_name,password,department_id,role_id,user_nike) values ('admin','e10adc3949ba59abbe56e057f20f883e',1,1,'管理员');
+INSERT INTO `pn_user` VALUES (10001, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 1, 10001, '管理员', '123555', '123456789', '1', 10001, '2017-12-4 15:12:06', '2017-12-4 15:12:09', 1);
+INSERT INTO `pn_user` VALUES (10002, 'quifar', 'e10adc3949ba59abbe56e057f20f883e', 10001, 10001, 'quifar', '314', '158', '1', 10001, '2017-12-4 15:12:48', '2017-12-4 15:12:48', 1);
 
 -- 系统操作日志 --
 DROP TABLE IF EXISTS `pn_log`;
@@ -51,8 +52,14 @@ CREATE TABLE `pn_menu` (
   `order_num` int(4) DEFAULT NULL COMMENT '排序',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  `status` int DEFAULT 1 COMMENT '状态  1:正常, 0:停用',
+  PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统菜单管理';
+
+INSERT INTO `pn_menu` VALUES (10001, 0, '系统管理', '', 1, 'icon-text', 1, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
+INSERT INTO `pn_menu` VALUES (10002, 10001, '菜单设置', '/menu/list', 1, 'icon-text', 2, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
+INSERT INTO `pn_menu` VALUES (10003, 10001, '角色设置', '/role/list', 1, 'icon-text', 3, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
+INSERT INTO `pn_menu` VALUES (10004, 10001, '用户管理', 'user/list', 1, 'icon-text', 4, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
 
 -- 用户角色 -- 
 DROP TABLE IF EXISTS `pn_role`;
@@ -67,7 +74,8 @@ CREATE TABLE `pn_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色';
 
-insert into `pn_role` values ('1', '超级用户角色', '拥有最高权限', '1', '2017-11-24 00:00:00', '2017-11-24 00:00:00',1);
+INSERT INTO `pn_role` VALUES (10001, '超级用户角色', '拥有最高权限', 10001, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
+
 
 -- 角色与系统菜单关系表 -- 
 DROP TABLE IF EXISTS `pn_role_menu`;
@@ -78,3 +86,7 @@ CREATE TABLE `pn_role_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
+INSERT INTO `pn_role_menu` VALUES (10001, 10001, 10001);
+INSERT INTO `pn_role_menu` VALUES (10002, 10001, 10002);
+INSERT INTO `pn_role_menu` VALUES (10003, 10001, 10003);
+INSERT INTO `pn_role_menu` VALUES (10004, 10001, 10004);

@@ -11,10 +11,11 @@
 		<result property="orderNum" column="order_num" jdbcType="NUMERIC"/>
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		<result property="status" column="status" jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<sql id="columns">
-		a.menu_id,a.parent_id,a.name,a.url,a.type,a.icon,a.order_num,a.create_time,a.update_time
+		a.menu_id,a.parent_id,a.name,a.url,a.type,a.icon,a.order_num,a.create_time,a.update_time,a.status
 	</sql>
 	
 	<insert id="add" parameterType="Menu">
@@ -30,17 +31,16 @@
 		select <include refid="columns"/> 
 		from pn_menu a
 		where 
-		menu_id=#{menuId}
+		a.menu_id=#{menuId} and a.status &lt; 64
 	</select>
 	
 	<select id="list" parameterType="java.util.Map" resultMap="menuMap">
 		select <include refid="columns"/> 
 		from pn_menu a
-		<where>
-			<if test="whereSql!=null">
-				${whereSql}
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="whereSql!=null">
+			and ${whereSql}
+		</if>
 		<choose>
 			<when test="orderSql!=null">
                 order by ${orderSql}
@@ -54,11 +54,10 @@
 	<select id="listPage" parameterType="java.util.Map" resultMap="menuMap">
 		select <include refid="columns"/> 
 		from pn_menu a
-		<where>
-			<if test="name != null and name != ''">
-				a.name like '%${name}%'
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="name != null and name != ''">
+			and a.name like '%${name}%'
+		</if>
 		<choose>
 			<when test="orderSql!=null">
                 order by ${orderSql}
@@ -73,11 +72,10 @@
 	<select id="countPage" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(1)
 		from pn_menu a
-		<where>
-			<if test="name != null and name != ''">
-				a.name like '%${name}%'
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="name != null and name != ''">
+			and	a.name like '%${name}%'
+		</if>
 		<choose>
 			<when test="orderSql!=null">
                 order by ${orderSql}
@@ -92,6 +90,7 @@
 		select <include refid="columns"/> 
 		from pn_menu a
 		right join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
+		where a.status &lt; 64
 	</select>
 	
 	<update id="update" parameterType="Menu">
@@ -127,13 +126,12 @@
 	</update>
 	
 	<delete id="remove" parameterType="java.lang.Integer">
-		delete from pn_menu 
-		where
-		menu_id=#{menuId}
+		update pn_menu set status = status + 64
+		where menu_id=#{menuId}
 	</delete>
 	
 	<delete id="removeBatch" parameterType="java.lang.String">
-		delete from pn_menu 
+		update pn_menu set status = status + 64
 		where menu_id in
 		 <foreach item="item" collection="array" open="(" separator="," close=")">
             #{item}

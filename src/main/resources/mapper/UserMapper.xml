@@ -36,7 +36,7 @@
 		from pn_user a
 		left join pn_user b on a.create_id = b.id
 		left join pn_role c on a.role_id = c.role_id and c.status = 1
-		where a.id = #{id}
+		where a.id = #{id} and a.status &lt; 64
 	</select>
 	
 	<select id="getByUserName" resultMap="usermap" parameterType="java.lang.String">
@@ -62,14 +62,13 @@
 		from pn_user a
 		left join pn_user b on a.create_id = b.id
 		left join pn_role c on a.role_id = c.role_id and c.status = 1
-		<where>
-			<if test="userName != null and userName != ''">
-				a.user_name like '%${userName}%'
-			</if>
-			<if test="sex != null">
-				and a.sex = #{sex}
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="userName != null and userName != ''">
+			and a.user_name like '%${userName}%'
+		</if>
+		<if test="sex != null">
+			and a.sex = #{sex}
+		</if>
 		order by a.id desc
 	</select>
 	
@@ -80,11 +79,10 @@
 		from pn_user a
 		left join pn_user b on a.create_id = b.id
 		left join pn_role c on a.role_id = c.role_id and c.status = 1
-		<where>
-			<if test="userName != null and userName != ''">
-				a.user_name like '%${userName}%'
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="userName != null and userName != ''">
+			and a.user_name like '%${userName}%'
+		</if>
 		<choose>
 			<when test="orderSql!=null">
                 order by ${orderSql}
@@ -99,11 +97,10 @@
 	<select id="countPage" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(1)
 		from pn_user a
-		<where>
-			<if test="userName != null and userName != ''">
-				a.user_name like '%${userName}%'
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="userName != null and userName != ''">
+			and a.user_name like '%${userName}%'
+		</if>
 		limit ${offset},${limit}
 	</select>
 
@@ -162,11 +159,11 @@
 	</update>
 
 	<delete id="remove" parameterType="java.lang.Integer">
-		delete from pn_user where id = #{id}
+		update pn_user set status = status + 64 where id = #{id}
 	</delete>
 	
 	<delete id="removeBatch" parameterType="java.lang.String">
-		delete from pn_user 
+		update pn_user set status = status + 64
 		where id in
 		 <foreach item="item" collection="array" open="(" separator="," close=")">
             #{item}

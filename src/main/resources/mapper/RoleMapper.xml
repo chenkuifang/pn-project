@@ -32,17 +32,16 @@
 		select <include refid="columns"/> 
 		from pn_role a
 		where 
-		role_id=#{roleId}
+		role_id=#{roleId} and a.status &lt; 64
 	</select>
 	
 	<select id="list" parameterType="java.util.Map" resultMap="roleMap">
 		select <include refid="columns"/> 
 		from pn_role a
-		<where>
-			<if test="whereSql!=null">
-				${whereSql}
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="whereSql!=null">
+			and ${whereSql}
+		</if>
 		<choose>
 			<when test="orderSql!=null">
                 order by ${orderSql}
@@ -58,11 +57,10 @@
 			,b.user_name as create_name
 		from pn_role a
 		left join pn_user b on a.create_id = b.id
-		<where>
-			<if test="roleName != null and roleName != ''">
-				a.role_name like '%${roleName}%'
-			</if>
-		</where>
+		where a.status &lt; 64
+		<if test="roleName != null and roleName != ''">
+			and a.role_name like '%${roleName}%'
+		</if>
 		<choose>
 			<when test="orderSql!=null">
                 order by ${orderSql}
@@ -79,19 +77,10 @@
 		select count(1)
 		from pn_role a
 		left join pn_user b on a.create_id = b.id
-		<where>
-			<if test="roleName != null and roleName != ''">
-				a.role_name like '%${roleName}%'
-			</if>
-		</where>
-		<choose>
-			<when test="orderSql!=null">
-                order by ${orderSql}
-			</when>
-			<otherwise>
-                order by a.role_id
-			</otherwise>
-		</choose>
+		where a.status &lt; 64
+		<if test="roleName != null and roleName != ''">
+			and a.role_name like '%${roleName}%'
+		</if>
 	</select>
 	
 	<update id="update" parameterType="Role">
@@ -122,13 +111,12 @@
 	</update>
 	
 	<delete id="remove" parameterType="java.lang.Integer">
-		delete from pn_role 
-		where
-		role_id=#{roleId}
+		update pn_role set status = status + 64
+		where role_id=#{roleId}
 	</delete>
 	
 	<delete id="removeBatch" parameterType="java.lang.String">
-		delete from pn_role 
+		update pn_role set status = status + 64
 		where role_id in
 		 <foreach item="item" collection="array" open="(" separator="," close=")">
             #{item}
