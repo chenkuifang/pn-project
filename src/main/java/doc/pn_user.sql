@@ -1,4 +1,4 @@
-
+﻿
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
@@ -71,7 +71,7 @@ CREATE TABLE `pn_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `status` int DEFAULT 1 COMMENT '状态  1:正常, 0:停用',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色';
 
 INSERT INTO `pn_role` VALUES (10001, '超级用户角色', '拥有最高权限', 10001, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);

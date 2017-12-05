@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -99,7 +101,7 @@ public class MenuController {
 		Menu menu = menuService.get(menuId);
 		// 父级菜单列表
 		List<Menu> parentMenus = menuService.listByParentId(0);
-		
+
 		model.addAttribute("menu", menu);
 		model.addAttribute("parentMenus", parentMenus);
 		model.addAttribute("action", "edit");
@@ -186,6 +188,34 @@ public class MenuController {
 			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
 		}
 		return r;
+	}
+
+	/**
+	 * 返回菜单列表
+	 * 
+	 * @param
+	 * @return
+	 */
+	@PostMapping("/listMenu")
+	@ResponseBody
+	public List<Map<String, Object>> removeBatch() {
+		List<Map<String, Object>> mapList = new ArrayList<>();
+		List<Menu> menus = menuService.listByStatus(1);
+
+		for (Menu menu : menus) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("id", menu.getMenuId());
+			map.put("pId", menu.getParentId());
+			map.put("name", menu.getName());
+			// for (RoleMenu roleMenu : roleMenus) {
+			// if (roleMenu.getMenuId() == e.getId()) {
+			// map.put("checked", true);
+			// }
+			// }
+			mapList.add(map);
+		}
+
+		return mapList;
 	}
 
 }

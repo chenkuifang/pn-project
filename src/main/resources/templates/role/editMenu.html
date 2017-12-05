@@ -1,59 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<title>角色添加</title>
-	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
-	
-	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
-	<script type="text/javascript" src="/js/role.js"></script>
-	<script type="text/javascript" src="/js/base.js"></script>
+    <meta charset="utf-8"/>
+    <title>菜单权限设置</title>
+    <link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/zTreeStyle/zTreeStyle.css" />
+
+    <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/ztree/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript" src="/js/roleMenu.js"></script>
 </head>
 <body class="childrenBody">
-	<form class="layui-form" style="width:80%;">
-		<div class="layui-form-item" style="margin-top: 20px;">
-			<div class="layui-inline">
-				<label class="layui-form-label">角色名称</label>
-				<div class="layui-input-block">
-					<input type="hidden" id="roleId" name="roleId" th:value="${role.roleId}" />
-					<input type="text" id="roleName" name="roleName" th:value="${role.roleName}" class="layui-input" lay-verify="required" />
-				</div>
-			</div>
-			<div class="layui-inline" th:if="${action == 'edit'}">
-				<label class="layui-form-label">创建时间</label>
-				<div class="layui-input-block">
-					<input type="text" th:value="${#dates.format(role.createTime,'yyyy-MM-dd HH:mm:ss')}" th:readonly="true" class="layui-input layui-disabled" />
-				</div>
-			</div>
-			
-			<div class="layui-inline" th:if="${action == 'edit'}">
-				<label class="layui-form-label">修改时间</label>
-				<div class="layui-input-block">
-					<input type="text" th:value="${#dates.format(role.updateTime,'yyyy-MM-dd HH:mm:ss')}" th:readonly="true" class="layui-input layui-disabled" />
-				</div>
-			</div>
+<div class="layui-form" style="width:80%;">
+    <div class="layui-form-item" style="margin-top: 20px;">
+		<div class="zTreeDemoBackground left">
+			<ul id="treeDemo" class="ztree"></ul>
 		</div>
-		<div class="layui-form-item">
-			<div class="layui-inline">
-			    <label class="layui-form-label">状态</label>
-			    <div class="layui-input-block">
-			      	<input type="radio" name="status" value="1" title="启用" th:checked="${role.status == 1 ? 'true' : 'false'}" />
-			      	<input type="radio" name="status" value="0" title="暂停" th:checked="${role.status == 0 ? 'true' : 'false'}" />
-			    </div>
-		    </div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">备注</label>
-			<div class="layui-input-block">
-				<textarea id="remark" name="remark" th:text="${role.remark}" class="layui-textarea"></textarea>
-			</div>
-		</div>
-		<div class="layui-form-item">
-			<div class="layui-input-block">
-				<button class="layui-btn addSubmit" >立即提交</button>
-				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-		    </div>
-		</div>
-	</form>
+    </div>
+    
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn addSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

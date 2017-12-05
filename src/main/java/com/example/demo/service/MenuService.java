@@ -67,6 +67,15 @@ public interface MenuService {
 	List<Menu> list(Map<String, Object> params);
 
 	/**
+	 * 根据状态值获取菜单列表
+	 * 
+	 * @param status
+	 *            状态
+	 * @return
+	 */
+	List<Menu> listByStatus(int status);
+
+	/**
 	 * 根据父级Id获取菜单列表
 	 * 
 	 * @param parentId

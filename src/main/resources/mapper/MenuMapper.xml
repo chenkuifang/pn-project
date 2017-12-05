@@ -46,7 +46,7 @@
                 order by ${orderSql}
 			</when>
 			<otherwise>
-                order by menu_id DESC
+                order by menu_id
 			</otherwise>
 		</choose>
 	</select>

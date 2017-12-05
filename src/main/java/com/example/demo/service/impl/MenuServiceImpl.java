@@ -76,4 +76,12 @@ public class MenuServiceImpl implements MenuService {
 		return menuMapper.list(params);
 	}
 
+	@Override
+	public List<Menu> listByStatus(int status) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("whereSql", "a.status = #{status}");
+		params.put("status", status);
+		return menuMapper.list(params);
+	}
+
 }
