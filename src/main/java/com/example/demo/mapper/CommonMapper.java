@@ -19,8 +19,8 @@ public interface CommonMapper {
 	 *            需要创建ID的数据库表名称,如"pn_user"
 	 * @param field
 	 *            数据表字段,如Id,user_id,menu_id等
-	 * @return
+	 * @return 因为会存在null 的情况下，所以返回类型用Map
 	 */
-	int getTableNewId(Map<String, Object> params);
+	Map<String, Object> getTableNewId(Map<String, Object> params);
 
 }

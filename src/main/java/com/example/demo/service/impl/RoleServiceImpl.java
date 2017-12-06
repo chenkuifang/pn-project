@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.entity.RoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,10 @@ import com.example.demo.mapper.RoleMapper;
 import com.example.demo.service.RoleService;
 
 /**
- * @Description: 系统菜单服务层接口实现类
  * @author QuiFar
- * @date 2017年11月25日 上午10:29:29
  * @version V1.0
+ * @Description: 系统菜单服务层接口实现类
+ * @date 2017年11月25日 上午10:29:29
  */
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -26,6 +27,11 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public int remove(Integer id) {
 		return roleMapper.remove(id);
+	}
+
+	@Override
+	public int removeMenuByRoleId(Integer roleId) {
+		return roleMapper.removeMenuByRoleId(roleId);
 	}
 
 	@Override
@@ -41,6 +47,11 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public int add(Role role) {
 		return roleMapper.add(role);
+	}
+
+	@Override
+	public int addMenuBatch(List<RoleMenu> roleMenus) {
+		return roleMapper.addMenuBatch(roleMenus);
 	}
 
 	@Override

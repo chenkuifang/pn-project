@@ -92,4 +92,12 @@ public interface MenuMapper {
 	 * @return
 	 */
 	List<Menu> listByRoleId(Integer roleId);
+
+	/**
+	 * 根据角色ID获取菜单所有列表 (获取该角色勾选的菜单列表) isChecked !=null 时表示勾选
+	 * 
+	 * @param params
+	 * @return
+	 */
+	List<Menu> listCheckedByRoleId(Integer roleId);
 }

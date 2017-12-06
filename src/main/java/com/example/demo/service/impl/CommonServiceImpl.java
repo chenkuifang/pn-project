@@ -2,10 +2,13 @@ package com.example.demo.service.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.common.util.StringUtils;
 import com.example.demo.mapper.CommonMapper;
 import com.example.demo.service.CommonService;
 
@@ -25,12 +28,16 @@ public class CommonServiceImpl implements CommonService {
 		Map<String, Object> params = new HashMap<>();
 		params.put("tableName", tableName);
 		params.put("field", field);
-		int result = commonMapper.getTableNewId(params);
+		Map<String, Object> result = commonMapper.getTableNewId(params);
 
-		if (result == 0) {
+		// 结果集包含null
+		if (Objects.isNull(result) || !result.containsKey(field)) {
 			return initId;
 		} else {
-			return result + 1;
+			// 原子操作
+			int id = StringUtils.parseInteger(result.get(field));
+			AtomicInteger atomicInteger = new AtomicInteger(id);
+			return atomicInteger.incrementAndGet();
 		}
 	}
 }

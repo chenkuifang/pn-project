@@ -38,11 +38,11 @@ layui.use(['layer','jquery','table','form'],function(){
 
 	// 编辑操作
 	$("body").on("click",".edit",function(){
-		var id = $(this).attr("data-id");
+		var roleId = $(this).attr("data-id");
 		var index = layui.layer.open({
 			title : "编辑角色信息",
 			type : 2,
-			content : "/role/edit/"+id
+			content : "/role/edit/"+roleId
 		})
 		$(window).resize(function(){
 			layui.layer.full(index);
@@ -52,11 +52,12 @@ layui.use(['layer','jquery','table','form'],function(){
 
 	// 菜单设置
     $("body").on("click",".setMenu",function(){
-        var id = $(this).attr("data-id");
+        var roleId = $(this).attr("data-id");
+        var roleName = $(this).attr("data-role-name");
         var index = layui.layer.open({
-            title : "编辑角色菜单信息",
+            title : "正在为 【" + roleName + "】 编辑角色菜单信息",
             type : 2,
-            content : "/role/editMenu/"+id
+            content : "/role/editMenu/"+roleId
         })
         $(window).resize(function(){
             layui.layer.full(index);

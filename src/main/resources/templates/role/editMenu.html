@@ -3,27 +3,37 @@
 <head>
     <meta charset="utf-8"/>
     <title>菜单权限设置</title>
-    <link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
-    <link rel="stylesheet" href="/zTreeStyle/zTreeStyle.css" />
+    <link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/zTreeStyle/zTreeStyle.css"/>
 
     <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="/ztree/jquery.ztree.all.min.js"></script>
     <script type="text/javascript" src="/js/roleMenu.js"></script>
+    <script type="text/javascript" src="/js/base.js"></script>
 </head>
 <body class="childrenBody">
-<div class="layui-form" style="width:80%;">
-    <div class="layui-form-item" style="margin-top: 20px;">
-		<div class="zTreeDemoBackground left">
-			<ul id="treeDemo" class="ztree"></ul>
-		</div>
-    </div>
-    
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn addSubmit">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    <div class="layui-form" style="width:80%;">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md2">
+                <input type="hidden" id="roleId" name="roleId" th:value="${roleId}" />
+                <input type="hidden" id="action" name="action" th:value="${action}" />
+            </div>
+            <div class="layui-col-md10">
+                <div class="zTreeDemoBackground left">
+                    <ul id="treeDemo" class="ztree"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md2"></div>
+            <div class="layui-col-md10">
+                <div class="layui-input-block">
+                    <button class="layui-btn addSubmit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>

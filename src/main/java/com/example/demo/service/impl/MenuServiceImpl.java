@@ -54,6 +54,11 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
+	public List<Menu> listCheckedByRoleId(Integer roleId) {
+		return menuMapper.listCheckedByRoleId(roleId);
+	}
+
+	@Override
 	public List<Menu> listPage(Map<String, Object> params) {
 		return menuMapper.listPage(params);
 	}

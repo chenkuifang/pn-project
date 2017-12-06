@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.common.Constants;
 import com.example.demo.common.R;
 import com.example.demo.common.ResultBean;
+import com.example.demo.common.util.StringUtils;
 import com.example.demo.entity.Menu;
 import com.example.demo.service.CommonService;
 import com.example.demo.service.MenuService;
@@ -196,22 +197,21 @@ public class MenuController {
 	 * @param
 	 * @return
 	 */
-	@PostMapping("/listMenu")
+	@PostMapping("/listMenu/{roleId}")
 	@ResponseBody
-	public List<Map<String, Object>> removeBatch() {
+	public List<Map<String, Object>> listMenu(@PathVariable("roleId") int roleId) {
 		List<Map<String, Object>> mapList = new ArrayList<>();
-		List<Menu> menus = menuService.listByStatus(1);
-
+		List<Menu> menus = menuService.listCheckedByRoleId(roleId);
+		Map<String, Object> map;
 		for (Menu menu : menus) {
-			Map<String, Object> map = new HashMap<>();
+			map = new HashMap<>();
 			map.put("id", menu.getMenuId());
 			map.put("pId", menu.getParentId());
 			map.put("name", menu.getName());
-			// for (RoleMenu roleMenu : roleMenus) {
-			// if (roleMenu.getMenuId() == e.getId()) {
-			// map.put("checked", true);
-			// }
-			// }
+			if (!StringUtils.isEmpty(menu.getIsChecked())) {
+				// 选中状态
+				map.put("checked", true);
+			}
 			mapList.add(map);
 		}
 

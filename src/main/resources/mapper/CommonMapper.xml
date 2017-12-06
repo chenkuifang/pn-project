@@ -3,11 +3,18 @@
 <mapper namespace="com.example.demo.mapper.CommonMapper">
 	<!-- 公共的Mapper -->
 
-	<select id="getTableNewId" resultType="java.lang.Integer" parameterType="java.util.Map">
+	<!-- <select id="getTableNewId" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select ${field}
+		from ${tableName}
+		order by ${field} desc
+		limit 0,1
+	</select> -->
+	
+	<select id="getTableNewId" parameterType="java.util.Map" resultType="java.util.Map">
 		select ${field}
 		from ${tableName}
 		order by ${field} desc
 		limit 0,1
 	</select>
-
+	
 </mapper>

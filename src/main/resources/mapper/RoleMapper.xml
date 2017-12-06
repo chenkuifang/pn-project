@@ -109,7 +109,7 @@
 		where
 		role_id=#{roleId}
 	</update>
-	
+
 	<delete id="remove" parameterType="java.lang.Integer">
 		update pn_role set status = status + 64
 		where role_id=#{roleId}
@@ -122,5 +122,25 @@
             #{item}
         </foreach>
 	</delete>
-	
+
+	<!-- 角色菜单设置-->
+	<insert id="addMenuBatch" parameterType="java.util.List">
+		insert into pn_role_menu
+		(id,role_id,menu_id)
+		values
+		<foreach item="item" collection="list" separator="," index="index">
+			(
+				#{item.id,jdbcType=NUMERIC}
+				,#{item.roleId,jdbcType=NUMERIC}
+				,#{item.menuId,jdbcType=NUMERIC}
+			)
+		</foreach>
+	</insert>
+
+	<delete id="removeMenuByRoleId" parameterType="java.lang.Integer">
+		delete from pn_role_menu
+		where role_id=#{roleId}
+	</delete>
+
+
 </mapper>

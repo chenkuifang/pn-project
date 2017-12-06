@@ -12,6 +12,8 @@
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 		<result property="status" column="status" jdbcType="NUMERIC"/>
+		
+		<result property="isChecked" column="is_checked" jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<sql id="columns">
@@ -86,10 +88,20 @@
 		</choose>
 	</select>
 	
+	<!-- 左边导航用 -->
 	<select id="listByRoleId" parameterType="java.lang.Integer" resultMap="menuMap">
 		select <include refid="columns"/> 
 		from pn_menu a
 		right join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
+		where a.status &lt; 64
+		order by a.order_num
+	</select>
+	
+	<!-- 角色菜单用 -->
+	<select id="listCheckedByRoleId" parameterType="java.lang.Integer" resultMap="menuMap">
+		select <include refid="columns"/>,b.role_id as is_checked
+		from pn_menu a
+		left join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
 		where a.status &lt; 64
 		order by a.order_num
 	</select>
