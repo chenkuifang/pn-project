@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.Role;
 import com.example.demo.mapper.RoleMapper;
 import com.example.demo.service.RoleService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author QuiFar
@@ -21,65 +22,70 @@ import com.example.demo.service.RoleService;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-	@Autowired
-	private RoleMapper roleMapper;
+    @Autowired
+    private RoleMapper roleMapper;
 
-	@Override
-	public int remove(Integer id) {
-		return roleMapper.remove(id);
-	}
+    @Override
+    public int remove(Integer id) {
+        return roleMapper.remove(id);
+    }
 
-	@Override
-	public int removeMenuByRoleId(Integer roleId) {
-		return roleMapper.removeMenuByRoleId(roleId);
-	}
+    @Override
+    public int removeMenuByRoleId(Integer roleId) {
+        return roleMapper.removeMenuByRoleId(roleId);
+    }
 
-	@Override
-	public int removeBatch(String[] ids) {
-		return roleMapper.removeBatch(ids);
-	}
+    @Override
+    public int removeBatch(String[] ids) {
+        return roleMapper.removeBatch(ids);
+    }
 
-	@Override
-	public int update(Role role) {
-		return roleMapper.update(role);
-	}
+    @Override
+    public int update(Role role) {
+        return roleMapper.update(role);
+    }
 
-	@Override
-	public int add(Role role) {
-		return roleMapper.add(role);
-	}
+    @Override
+    public int add(Role role) {
+        return roleMapper.add(role);
+    }
 
-	@Override
-	public int addMenuBatch(List<RoleMenu> roleMenus) {
-		return roleMapper.addMenuBatch(roleMenus);
-	}
+    @Override
+    @Transactional
+    public void addMenuBatch(int roleId,List<RoleMenu> roleMenus) {
+        //1.清空该角色的原有菜单
+        roleMapper.removeMenuByRoleId(roleId);
 
-	@Override
-	public Role get(Integer id) {
-		return roleMapper.get(id);
-	}
+        //2.批量新增
+        roleMapper.addMenuBatch(roleMenus);
+    }
 
-	@Override
-	public List<Role> list(Map<String, Object> params) {
-		return roleMapper.list(params);
-	}
+    @Override
+    public Role get(Integer id) {
+        return roleMapper.get(id);
+    }
 
-	@Override
-	public List<Role> listPage(Map<String, Object> params) {
-		return roleMapper.listPage(params);
-	}
+    @Override
+    public List<Role> list(Map<String, Object> params) {
+        return roleMapper.list(params);
+    }
 
-	@Override
-	public int countPage(Map<String, Object> params) {
-		return roleMapper.countPage(params);
-	}
+    @Override
+    public List<Role> listPage(Map<String, Object> params) {
+        return roleMapper.listPage(params);
+    }
 
-	@Override
-	public List<Role> listByStatus(int status) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("whereSql", "a.status = #{status}");
-		params.put("status", status);
-		return roleMapper.list(params);
-	}
+    @Override
+    public int countPage(Map<String, Object> params) {
+        return roleMapper.countPage(params);
+    }
+
+    @Override
+    public List<Role> listByStatus(int status) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("whereSql", "a.status = #{status}");
+        params.put("status", status);
+        return roleMapper.list(params);
+    }
 
 }

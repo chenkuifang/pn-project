@@ -34,7 +34,7 @@ function init(roleId) {
 $(document).ready(function() {
 	var action = $("#action").val();
 	var roleId = $("#roleId").val();
-	
+
 	init(roleId);
 	// 监听提交
 	$("body").on("click", ".addSubmit", function() {
@@ -46,12 +46,12 @@ $(document).ready(function() {
 		}
 
 		if(g.isEmpty(roleId)) {
-		    alert("角色编号不能为空");
+		    layer.alert("角色编号不能为空");
 		    return;
 		}
 
 		if(ids.length == 0) {
-		    alert("请选择菜单");
+		    layer.alert("请选择菜单");
 		    return;
 		}
 		// 总数据
@@ -60,7 +60,7 @@ $(document).ready(function() {
 		    roleId : roleId,
 		    ids : ids
 		};
-		
+
 		$.ajax({
             type:"post",
             contentType:"application/json; charset=utf-8",
@@ -68,11 +68,11 @@ $(document).ready(function() {
             async : false,
             data: JSON.stringify(data),
             success:function(result){
-                 if(result["code"]==g.successCode){
-                	 alert("成功");
+                 if(result["code"]==g.successCode) {
+                	 layer.alert("成功");
                  }
-                 if(result["code"]==g.failCode){
-                	 alert("失败");
+                 if(result["code"]==g.failCode) {
+                	 layer.alert("失败");
                  }
             }
 		});

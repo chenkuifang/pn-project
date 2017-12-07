@@ -61,7 +61,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
 		if (obj.substring(0, 1).equals("[") && obj.lastIndexOf("]") > 0) {
 			String tem = obj.substring(1, obj.length() - 1);
-			result = tem.split(",");
+			result = tem.replace(" ","").split(",");
 		}
 		return result;
 	}
