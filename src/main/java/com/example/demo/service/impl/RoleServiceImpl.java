@@ -52,7 +52,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public void addMenuBatch(int roleId,List<RoleMenu> roleMenus) {
+    public void addMenuBatch(int roleId, List<RoleMenu> roleMenus) {
         //1.清空该角色的原有菜单
         roleMapper.removeMenuByRoleId(roleId);
 

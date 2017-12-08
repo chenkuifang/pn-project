@@ -1,65 +1,65 @@
 package com.example.demo.common;
 
 /**
- * @Description: 上下文POJO,方便读取系统需要的属性
+ * 上下文POJO,方便读取系统常用属性
+ *
  * @author QuiFar
- * @date 2017年11月23日 下午10:39:26
  * @version V1.0
  */
 public class WebContext {
-	/**
-	 * 当前登录用户ID
-	 */
-	private Integer userId;
-	/**
-	 * 当前登陆用户名
-	 */
-	private String userName;
-	/**
-	 * 当前登陆用户昵称
-	 */
-	private String userNike;
-	/**
-	 * 当前用户角色id
-	 */
-	private Integer roleId;
+    /**
+     * 当前登录用户ID
+     */
+    private Integer userId;
+    /**
+     * 当前登陆用户名
+     */
+    private String userName;
+    /**
+     * 当前登陆用户昵称
+     */
+    private String userNike;
+    /**
+     * 当前用户角色id
+     */
+    private Integer roleId;
 
-	public Integer getUserId() {
-		return userId;
-	}
+    public Integer getUserId() {
+        return userId;
+    }
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public String getUserNike() {
-		return userNike;
-	}
+    public String getUserNike() {
+        return userNike;
+    }
 
-	public void setUserNike(String userNike) {
-		this.userNike = userNike;
-	}
+    public void setUserNike(String userNike) {
+        this.userNike = userNike;
+    }
 
-	public Integer getRoleId() {
-		return roleId;
-	}
+    public Integer getRoleId() {
+        return roleId;
+    }
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 
-	@Override
-	public String toString() {
-		return "WebContext [userId=" + userId + ", userName=" + userName + ", userNike=" + userNike + ", roleId="
-				+ roleId + "]";
-	}
+    @Override
+    public String toString() {
+        return "WebContext [userId=" + userId + ", userName=" + userName + ", userNike=" + userNike + ", roleId="
+                + roleId + "]";
+    }
 
 }

@@ -24,7 +24,7 @@ import com.example.demo.common.R;
 import com.example.demo.common.ResultBean;
 import com.example.demo.common.WebContext;
 import com.example.demo.common.util.MDUtils;
-import com.example.demo.common.util.WebContextUitls;
+import com.example.demo.common.util.WebContextUtils;
 import com.example.demo.entity.Menu;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
@@ -130,7 +130,7 @@ public class UserController {
 	/**
 	 * 保存
 	 * 
-	 * @param role
+	 * @param user
 	 * @return
 	 * @throws Exception
 	 */
@@ -148,7 +148,7 @@ public class UserController {
 			user.setDepartmentId(10001);
 			// 初始化密码
 			user.setPassword(MDUtils.encodeMD5("123456"));
-			user.setCreateId(WebContextUitls.getCurrentUserId(session));
+			user.setCreateId(WebContextUtils.getCurrentUserId(session));
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
 			flag = userService.add(user);
@@ -159,11 +159,11 @@ public class UserController {
 
 		// 结果返回
 		if (flag > 0) {
-			r.setCode(Constants.RESULT_CODE_SUCCESS);
-			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+			r.setCode(Constants.SUCCESS_CODE);
+			r.setMsg(Constants.SUCCESS_DESCRIPTION);
 		} else {
-			r.setCode(Constants.RESULT_CODE_FAIL);
-			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+			r.setCode(Constants.FAIL_CODE);
+			r.setMsg(Constants.FAIL_DESCRIPTION);
 		}
 		return r;
 	}
@@ -186,11 +186,11 @@ public class UserController {
 
 		// 结果返回
 		if (flag > 0) {
-			r.setCode(Constants.RESULT_CODE_SUCCESS);
-			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+			r.setCode(Constants.SUCCESS_CODE);
+			r.setMsg(Constants.SUCCESS_DESCRIPTION);
 		} else {
-			r.setCode(Constants.RESULT_CODE_FAIL);
-			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+			r.setCode(Constants.FAIL_CODE);
+			r.setMsg(Constants.FAIL_DESCRIPTION);
 		}
 		return r;
 	}
@@ -213,11 +213,11 @@ public class UserController {
 
 		// 结果返回
 		if (flag > 0) {
-			r.setCode(Constants.RESULT_CODE_SUCCESS);
-			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+			r.setCode(Constants.SUCCESS_CODE);
+			r.setMsg(Constants.SUCCESS_DESCRIPTION);
 		} else {
-			r.setCode(Constants.RESULT_CODE_FAIL);
-			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+			r.setCode(Constants.FAIL_CODE);
+			r.setMsg(Constants.FAIL_DESCRIPTION);
 		}
 		return r;
 	}

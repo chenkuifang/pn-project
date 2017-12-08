@@ -5,7 +5,7 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.R;
 import com.example.demo.common.ResultBean;
 import com.example.demo.common.util.StringUtils;
-import com.example.demo.common.util.WebContextUitls;
+import com.example.demo.common.util.WebContextUtils;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.RoleMenu;
 import com.example.demo.service.CommonService;
@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 角色管理控制类
+ *
  * @author QuiFar
  * @version V1.0
- * @Description: 角色设置控制器
- * @date 2017年11月26日 上午21:32:27
  */
 @Controller
 @RequestMapping("/role")
@@ -81,6 +81,7 @@ public class RoleController {
     /**
      * 编辑初始化视图
      *
+     * @param roleId
      * @param model
      * @return
      */
@@ -95,6 +96,7 @@ public class RoleController {
     /**
      * 保存
      *
+     * @param session
      * @param role
      * @return
      */
@@ -108,7 +110,7 @@ public class RoleController {
         if (role.getRoleId() == null) {
             int roleId = commonService.getTableNewId("pn_role", "role_id", 10001);
             role.setRoleId(roleId);
-            role.setCreateId(WebContextUitls.getCurrentUserId(session));
+            role.setCreateId(WebContextUtils.getCurrentUserId(session));
             role.setCreateTime(new Date());
             role.setUpdateTime(new Date());
             flag = roleService.add(role);
@@ -119,11 +121,11 @@ public class RoleController {
 
         // 结果返回
         if (flag > 0) {
-            r.setCode(Constants.RESULT_CODE_SUCCESS);
-            r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+            r.setCode(Constants.SUCCESS_CODE);
+            r.setMsg(Constants.SUCCESS_DESCRIPTION);
         } else {
-            r.setCode(Constants.RESULT_CODE_FAIL);
-            r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+            r.setCode(Constants.FAIL_CODE);
+            r.setMsg(Constants.FAIL_DESCRIPTION);
         }
         return r;
     }
@@ -143,11 +145,11 @@ public class RoleController {
 
         // 结果返回
         if (flag > 0) {
-            r.setCode(Constants.RESULT_CODE_SUCCESS);
-            r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+            r.setCode(Constants.SUCCESS_CODE);
+            r.setMsg(Constants.SUCCESS_DESCRIPTION);
         } else {
-            r.setCode(Constants.RESULT_CODE_FAIL);
-            r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+            r.setCode(Constants.FAIL_CODE);
+            r.setMsg(Constants.FAIL_DESCRIPTION);
         }
         return r;
     }
@@ -166,11 +168,11 @@ public class RoleController {
 
         // 结果返回
         if (flag > 0) {
-            r.setCode(Constants.RESULT_CODE_SUCCESS);
-            r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+            r.setCode(Constants.SUCCESS_CODE);
+            r.setMsg(Constants.SUCCESS_DESCRIPTION);
         } else {
-            r.setCode(Constants.RESULT_CODE_FAIL);
-            r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+            r.setCode(Constants.FAIL_CODE);
+            r.setMsg(Constants.FAIL_DESCRIPTION);
         }
         return r;
     }
@@ -226,11 +228,11 @@ public class RoleController {
 
         // 结果返回
         if (flag > 0) {
-            r.setCode(Constants.RESULT_CODE_SUCCESS);
-            r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+            r.setCode(Constants.SUCCESS_CODE);
+            r.setMsg(Constants.SUCCESS_DESCRIPTION);
         } else {
-            r.setCode(Constants.RESULT_CODE_FAIL);
-            r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+            r.setCode(Constants.FAIL_CODE);
+            r.setMsg(Constants.FAIL_DESCRIPTION);
         }
         return r;
     }

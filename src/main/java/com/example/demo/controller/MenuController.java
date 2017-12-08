@@ -112,7 +112,7 @@ public class MenuController {
 	/**
 	 * 保存
 	 * 
-	 * @param role
+	 * @param menu
 	 * @return
 	 */
 	@PostMapping("/save")
@@ -135,11 +135,11 @@ public class MenuController {
 
 		// 结果返回
 		if (flag > 0) {
-			r.setCode(Constants.RESULT_CODE_SUCCESS);
-			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+			r.setCode(Constants.SUCCESS_CODE);
+			r.setMsg(Constants.SUCCESS_DESCRIPTION);
 		} else {
-			r.setCode(Constants.RESULT_CODE_FAIL);
-			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+			r.setCode(Constants.FAIL_CODE);
+			r.setMsg(Constants.FAIL_DESCRIPTION);
 		}
 		return r;
 	}
@@ -159,11 +159,11 @@ public class MenuController {
 
 		// 结果返回
 		if (flag > 0) {
-			r.setCode(Constants.RESULT_CODE_SUCCESS);
-			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+			r.setCode(Constants.SUCCESS_CODE);
+			r.setMsg(Constants.SUCCESS_DESCRIPTION);
 		} else {
-			r.setCode(Constants.RESULT_CODE_FAIL);
-			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+			r.setCode(Constants.FAIL_CODE);
+			r.setMsg(Constants.FAIL_DESCRIPTION);
 		}
 		return r;
 	}
@@ -182,11 +182,11 @@ public class MenuController {
 
 		// 结果返回
 		if (flag > 0) {
-			r.setCode(Constants.RESULT_CODE_SUCCESS);
-			r.setMsg(Constants.RESULT_SUCCESS_DESCRIPTION);
+			r.setCode(Constants.SUCCESS_CODE);
+			r.setMsg(Constants.SUCCESS_DESCRIPTION);
 		} else {
-			r.setCode(Constants.RESULT_CODE_FAIL);
-			r.setMsg(Constants.Result_FAIL_DESCRIPTION);
+			r.setCode(Constants.FAIL_CODE);
+			r.setMsg(Constants.FAIL_DESCRIPTION);
 		}
 		return r;
 	}
