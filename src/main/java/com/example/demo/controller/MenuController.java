@@ -117,7 +117,7 @@ public class MenuController {
 	 */
 	@PostMapping("/save")
 	@ResponseBody
-	public R save(HttpSession session, Menu menu) {
+	public R save(Menu menu) {
 		R r = R.getInstance();
 
 		int flag = 0;

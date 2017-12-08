@@ -19,6 +19,16 @@ public interface Constants {
     String FAIL_DESCRIPTION = "失败";
 
     /**
+     * user name or password error 用户名或密码错误
+     */
+    String USER_NAME_OR_PASSWORD_ERROR = "用户名或密码错误";
+
+    /**
+     * password empty 密码为空
+     */
+    String PASSWORD_EMPTY = "密码为空";
+
+    /**
      * 返回码 100 成功
      */
     String SUCCESS_CODE = "100";

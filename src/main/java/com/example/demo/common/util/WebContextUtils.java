@@ -14,6 +14,15 @@ import com.example.demo.common.WebContext;
  */
 public class WebContextUtils {
 
+    private HttpSession session;
+
+    private WebContextUtils() {
+    }
+
+    public WebContextUtils(HttpSession session) {
+        this.session = session;
+    }
+
     /**
      * 获取当前用户信息(session数据)
      */
@@ -36,5 +45,29 @@ public class WebContextUtils {
         WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
         return webContext.getRoleId();
     }
+
+// 以下是 12.8修改
+//    /**
+//     * 获取当前用户信息(session数据)
+//     */
+//    public static WebContext getCurrentUser(HttpSession session) {
+//        return (WebContext) session.getAttribute(Constants.SESSION_USER);
+//    }
+//
+//    /**
+//     * 获取当前用户Id(session数据)
+//     */
+//    public static int getCurrentUserId(HttpSession session) {
+//        WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+//        return webContext.getUserId();
+//    }
+//
+//    /**
+//     * 获取当前用户角色Id(session数据)
+//     */
+//    public static int getCurrentRoleId(HttpSession session) {
+//        WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+//        return webContext.getRoleId();
+//    }
 
 }

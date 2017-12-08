@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.common.util.WebContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -36,17 +37,18 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         } else {
             HttpSession session = request.getSession();
             Object obj = session.getAttribute(Constants.SESSION_USER);
-            if (obj == null) {
+            if (Objects.isNull(obj)) {
                 response.sendRedirect(request.getContextPath() + "/login.html");
                 return false;
             }
-            // 当前登录信息
+            // 二次校验当前登录信息
             WebContext webContext = (WebContext) obj;
-            if (webContext.getRoleId() == null || StringUtils.isBlank(webContext.getRoleId().toString())) {
+            if (Objects.isNull(webContext.getUserId())) {
                 response.sendRedirect(request.getContextPath() + "/login.html");
                 return false;
             }
         }
+
         return true;
     }
 

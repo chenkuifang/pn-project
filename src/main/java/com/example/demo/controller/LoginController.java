@@ -58,7 +58,7 @@ public class LoginController {
         R r = R.getInstance();
 
         String code = Constants.FAIL_CODE;
-        String msg = "用户名或密码错误!";
+        String msg = Constants.USER_NAME_OR_PASSWORD_ERROR;
         User user = UserService.getByUserName(userName);
 
         if (user != null) {
@@ -119,20 +119,17 @@ public class LoginController {
     /**
      * 获取修改密码操作
      *
+     * @param userName 用户名
+     * @param oldPwd   旧密码
+     * @param newPwd   新密码
+     * @param model    需要返回的数据
      * @return
      * @throws Exception
      */
     @PostMapping("/changePwdPost")
     public String changePwdPost(@RequestParam String userName, @RequestParam String oldPwd, @RequestParam String newPwd,
                                 Model model) throws Exception {
-        String result = "";
-        String viewName = "user/changePwd";
-
-        if (StringUtils.isBlank(oldPwd) || StringUtils.isBlank(newPwd)) {
-            result = "密码不能为空！";
-            model.addAttribute("result", result);
-            return viewName;
-        }
+        String result;
 
         // 根据用户名获取用户信息
         User user = UserService.getByUserName(userName);
@@ -141,13 +138,15 @@ public class LoginController {
             User newUser = new User();
             newUser.setId(user.getId());
             newUser.setPassword(MDUtils.encodeMD5(newPwd));
+
+            // 修改密码
             int flag = UserService.update(newUser);
-            result = flag >= 1 ? "修改成功" : "修改失败";
+            result = flag >= 1 ? Constants.SUCCESS_DESCRIPTION : Constants.FAIL_DESCRIPTION;
         } else {
-            result = "用户名或密码错误,请重新输入！";
+            result = Constants.USER_NAME_OR_PASSWORD_ERROR;
         }
         model.addAttribute("userName", userName);
         model.addAttribute("result", result);
-        return viewName;
+        return "user/changePwd";
     }
 }
