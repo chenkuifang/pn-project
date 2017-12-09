@@ -104,7 +104,7 @@ public interface MenuService {
 	/**
 	 * 根据角色ID获取菜单列表 (获取该角色所属的菜单列表)
 	 * 
-	 * @param params
+	 * @param roleId
 	 * @return
 	 */
 	List<Menu> listByRoleId(Integer roleId);
@@ -112,7 +112,7 @@ public interface MenuService {
 	/**
 	 * 根据角色ID获取菜单所有列表 (获取该角色勾选的菜单列表) isChecked !=null 时表示勾选
 	 * 
-	 * @param params
+	 * @param roleId
 	 * @return
 	 */
 	List<Menu> listCheckedByRoleId(Integer roleId);

@@ -14,7 +14,7 @@
 		    <result property="userName" column="create_name"/>
 	  	</association>
 	</resultMap>
-	
+
 	<sql id="columns">
 		a.role_id,a.role_name,a.remark,a.create_id,a.create_time,a.update_time,a.status
 	</sql>
@@ -86,25 +86,25 @@
 	<update id="update" parameterType="Role">
 		update pn_role
 		<trim prefix="set" suffixOverrides=",">
-	            <if test="roleName!=null and roleName!=''">
+			<if test="roleName!=null and roleName!=''">
 				role_name=#{roleName,jdbcType=VARCHAR},
-	            </if>		
-	            <if test="remark!=null and remark!=''">
+			</if>
+			<if test="remark!=null and remark!=''">
 				remark=#{remark,jdbcType=VARCHAR},
-	            </if>
-	            <if test="createId!=null and createId!=''">
+			</if>
+			<if test="createId!=null">
 				create_id=#{createId,jdbcType=NUMERIC},
-	            </if>		
-	            <if test="createTime!=null and createTime!=''">
+			</if>
+			<if test="createTime!=null and createTime!=''">
 				create_time=#{createTime,jdbcType=TIMESTAMP},
-	            </if>		
-	            <if test="updateTime!=null and updateTime!=''">
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
 				update_time=#{updateTime,jdbcType=TIMESTAMP},
-	            </if>
-	            <!-- !=''是用来判断String类型的，如果Integer=0的情况下 ==''是一致的 -->
-	            <if test="status!=null">
+			</if>
+			<!-- !=''是用来判断String类型的，如果Integer=0的情况下 ==''是一致的 -->
+			<if test="status!=null">
 				status=#{status,jdbcType=NUMERIC},
-	            </if>			
+			</if>
 		</trim>
 		where
 		role_id=#{roleId}
@@ -141,6 +141,5 @@
 		delete from pn_role_menu
 		where role_id=#{roleId}
 	</delete>
-
 
 </mapper>

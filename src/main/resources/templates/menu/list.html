@@ -3,29 +3,42 @@
 <head>
 	<meta charset="utf-8" />
 	<title>系统菜单管理</title>
-	<link rel="stylesheet" href="../layui.2.2.3/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
 	
-	<script type="text/javascript" src="../layui.2.2.3/layui/layui.js"></script>
-	<script type="text/javascript" src="../js/menu.js"></script>
-	<script type="text/javascript" src="../js/base.js"></script>
+	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/menu.js"></script>
+	<script type="text/javascript" src="/js/base.js"></script>
 </head>
 <body class="childrenBody">
-	
-	<blockquote class="layui-elem-quote">
-		<div class="layui-inline">
-		    <div class="layui-input-inline">
-		    	<input type="text" id="menuName" name="menuName" placeholder="名称" class="layui-input"  />
-		    </div>
-		    <a class="layui-btn searchBtn"><i class="layui-icon">&#xe615;</i>查询</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-normal add"><i class="layui-icon">&#xe608;</i>添加</a>
-		</div>
-		<div class="layui-inline">
-			<a class="layui-btn layui-btn-danger removeBatch"><i class="layui-icon">&#xe640;</i>批量删除</a>
-		</div>
-	</blockquote>
-	
+	<form class="layui-form">
+		<blockquote class="layui-elem-quote">
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<input type="text" id="menuName" name="menuName" placeholder="名称" class="layui-input" />
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<select name="parentId" id="parentId" >
+						<option value="" >请选择上级菜单</option>
+						<option value="0">根目录</option>
+						<option th:each="item : ${parentMenus}" th:value="${item.menuId}" th:text="${item.name}"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<a class="layui-btn searchBtn"><i class="layui-icon">&#xe615;</i>查询</a>
+			</div>
+			<div class="layui-inline">
+				<a class="layui-btn layui-btn-normal add"><i class="layui-icon">&#xe608;</i>添加</a>
+			</div>
+			<div class="layui-inline">
+				<a class="layui-btn layui-btn-danger removeBatch"><i class="layui-icon">&#xe640;</i>批量删除</a>
+			</div>
+		</blockquote>
+	</form>
 	<table  class="layui-table" id="dataTable"></table>
 	
 	<!-- 操作模板 -->

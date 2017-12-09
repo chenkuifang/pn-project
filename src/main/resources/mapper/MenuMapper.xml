@@ -12,14 +12,14 @@
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 		<result property="status" column="status" jdbcType="NUMERIC"/>
-		
+
 		<result property="isChecked" column="is_checked" jdbcType="VARCHAR"/>
 	</resultMap>
-	
+
 	<sql id="columns">
 		a.menu_id,a.parent_id,a.name,a.url,a.type,a.icon,a.order_num,a.create_time,a.update_time,a.status
 	</sql>
-	
+
 	<insert id="add" parameterType="Menu">
 		insert into pn_menu 
 			(menu_id,parent_id,name,url,type,icon,order_num,create_time,update_time)
@@ -28,16 +28,16 @@
 			#{url,jdbcType=VARCHAR}, #{type,jdbcType=NUMERIC}, #{icon,jdbcType=VARCHAR}, 
 			#{orderNum,jdbcType=NUMERIC}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
 	</insert>
-	
+
 	<select id="get" parameterType="java.lang.Integer" resultMap="menuMap">
-		select <include refid="columns"/> 
+		select <include refid="columns"/>
 		from pn_menu a
-		where 
+		where
 		a.menu_id=#{menuId} and a.status &lt; 64
 	</select>
-	
+
 	<select id="list" parameterType="java.util.Map" resultMap="menuMap">
-		select <include refid="columns"/> 
+		select <include refid="columns"/>
 		from pn_menu a
 		where a.status &lt; 64
 		<if test="whereSql!=null">
@@ -52,13 +52,16 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<select id="listPage" parameterType="java.util.Map" resultMap="menuMap">
-		select <include refid="columns"/> 
+		select <include refid="columns"/>
 		from pn_menu a
 		where a.status &lt; 64
 		<if test="name != null and name != ''">
 			and a.name like '%${name}%'
+		</if>
+		<if test="parentId != null and parentId != ''">
+			and a.parent_id = '${parentId}'
 		</if>
 		<choose>
 			<when test="orderSql!=null">
@@ -70,13 +73,16 @@
 		</choose>
 		limit ${offset},${limit}
 	</select>
-	
+
 	<select id="countPage" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(1)
 		from pn_menu a
 		where a.status &lt; 64
 		<if test="name != null and name != ''">
 			and	a.name like '%${name}%'
+		</if>
+		<if test="parentId != null and parentId != ''">
+			and a.parent_id = '${parentId}'
 		</if>
 		<choose>
 			<when test="orderSql!=null">
@@ -87,62 +93,62 @@
 			</otherwise>
 		</choose>
 	</select>
-	
+
 	<!-- 左边导航用 -->
 	<select id="listByRoleId" parameterType="java.lang.Integer" resultMap="menuMap">
-		select <include refid="columns"/> 
+		select <include refid="columns"/>
 		from pn_menu a
 		right join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
 		where a.status &lt; 64
-		order by a.order_num
+		order by a.menu_id,a.order_num
 	</select>
-	
-	<!-- 角色菜单用 -->
+
+	<!-- 角色菜单用,左联关联表的一个字段，如果为Null表示该角色未拥有该菜单 -->
 	<select id="listCheckedByRoleId" parameterType="java.lang.Integer" resultMap="menuMap">
 		select <include refid="columns"/>,b.role_id as is_checked
 		from pn_menu a
 		left join pn_role_menu b on a.menu_id = b.menu_id and b.role_id = #{roleId}
 		where a.status &lt; 64
-		order by a.order_num
+		order by a.menu_id
 	</select>
-	
+
 	<update id="update" parameterType="Menu">
 		update pn_menu
-		<trim prefix="set" suffixOverrides=",">
-	            <if test="parentId!=null">
-				parent_id=#{parentId,jdbcType=NUMERIC},
-	            </if>		
-	            <if test="name!=null">
-				name=#{name,jdbcType=VARCHAR},
-	            </if>		
-	            <if test="url!=null">
-				url=#{url,jdbcType=VARCHAR},
-	            </if>		
-	            <if test="type!=null">
-				type=#{type,jdbcType=NUMERIC},
-	            </if>		
-	            <if test="icon!=null">
-				icon=#{icon,jdbcType=VARCHAR},
-	            </if>		
-	            <if test="orderNum!=null">
-				order_num=#{orderNum,jdbcType=NUMERIC},
-	            </if>		
-	            <if test="createTime!=null">
-				create_time=#{createTime,jdbcType=TIMESTAMP},
-	            </if>		
-	            <if test="updateTime!=null">
-				update_time=#{updateTime,jdbcType=TIMESTAMP},
-	            </if>		
-		</trim>
+        <trim prefix="set" suffixOverrides=",">
+            <if test="parentId!=null">
+                parent_id=#{parentId,jdbcType=NUMERIC},
+            </if>
+            <if test="name!=null">
+                name=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="url!=null">
+                url=#{url,jdbcType=VARCHAR},
+            </if>
+            <if test="type!=null">
+                type=#{type,jdbcType=NUMERIC},
+            </if>
+            <if test="icon!=null">
+                icon=#{icon,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNum!=null">
+                order_num=#{orderNum,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
 		where
 		menu_id=#{menuId}
 	</update>
-	
+
 	<delete id="remove" parameterType="java.lang.Integer">
 		update pn_menu set status = status + 64
 		where menu_id=#{menuId}
 	</delete>
-	
+
 	<delete id="removeBatch" parameterType="java.lang.String">
 		update pn_menu set status = status + 64
 		where menu_id in
@@ -150,5 +156,5 @@
             #{item}
         </foreach>
 	</delete>
-	
+
 </mapper>

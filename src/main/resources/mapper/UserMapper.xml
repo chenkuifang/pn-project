@@ -41,7 +41,7 @@
 	
 	<select id="getByUserName" resultMap="usermap" parameterType="java.lang.String">
 		select
-		<include refid="columns" />,a.password
+			<include refid="columns" />,a.password
 		from pn_user a
 		left join pn_role b on a.role_id = b.role_id and b.status = 1
 		where a.user_name = #{userName} and a.status = 1
@@ -49,7 +49,7 @@
 	
 	<select id="getByMobile" resultMap="usermap" parameterType="java.lang.String">
 		select
-		<include refid="columns" />
+			<include refid="columns" />
 		from pn_user a
 		where a.mobile = #{mobile} and a.status = 1
 	</select>
@@ -101,7 +101,6 @@
 		<if test="userName != null and userName != ''">
 			and a.user_name like '%${userName}%'
 		</if>
-		limit ${offset},${limit}
 	</select>
 
 	<insert id="add" parameterType="User">

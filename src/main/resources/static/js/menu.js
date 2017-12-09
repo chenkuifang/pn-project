@@ -4,7 +4,7 @@ layui.use(['form','layer','jquery','table'],function(){
 		form = layui.form,
 		table = layui.table;
 		$ = layui.jquery;
-	
+
 	// 数据渲染(templet遵守laytpl 模板规则 )
 	var tableIns = table.render({
 		elem: '#dataTable',
@@ -22,7 +22,7 @@ layui.use(['form','layer','jquery','table'],function(){
 	    ]],
 	    page: true
 	});
-	
+
 	// 添加
 	$(".add").click(function(){
 		//当前层索引
@@ -50,13 +50,15 @@ layui.use(['form','layer','jquery','table'],function(){
 		})
 		layui.layer.full(index);
 	});
-	
+
 	// 搜索
 	$("body").on("click",".searchBtn",function(){
 		var menuName = $("#menuName").val();
+		var parentId = $("#parentId").val();
 		tableIns.reload({
 			where : {
-				name : menuName
+				name : menuName,
+				parentId : parentId
 			}
 		});
 	});
@@ -64,7 +66,7 @@ layui.use(['form','layer','jquery','table'],function(){
 	// 单个删除操作
 	$("body").on("click",".remove",function(){
 		var id = $(this).attr("data-id");
-		var index = layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
+		layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
 	             type:"post",
 	             url:"/menu/remove",
@@ -72,16 +74,16 @@ layui.use(['form','layer','jquery','table'],function(){
 	             success:function(result){
 	                 if(result["code"]===g.successCode){
 	                     window.location.reload();
-	                     layer.close(index);
 	                 }
 	                 if(result["code"]===g.failCode){
 	                	 layer.msg(result["msg"]);
 	                 }
+                     layer.closeAll();
 	             }
 	        });
 		});
 	});
-	
+
 	// 批量删除
 	$("body").on("click",".removeBatch",function(){
 		// 获取表格选中的所有行数据数组
@@ -92,12 +94,12 @@ layui.use(['form','layer','jquery','table'],function(){
 			ids.push(item['menuId']);
 		});
 		//alert(JSON.stringify(checkStatus.data));
-		
+
 		if(ids == null || ids.length == 0){
 			return;
 		}
-		
-		var index = layer.confirm('确定删除吗?',{icon:3, title:g.title},function(index){
+
+		layer.confirm('确定删除吗?',{icon:3, title:g.title},function(index){
 			$.ajax({
 	             type:"post",
 	             url:"/menu/removeBatch",
@@ -113,12 +115,13 @@ layui.use(['form','layer','jquery','table'],function(){
 	                 if(result["code"]==g.failCode){
 	                	 layer.msg(result["msg"]);
 	                 }
+                     layer.closeAll();
 	             }
 	        });
 		});
-		
+
 	});
-	
+
 	// 添加提交
 	$("body").on("click",".addSubmit",function(){
 		if(!checkData()){
@@ -139,29 +142,29 @@ layui.use(['form','layer','jquery','table'],function(){
              }
         });
 	});
-	
+
 	function checkData(){
 		var name = $("#name").val();
 		var parentId = $("#parentId").val();
 		var orderNum = $("#orderNum").val();
-		
+
 		if(g.isEmpty(name)){
 			layer.msg("名称不能为空！");
 			return false;
 		}
-		
+
 		if(g.isEmpty(parentId) || !g.isNumber(parentId)){
 			layer.msg("菜单父级输入格式不正确！");
 			return false;
 		}
-		
+
 		if(g.isEmpty(orderNum) || !g.isNumber(orderNum)){
 			layer.msg("排序输入格式不正确！");
 			return false;
 		}
 		return true;
 	}
-	
+
 });
 
 // 类型格式转换

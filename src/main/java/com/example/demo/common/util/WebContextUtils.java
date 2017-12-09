@@ -39,6 +39,14 @@ public class WebContextUtils {
     }
 
     /**
+     * 获取当前用户名(session数据)
+     */
+    public static String getCurrentUserName(HttpSession session) {
+        WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+        return webContext.getUserName();
+    }
+
+    /**
      * 获取当前用户角色Id(session数据)
      */
     public static int getCurrentRoleId(HttpSession session) {

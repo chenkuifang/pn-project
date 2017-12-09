@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import com.example.demo.common.Constants;
 import com.example.demo.common.R;
+import com.example.demo.common.WebContext;
+import com.example.demo.common.util.MDUtils;
+import com.example.demo.common.util.WebContextUtils;
+import com.example.demo.entity.User;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,12 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.common.Constants;
-import com.example.demo.common.WebContext;
-import com.example.demo.common.util.MDUtils;
-import com.example.demo.common.util.StringUtils;
-import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 /**
  * 登陆控制类
@@ -110,8 +106,8 @@ public class LoginController {
      */
     @GetMapping("/changePwd")
     public String changePwd(HttpSession session, Model model) {
-        WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
-        model.addAttribute("userName", webContext.getUserName());
+        String userName = WebContextUtils.getCurrentUserName(session);
+        model.addAttribute("userName", userName);
         model.addAttribute("result", "");
         return "user/changePwd";
     }

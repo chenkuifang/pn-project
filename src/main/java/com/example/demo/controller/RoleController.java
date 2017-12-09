@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.common.Constants;
 import com.example.demo.common.R;
 import com.example.demo.common.ResultBean;
+import com.example.demo.common.util.ResultUtils;
 import com.example.demo.common.util.StringUtils;
 import com.example.demo.common.util.WebContextUtils;
 import com.example.demo.entity.Role;
@@ -103,7 +103,6 @@ public class RoleController {
     @PostMapping("/save")
     @ResponseBody
     public R save(HttpSession session, Role role) {
-        R r = R.getInstance();
 
         int flag = 0;
         // 新增
@@ -120,14 +119,7 @@ public class RoleController {
         }
 
         // 结果返回
-        if (flag > 0) {
-            r.setCode(Constants.SUCCESS_CODE);
-            r.setMsg(Constants.SUCCESS_DESCRIPTION);
-        } else {
-            r.setCode(Constants.FAIL_CODE);
-            r.setMsg(Constants.FAIL_DESCRIPTION);
-        }
-        return r;
+        return ResultUtils.jsonResult(flag);
     }
 
     /**
@@ -139,19 +131,10 @@ public class RoleController {
     @PostMapping("/remove")
     @ResponseBody
     public R remove(@RequestParam("roleId") Integer roleId) {
-        R r = R.getInstance();
-
         int flag = roleService.remove(roleId);
 
         // 结果返回
-        if (flag > 0) {
-            r.setCode(Constants.SUCCESS_CODE);
-            r.setMsg(Constants.SUCCESS_DESCRIPTION);
-        } else {
-            r.setCode(Constants.FAIL_CODE);
-            r.setMsg(Constants.FAIL_DESCRIPTION);
-        }
-        return r;
+        return ResultUtils.jsonResult(flag);
     }
 
     /**
@@ -163,18 +146,10 @@ public class RoleController {
     @PostMapping("/removeBatch")
     @ResponseBody
     public R removeBatch(@RequestBody String[] ids) {
-        R r = R.getInstance();
         int flag = roleService.removeBatch(ids);
 
         // 结果返回
-        if (flag > 0) {
-            r.setCode(Constants.SUCCESS_CODE);
-            r.setMsg(Constants.SUCCESS_DESCRIPTION);
-        } else {
-            r.setCode(Constants.FAIL_CODE);
-            r.setMsg(Constants.FAIL_DESCRIPTION);
-        }
-        return r;
+        return ResultUtils.jsonResult(flag);
     }
 
     /**
@@ -191,7 +166,7 @@ public class RoleController {
     }
 
     /**
-     * 保存角色菜单设置(需要事务)
+     * 保存角色菜单设置(需要事务),并且这一步必须是同步的,目前暂不考虑并发问题
      *
      * @param params
      * @return
@@ -199,7 +174,6 @@ public class RoleController {
     @PostMapping("/saveRoleMenu")
     @ResponseBody
     public R saveRoleMenu(@RequestBody JSONObject params) {
-        R r = R.getInstance();
         int flag = 1;
 
         // 参数
@@ -227,13 +201,6 @@ public class RoleController {
         }
 
         // 结果返回
-        if (flag > 0) {
-            r.setCode(Constants.SUCCESS_CODE);
-            r.setMsg(Constants.SUCCESS_DESCRIPTION);
-        } else {
-            r.setCode(Constants.FAIL_CODE);
-            r.setMsg(Constants.FAIL_DESCRIPTION);
-        }
-        return r;
+        return ResultUtils.jsonResult(flag);
     }
 }
