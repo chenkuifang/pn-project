@@ -5,7 +5,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.example.demo.interceptor.LoginInterceptor;
-import com.example.demo.interceptor.ParamsInterceptor;
 
 /**
  * @Description: 配置各个注册器

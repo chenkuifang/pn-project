@@ -30,7 +30,6 @@ public class JsonResult implements Serializable {
 	 */
 	private List<?> data;
 
-	// 初始值,禁止再为code、msg 赋值
 	private JsonResult() {
 	}
 
@@ -106,7 +105,7 @@ public class JsonResult implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ResultBean [code=" + code + ", msg=" + msg + ", count=" + count + ", data=" + data + "]";
+		return "JsonResult [code=" + code + ", msg=" + msg + ", count=" + count + ", data=" + data + "]";
 	}
 
 }

@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -132,7 +130,7 @@ public class UserController {
 	 */
 	@PostMapping("/save")
 	@ResponseBody
-	public JsonResult save(HttpSession session, User user) throws Exception {
+	public JsonResult save(User user) throws Exception {
 		int flag;
 		// 新增
 		if (user.getId() == null) {
@@ -142,7 +140,7 @@ public class UserController {
 			user.setDepartmentId(10001);
 			// 初始化密码
 			user.setPassword(MDUtils.encodeMD5("123456"));
-			user.setCreateId(WebContextUtils.getCurrentUserId(session));
+			user.setCreateId(WebContextUtils.getCurrentUserId());
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
 			flag = userService.add(user);
@@ -201,9 +199,9 @@ public class UserController {
 	 */
 	@GetMapping("/listMenu")
 	@ResponseBody
-	public JsonResult listMenu(HttpSession session) {
+	public JsonResult listMenu() {	
 		// 当前登录信息
-		int roleId = WebContextUtils.getCurrentRoleId(session);
+		int roleId = WebContextUtils.getCurrentRoleId();
 		// 获取该角色的系统菜单列表
 		List<Menu> menus = menuService.listByRoleId(roleId);
 		return JsonResultUtils.jsonResult(menus);

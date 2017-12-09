@@ -1,13 +1,11 @@
 package com.example.demo.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.demo.common.Constants;
 import com.example.demo.common.WebContext;
+import com.example.demo.common.util.WebContextUtils;
 
 /**
  * @Description: 首页控制类
@@ -26,8 +24,8 @@ public class IndexController {
 	 * @return
 	 */
 	@GetMapping("/index")
-	public String index(HttpSession session, Model model) {
-		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+	public String index(Model model) {
+		WebContext webContext = WebContextUtils.getCurrentUser();
 		model.addAttribute("webContext", webContext);
 		return "index";
 	}
