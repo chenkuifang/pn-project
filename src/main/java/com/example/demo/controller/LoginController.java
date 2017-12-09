@@ -1,12 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.common.Constants;
-import com.example.demo.common.R;
-import com.example.demo.common.WebContext;
-import com.example.demo.common.util.MDUtils;
-import com.example.demo.common.util.WebContextUtils;
-import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
+import com.example.demo.common.Constants;
+import com.example.demo.common.JsonResult;
+import com.example.demo.common.WebContext;
+import com.example.demo.common.util.MDUtils;
+import com.example.demo.common.util.WebContextUtils;
+import com.example.demo.entity.User;
+import com.example.demo.service.UserService;
 
 /**
  * 登陆控制类
@@ -49,9 +51,9 @@ public class LoginController {
      */
     @PostMapping("/loginPost")
     @ResponseBody
-    public R loginPost(HttpSession session, @RequestParam("userName") String userName,
+    public JsonResult loginPost(HttpSession session, @RequestParam("userName") String userName,
                        @RequestParam("password") final String password) {
-        R r = R.getInstance();
+    	JsonResult r = JsonResult.getInstance();
 
         String code = Constants.FAIL_CODE;
         String msg = Constants.USER_NAME_OR_PASSWORD_ERROR;

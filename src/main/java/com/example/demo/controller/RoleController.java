@@ -1,25 +1,33 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.common.R;
-import com.example.demo.common.ResultBean;
-import com.example.demo.common.util.ResultUtils;
+import com.example.demo.common.JsonResult;
+import com.example.demo.common.util.JsonResultUtils;
 import com.example.demo.common.util.StringUtils;
 import com.example.demo.common.util.WebContextUtils;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.RoleMenu;
 import com.example.demo.service.CommonService;
 import com.example.demo.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 角色管理控制类
@@ -49,17 +57,15 @@ public class RoleController {
      */
     @GetMapping("/listPage")
     @ResponseBody
-    public ResultBean listPage(@RequestParam Map<String, Object> params) {
+    public JsonResult listPage(@RequestParam Map<String, Object> params) {
         double page = Double.parseDouble(params.get("page").toString());
         double limit = Double.parseDouble(params.get("limit").toString());
         params.put("offset", (int) ((page - 1) * limit));
-        List<Role> list = roleService.listPage(params);
 
-        // 返回数据
-        ResultBean resultBean = ResultBean.getInstance();
-        resultBean.setCount(roleService.countPage(params));
-        resultBean.setData(list);
-        return resultBean;
+        List<Role> list = roleService.listPage(params);
+        int countPage = roleService.countPage(params);
+
+        return JsonResultUtils.jsonPageResult(list, countPage);
     }
 
     /**
@@ -102,7 +108,7 @@ public class RoleController {
      */
     @PostMapping("/save")
     @ResponseBody
-    public R save(HttpSession session, Role role) {
+    public JsonResult save(HttpSession session, Role role) {
 
         int flag = 0;
         // 新增
@@ -119,7 +125,7 @@ public class RoleController {
         }
 
         // 结果返回
-        return ResultUtils.jsonResult(flag);
+        return JsonResultUtils.jsonResult(flag);
     }
 
     /**
@@ -130,11 +136,11 @@ public class RoleController {
      */
     @PostMapping("/remove")
     @ResponseBody
-    public R remove(@RequestParam("roleId") Integer roleId) {
+    public JsonResult remove(@RequestParam("roleId") Integer roleId) {
         int flag = roleService.remove(roleId);
 
         // 结果返回
-        return ResultUtils.jsonResult(flag);
+        return JsonResultUtils.jsonResult(flag);
     }
 
     /**
@@ -145,11 +151,11 @@ public class RoleController {
      */
     @PostMapping("/removeBatch")
     @ResponseBody
-    public R removeBatch(@RequestBody String[] ids) {
+    public JsonResult removeBatch(@RequestBody String[] ids) {
         int flag = roleService.removeBatch(ids);
 
         // 结果返回
-        return ResultUtils.jsonResult(flag);
+        return JsonResultUtils.jsonResult(flag);
     }
 
     /**
@@ -173,7 +179,7 @@ public class RoleController {
      */
     @PostMapping("/saveRoleMenu")
     @ResponseBody
-    public R saveRoleMenu(@RequestBody JSONObject params) {
+    public JsonResult saveRoleMenu(@RequestBody JSONObject params) {
         int flag = 1;
 
         // 参数
@@ -201,6 +207,6 @@ public class RoleController {
         }
 
         // 结果返回
-        return ResultUtils.jsonResult(flag);
+        return JsonResultUtils.jsonResult(flag);
     }
 }

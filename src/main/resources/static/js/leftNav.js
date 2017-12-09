@@ -4,8 +4,9 @@
  * @param data json格式数据
  * @returns
  */
-function navBar(data){
+function navBar(result){
 	var ulHtml = '<ul class="layui-nav layui-nav-tree">';
+	var data = result.data;
 	var childData = data;
 	for(var i=0,len1=data.length; i<len1; i++){
 		var flag = 0;
