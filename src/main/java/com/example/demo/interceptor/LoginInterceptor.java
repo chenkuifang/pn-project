@@ -35,6 +35,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		} else {
 			HttpSession session = request.getSession();
+
 			Object obj = session.getAttribute(Constants.SESSION_USER);
 			if (Objects.isNull(obj)) {
 				response.sendRedirect(request.getContextPath() + "/login.html");
@@ -47,10 +48,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 
-			// 为web上下文赋值
-			if (WebContextUtils.getSession() == null) {
-				WebContextUtils.setSession(session);
-			}
+			// 为web上下文赋值 (避免WebContextUtils.getSession的session非空，但无效，所以每次都赋值)
+			WebContextUtils.setSession(session);
+
 		}
 
 		return true;

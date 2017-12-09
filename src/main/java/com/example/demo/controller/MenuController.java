@@ -172,7 +172,7 @@ public class MenuController {
 	 */
 	@PostMapping("/listMenu/{roleId}")
 	@ResponseBody
-	public List<Map<String, Object>> listMenu(@PathVariable("roleId") int roleId) {
+	public JsonResult listMenu(@PathVariable("roleId") int roleId) {
 		List<Map<String, Object>> mapList = new ArrayList<>();
 		List<Menu> menus = menuService.listCheckedByRoleId(roleId);
 		Map<String, Object> map;
@@ -188,7 +188,8 @@ public class MenuController {
 			mapList.add(map);
 		}
 
-		return mapList;
+		// 结果返回
+		return JsonResultUtils.jsonResult(mapList);
 	}
 
 }

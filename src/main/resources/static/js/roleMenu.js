@@ -25,7 +25,8 @@ function init(roleId) {
 		url : "/menu/listMenu/" + roleId,
 		async : false,
 		success : function(result) {
-			tree = $.fn.zTree.init($("#treeDemo"), setting, result);
+			var data = result.data;
+			tree = $.fn.zTree.init($("#treeDemo"), setting, data);
 			tree.expandAll(true);// 全部展开
 		}
 	});
