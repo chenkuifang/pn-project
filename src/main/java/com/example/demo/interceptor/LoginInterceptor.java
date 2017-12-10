@@ -48,7 +48,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 
-			// 为web上下文赋值 (避免WebContextUtils.getSession的session非空，但无效，所以每次都赋值)
+			// 为web上下文赋值 (避免WebContextUtils.getSession的session非空，但session已无效，所以每次都赋值)
 			WebContextUtils.setSession(session);
 
 		}
@@ -62,7 +62,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		// response.setContentType("text/html;charset=utf-8");
+		// PrintWriter out=response.getWriter();
+		// out.println("<html><head></head><body>1111</body></html>");
+		// System.err.println(modelAndView.getStatus());
+		
 		super.postHandle(request, response, handler, modelAndView);
+
 	}
 
 	/**
@@ -72,7 +78,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		if (!Objects.isNull(ex)) {
-			System.err.println("服务器响应出现异常");
+			// ex.printStackTrace();
+			//response.
 		}
 		super.afterCompletion(request, response, handler, ex);
 	}

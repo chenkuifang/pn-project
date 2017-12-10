@@ -9,8 +9,9 @@ function navBar(result){
 	var data = result.data;
 	var childData = data;
 	for(var i=0,len1=data.length; i<len1; i++){
-		var flag = 0;
-		ulHtml += '<li class="layui-nav-item">';
+		var flag = 0; 
+		// 如果想不展开 把 layui-nav-itemed 删除即可
+		ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
 		//根目录
 		if(data[i].parentId == 0){
 			for(var j=0,len2=childData.length;j<len2;j++){
