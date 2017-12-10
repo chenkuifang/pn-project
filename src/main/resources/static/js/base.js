@@ -142,26 +142,11 @@ g = {
             async: false,
             cache: false,
             success: function (text) {
-                var data;
-                try {
-                    data = $.parseJSON(text);
-                } catch (e) {
-                    if (epm.g.is_debug) {
-                        alert(text);
-                    } else {
-                        $.messager.alert(epm.g.title, '服务器返回数据格式不正确', "error");
-                    }
-                    return;
-                }
-
-                if (data['ans'] == 'ok') {
-                    ret = data;
-                } else {
-                    $.messager.alert(epm.g.title, data['ans'], "info");
-                }
+                //do something
+            	ret = text;
             },
             error: function () {
-                $.messager.alert(epm.g.title, '服务器繁忙', "error");
+                alert(g.title + ",服务器错误",);
             }
         });
 

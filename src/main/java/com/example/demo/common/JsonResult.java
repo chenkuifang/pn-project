@@ -5,17 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 结果返回类
+ * 结果返回类,控制器返回值只可以是String,和JsonResult这两种类型
  *
  * @author QuiFar
  * @version V1.0
  */
-public class JsonResult implements Serializable {
+public final class JsonResult implements Serializable {
+
+	private static final long serialVersionUID = -4908915966053299827L;
 
 	private JsonResult() {
 	}
 
-	private static final long serialVersionUID = -4908915966053299827L;
 	/**
 	 * 编码
 	 */
@@ -51,7 +52,7 @@ public class JsonResult implements Serializable {
 			}
 		}
 
-		clear();
+		initList();
 
 		return resultBean;
 	}
@@ -59,7 +60,7 @@ public class JsonResult implements Serializable {
 	/**
 	 * 初始化对象
 	 */
-	private static void clear() {
+	private static void initList() {
 		if (list == null) {
 			list = new ArrayList<>();
 		} else {

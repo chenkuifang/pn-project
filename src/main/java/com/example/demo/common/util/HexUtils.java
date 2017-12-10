@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
  * 十六进制转化，默认字符集为 UTF-8
  */
 public class HexUtils {
+	
     /***
      * 默认字符集 {@link CharEncoding#UTF_8}
      */

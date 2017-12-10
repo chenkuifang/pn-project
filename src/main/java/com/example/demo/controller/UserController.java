@@ -203,4 +203,15 @@ public class UserController {
 		return JsonResultUtils.jsonResult(menus);
 	}
 
+	/**
+	 * 密码重置
+	 *
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/resetPwd")
+	public String resetPwd() {
+		return "user/resetPwd";
+	}
+
 }

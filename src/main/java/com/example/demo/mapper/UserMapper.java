@@ -22,7 +22,7 @@ public interface UserMapper {
 	 *            主键
 	 * @return
 	 */
-	int remove(Integer id);
+	Integer remove(Integer id);
 	
 	/**
 	 * 根据主键数据批量删除用户
@@ -31,7 +31,7 @@ public interface UserMapper {
 	 *            主键
 	 * @return
 	 */
-	int removeBatch(String[] ids);
+	Integer removeBatch(String[] ids);
 
 	/**
 	 * 根据主键ID更新单个对象
@@ -40,7 +40,7 @@ public interface UserMapper {
 	 *            需要更新的对象
 	 * @return
 	 */
-	int update(User user);
+	Integer update(User user);
 
 	/**
 	 * 新增
@@ -48,7 +48,7 @@ public interface UserMapper {
 	 * @param user
 	 * @return
 	 */
-	int add(User user);
+	Integer add(User user);
 
 	/**
 	 * 根据主键获取单个对象
@@ -98,6 +98,6 @@ public interface UserMapper {
 	 * @param params
 	 * @return
 	 */
-	int countPage(Map<String, Object> params);
+	Integer countPage(Map<String, Object> params);
 
 }

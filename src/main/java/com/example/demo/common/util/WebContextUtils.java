@@ -1,5 +1,7 @@
 package com.example.demo.common.util;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.example.demo.common.Constants;
@@ -10,7 +12,6 @@ import com.example.demo.common.WebContext;
  *
  * @author QuiFar
  * @version V1.0
- * @date 2017年12月1日 下午19:28:35
  */
 public class WebContextUtils {
 
@@ -20,7 +21,10 @@ public class WebContextUtils {
 	}
 
 	/**
-	 * 设置sesion
+	 * 设置sesion,此方法在LoginInterceptor中调用赋值
+	 * 
+	 * @see #preHandle(HttpServletRequest request, HttpServletResponse response,
+	 *      Object handler)
 	 * 
 	 * @param session
 	 */

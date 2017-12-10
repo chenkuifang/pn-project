@@ -26,33 +26,33 @@ public class RoleServiceImpl implements RoleService {
     private RoleMapper roleMapper;
 
     @Override
-    public int remove(Integer id) {
+    public Integer remove(Integer id) {
         return roleMapper.remove(id);
     }
 
     @Override
-    public int removeMenuByRoleId(Integer roleId) {
+    public Integer removeMenuByRoleId(Integer roleId) {
         return roleMapper.removeMenuByRoleId(roleId);
     }
 
     @Override
-    public int removeBatch(String[] ids) {
+    public Integer removeBatch(String[] ids) {
         return roleMapper.removeBatch(ids);
     }
 
     @Override
-    public int update(Role role) {
+    public Integer update(Role role) {
         return roleMapper.update(role);
     }
 
     @Override
-    public int add(Role role) {
+    public Integer add(Role role) {
         return roleMapper.add(role);
     }
 
     @Override
     @Transactional
-    public void addMenuBatch(int roleId, List<RoleMenu> roleMenus) {
+    public void addMenuBatch(Integer roleId, List<RoleMenu> roleMenus) {
         //1.清空该角色的原有菜单
         roleMapper.removeMenuByRoleId(roleId);
 
@@ -76,12 +76,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public int countPage(Map<String, Object> params) {
+    public Integer countPage(Map<String, Object> params) {
         return roleMapper.countPage(params);
     }
 
     @Override
-    public List<Role> listByStatus(int status) {
+    public List<Role> listByStatus(Integer status) {
         Map<String, Object> params = new HashMap<>();
         params.put("whereSql", "a.status = #{status}");
         params.put("status", status);

@@ -66,7 +66,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		// PrintWriter out=response.getWriter();
 		// out.println("<html><head></head><body>1111</body></html>");
 		// System.err.println(modelAndView.getStatus());
-		
+
 		super.postHandle(request, response, handler, modelAndView);
 
 	}
@@ -79,7 +79,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		if (!Objects.isNull(ex)) {
 			// ex.printStackTrace();
-			//response.
+			// response.
 		}
 		super.afterCompletion(request, response, handler, ex);
 	}

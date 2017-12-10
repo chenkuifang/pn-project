@@ -22,12 +22,9 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
 		// 多个拦截器组成一个拦截器链
 		// addPathPatterns 用于添加拦截规则
 		// excludePathPatterns 用户排除拦截
-		// registry.addInterceptor(new
-		// LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login/**");
+		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login/**")
+				.excludePathPatterns("/resetPwd/**");
 
-		registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**");
-		// 拦截类似/menu/listPage
-		//registry.addInterceptor(new ParamsInterceptor()).addPathPatterns("/*/listPage/**");
 		super.addInterceptors(registry);
 	}
 }

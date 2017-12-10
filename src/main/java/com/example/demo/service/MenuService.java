@@ -19,7 +19,7 @@ public interface MenuService {
 	 *            主键
 	 * @return
 	 */
-	int remove(Integer id);
+	Integer remove(Integer id);
 
 	/**
 	 * 根据主键数据批量删除菜单
@@ -28,7 +28,7 @@ public interface MenuService {
 	 *            主键数组
 	 * @return
 	 */
-	int removeBatch(String[] ids);
+	Integer removeBatch(String[] ids);
 
 	/**
 	 * 根据主键ID更新菜单,Menu对象必须包括ID值
@@ -37,7 +37,7 @@ public interface MenuService {
 	 *            需要更新的菜单
 	 * @return
 	 */
-	int update(Menu menu);
+	Integer update(Menu menu);
 
 	/**
 	 * 新增菜单
@@ -45,7 +45,7 @@ public interface MenuService {
 	 * @param menu
 	 * @return
 	 */
-	int add(Menu menu);
+	Integer add(Menu menu);
 
 	/**
 	 * 根据主键获取菜单
@@ -73,7 +73,7 @@ public interface MenuService {
 	 *            状态
 	 * @return
 	 */
-	List<Menu> listByStatus(int status);
+	List<Menu> listByStatus(Integer status);
 
 	/**
 	 * 根据父级Id获取菜单列表
@@ -82,7 +82,7 @@ public interface MenuService {
 	 *            父级id
 	 * @return
 	 */
-	List<Menu> listByParentId(int parentId);
+	List<Menu> listByParentId(Integer parentId);
 
 	/**
 	 * 根据条件获取菜单列表(分页用)
@@ -99,7 +99,7 @@ public interface MenuService {
 	 * @param params
 	 * @return
 	 */
-	int countPage(Map<String, Object> params);
+	Integer countPage(Map<String, Object> params);
 
 	/**
 	 * 根据角色ID获取菜单列表 (获取该角色所属的菜单列表)

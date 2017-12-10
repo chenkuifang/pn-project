@@ -22,7 +22,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
      * @return
      */
     public static double parseDouble(Object obj) {
-        double ret = 0D;
+        double ret = 0d;
 
         if (obj == null) {
             return ret;
@@ -34,7 +34,7 @@ public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
             try {
                 ret = Double.parseDouble(obj.toString());
             } catch (NumberFormatException e) {
-                return 0D;
+                return 0d;
             }
         }
         return ret;

@@ -9,6 +9,10 @@ import org.springframework.context.ApplicationContext;
  * @version V1.0
  */
 public class SpringContextUtils {
+
+	private SpringContextUtils() {
+	}
+
 	private static ApplicationContext applicationContext;
 
 	// 获取上下文

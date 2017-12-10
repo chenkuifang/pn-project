@@ -23,7 +23,7 @@ public interface RoleMapper {
 	 *            主键
 	 * @return
 	 */
-	int remove(Integer id);
+	Integer remove(Integer id);
 
 	/**
 	 * 根据主键数据批量删除角色
@@ -32,7 +32,7 @@ public interface RoleMapper {
 	 *            主键
 	 * @return
 	 */
-	int removeBatch(String[] ids);
+	Integer removeBatch(String[] ids);
 
 	/**
 	 * 根据角色ID删除角色菜单列表
@@ -40,7 +40,7 @@ public interface RoleMapper {
 	 * @param roleId
 	 * @return
 	 */
-	int removeMenuByRoleId(Integer roleId);
+	Integer removeMenuByRoleId(Integer roleId);
 
 	/**
 	 * 根据主键ID更新角色,role对象必须包括ID值
@@ -49,7 +49,7 @@ public interface RoleMapper {
 	 *            需要更新的角色
 	 * @return
 	 */
-	int update(Role role);
+	Integer update(Role role);
 
 	/**
 	 * 新增角色
@@ -57,7 +57,7 @@ public interface RoleMapper {
 	 * @param role
 	 * @return
 	 */
-	int add(Role role);
+	Integer add(Role role);
 
 	/**
 	 * 批量新增角色菜单
@@ -65,7 +65,7 @@ public interface RoleMapper {
 	 * @param roleMenu
 	 * @return
 	 */
-	int addMenuBatch(List<RoleMenu> roleMenus);
+	Integer addMenuBatch(List<RoleMenu> roleMenus);
 
 	/**
 	 * 根据主键获取角色
@@ -100,5 +100,5 @@ public interface RoleMapper {
 	 * @param params
 	 * @return
 	 */
-	int countPage(Map<String, Object> params);
+	Integer countPage(Map<String, Object> params);
 }

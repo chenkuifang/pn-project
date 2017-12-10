@@ -30,7 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class SystemLogger {
 
 	private static final Logger logger = LoggerFactory.getLogger(SystemLogger.class);
-
+	
 	private static long startTime = 0L;
 
 	@Pointcut("execution(* com.example.demo.controller..*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)")

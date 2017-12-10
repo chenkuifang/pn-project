@@ -24,7 +24,7 @@ public class CommonServiceImpl implements CommonService {
 	@Autowired
 	private CommonMapper commonMapper;
 
-	public int getTableNewId(String tableName, String field, Integer initId) {
+	public Integer getTableNewId(String tableName, String field, Integer initId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("tableName", tableName);
 		params.put("field", field);

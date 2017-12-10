@@ -29,4 +29,15 @@ public class IndexController {
 		model.addAttribute("webContext", webContext);
 		return "index";
 	}
+
+	/**
+	 * 主页视图初始化
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/main")
+	public String main() {
+		return "main";
+	}
 }

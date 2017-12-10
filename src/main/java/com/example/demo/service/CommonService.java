@@ -18,5 +18,5 @@ public interface CommonService {
 	 *            Id初始值,如10001,在该表为空的时候,该数据表的第一条数据的ID就是10001
 	 * @return
 	 */
-	int getTableNewId(String tableName, String field, Integer initId);
+	Integer getTableNewId(String tableName, String field, Integer initId);
 }

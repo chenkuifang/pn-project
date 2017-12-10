@@ -19,7 +19,7 @@ public interface RoleService {
      * @param roleId 主键
      * @return
      */
-    int remove(Integer roleId);
+	Integer remove(Integer roleId);
 
     /**
      * 根据角色ID删除菜单列表
@@ -27,7 +27,7 @@ public interface RoleService {
      * @param roleId
      * @return
      */
-    int removeMenuByRoleId(Integer roleId);
+	Integer removeMenuByRoleId(Integer roleId);
 
     /**
      * 根据主键数据批量删除角色
@@ -35,7 +35,7 @@ public interface RoleService {
      * @param ids 主键数组
      * @return
      */
-    int removeBatch(String[] ids);
+	Integer removeBatch(String[] ids);
 
     /**
      * 根据主键ID更新角色,Role对象必须包括ID值
@@ -43,7 +43,7 @@ public interface RoleService {
      * @param role 需要更新的角色
      * @return
      */
-    int update(Role role);
+	Integer update(Role role);
 
     /**
      * 新增角色
@@ -51,7 +51,7 @@ public interface RoleService {
      * @param role
      * @return
      */
-    int add(Role role);
+	Integer add(Role role);
 
     /**
      * 批量新增角色菜单
@@ -61,7 +61,7 @@ public interface RoleService {
      * @param roleId    角色ID
      * @return
      */
-    void addMenuBatch(int roleId, List<RoleMenu> roleMenus);
+    void addMenuBatch(Integer roleId, List<RoleMenu> roleMenus);
 
     /**
      * 根据主键获取角色
@@ -85,7 +85,7 @@ public interface RoleService {
      * @param status 状态值 0:暂停,1:使用中
      * @return
      */
-    List<Role> listByStatus(int status);
+    List<Role> listByStatus(Integer status);
 
     /**
      * 根据条件获取角色列表(分页用)
@@ -101,6 +101,6 @@ public interface RoleService {
      * @param params
      * @return
      */
-    int countPage(Map<String, Object> params);
+    Integer countPage(Map<String, Object> params);
 
 }

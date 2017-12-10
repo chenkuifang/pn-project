@@ -21,7 +21,7 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.JsonResult;
 
 /**
- * 控制器方法拦截器
+ * 控制器方法拦截器，该拦截器的作用主要有1.规范控制器方法返回值 2.为listPage请求添加offset参数
  * <p>
  * Advice就是我们插入的代码以何种方式插入 1.Before 切入点插入、After 切入点后插入、Around 环绕插入
  * </p>
@@ -80,7 +80,7 @@ public class ControllerMethodInterceptor {
 
 		// 构造翻页参数
 		String methodName = method.getName();
-		if (methodName.matches("^*listPage*")) {
+		if (methodName.matches(Constants.PAGE_INTERCEPTOR_PATH)) {
 			double page = Double.parseDouble(request.getParameter("page"));
 			double limit = Double.parseDouble(request.getParameter("limit"));
 			int offset = (int) ((page - 1) * limit);

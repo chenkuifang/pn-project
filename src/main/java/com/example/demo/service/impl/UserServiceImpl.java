@@ -23,24 +23,24 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public int remove(Integer id) {
+	public Integer remove(Integer id) {
 		// 1.判断是否有删除的权限
 		// 2.操作删除
 		return userMapper.remove(id);
 	}
 
 	@Override
-	public int removeBatch(String[] ids) {
+	public Integer removeBatch(String[] ids) {
 		return userMapper.removeBatch(ids);
 	}
 
 	@Override
-	public int update(User user) {
+	public Integer update(User user) {
 		return userMapper.update(user);
 	}
 
 	@Override
-	public int add(User user) {
+	public Integer add(User user) {
 		return userMapper.add(user);
 	}
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int countPage(Map<String, Object> params) {
+	public Integer countPage(Map<String, Object> params) {
 		return userMapper.countPage(params);
 	}
 

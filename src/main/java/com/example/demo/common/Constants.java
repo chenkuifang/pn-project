@@ -55,10 +55,10 @@ public interface Constants {
 	/**
 	 * 前端拦截放行访问路径，不需要进行session判断
 	 */
-	String NO_INTERCEPTOR_PATH = ".*/((login)|(loginOut)|(code)).*";
+	String NO_INTERCEPTOR_PATH = ".*/((login)|(loginOut)|(resetPwd)|(code)).*";
 
 	/**
 	 * 翻页参数拦截路径
 	 */
-	String PAGE_INTERCEPTOR_PATH = ".*/(listPage)*";
+	String PAGE_INTERCEPTOR_PATH = "^*listPage*";
 }

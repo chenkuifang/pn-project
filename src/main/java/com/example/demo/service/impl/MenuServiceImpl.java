@@ -24,17 +24,17 @@ public class MenuServiceImpl implements MenuService {
 	private MenuMapper menuMapper;
 
 	@Override
-	public int remove(Integer id) {
+	public Integer remove(Integer id) {
 		return menuMapper.remove(id);
 	}
 
 	@Override
-	public int update(Menu menu) {
+	public Integer update(Menu menu) {
 		return menuMapper.update(menu);
 	}
 
 	@Override
-	public int add(Menu menu) {
+	public Integer add(Menu menu) {
 		return menuMapper.add(menu);
 	}
 
@@ -64,17 +64,17 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public int countPage(Map<String, Object> params) {
+	public Integer countPage(Map<String, Object> params) {
 		return menuMapper.countPage(params);
 	}
 
 	@Override
-	public int removeBatch(String[] ids) {
+	public Integer removeBatch(String[] ids) {
 		return menuMapper.removeBatch(ids);
 	}
 
 	@Override
-	public List<Menu> listByParentId(int parentId) {
+	public List<Menu> listByParentId(Integer parentId) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("whereSql", "a.parent_id = #{parentId}");
 		params.put("parentId", parentId);
@@ -82,7 +82,7 @@ public class MenuServiceImpl implements MenuService {
 	}
 
 	@Override
-	public List<Menu> listByStatus(int status) {
+	public List<Menu> listByStatus(Integer status) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("whereSql", "a.status = #{status}");
 		params.put("status", status);

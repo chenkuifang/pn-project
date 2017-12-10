@@ -19,7 +19,7 @@ public interface UserService {
 	 *            主键
 	 * @return
 	 */
-	int remove(Integer id);
+	Integer remove(Integer id);
 	
 	/**
 	 * 根据主键数据批量删除用户
@@ -28,7 +28,7 @@ public interface UserService {
 	 *            主键
 	 * @return
 	 */
-	int removeBatch(String[] ids);
+	Integer removeBatch(String[] ids);
 
 	/**
 	 * 根据主键ID更新用户信息
@@ -37,7 +37,7 @@ public interface UserService {
 	 *            需要更新的对象
 	 * @return
 	 */
-	int update(User user);
+	Integer update(User user);
 
 	/**
 	 * 新增信息
@@ -45,7 +45,7 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	int add(User user);
+	Integer add(User user);
 
 	/**
 	 * 根据主键获取用户信息
@@ -96,5 +96,5 @@ public interface UserService {
 	 * @param params
 	 * @return
 	 */
-	int countPage(Map<String, Object> params);
+	Integer countPage(Map<String, Object> params);
 }
