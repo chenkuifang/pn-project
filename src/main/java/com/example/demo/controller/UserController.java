@@ -68,10 +68,6 @@ public class UserController {
 	@GetMapping("/listPage")
 	@ResponseBody
 	public JsonResult listPage(@RequestParam Map<String, Object> params) {
-		double page = Double.parseDouble(params.get("page").toString());
-		double limit = Double.parseDouble(params.get("limit").toString());
-		params.put("offset", (int) ((page - 1) * limit));
-
 		List<User> list = userService.listPage(params);
 		int countPage = userService.countPage(params);
 		// 返回
@@ -199,7 +195,7 @@ public class UserController {
 	 */
 	@GetMapping("/listMenu")
 	@ResponseBody
-	public JsonResult listMenu() {	
+	public JsonResult listMenu() {
 		// 当前登录信息
 		int roleId = WebContextUtils.getCurrentRoleId();
 		// 获取该角色的系统菜单列表

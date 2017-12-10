@@ -59,10 +59,6 @@ public class MenuController {
 	@GetMapping("/listPage")
 	@ResponseBody
 	public JsonResult listPage(@RequestParam Map<String, Object> params) {
-		double page = Double.parseDouble(params.get("page").toString());
-		double limit = Double.parseDouble(params.get("limit").toString());
-		params.put("offset", (int) ((page - 1) * limit));
-
 		List<Menu> list = menuService.listPage(params);
 		int countPage = menuService.countPage(params);
 

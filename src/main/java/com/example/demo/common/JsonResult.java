@@ -12,6 +12,9 @@ import java.util.List;
  */
 public class JsonResult implements Serializable {
 
+	private JsonResult() {
+	}
+
 	private static final long serialVersionUID = -4908915966053299827L;
 	/**
 	 * 编码
@@ -29,9 +32,6 @@ public class JsonResult implements Serializable {
 	 * 数据列表
 	 */
 	private List<?> data;
-
-	private JsonResult() {
-	}
 
 	private static JsonResult resultBean = null;
 

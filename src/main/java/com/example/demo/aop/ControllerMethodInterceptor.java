@@ -1,15 +1,21 @@
 package com.example.demo.aop;
 
 import java.lang.reflect.Method;
+import java.util.Map;
 
-import org.aspectj.lang.JoinPoint;
+import javax.servlet.http.HttpServletRequest;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.JsonResult;
@@ -40,13 +46,20 @@ public class ControllerMethodInterceptor {
 	}
 
 	/**
-	 * 切入前点插入
+	 * Around增强处理是功能比较强大的增强处理，它近似于Before增强处理和AfterReturing增强处理的汇总
+	 * <p>
+	 * Around增强处理可以决定目标方法在什么时候执行，如何执行，甚至可以完全阻止目标方法的执行
 	 * 
-	 * @param joinPoint
+	 * @param point
+	 * @return
 	 * @throws Throwable
 	 */
-	@Before("pointcut()")
-	public void doBefore(JoinPoint joinPoint) throws Throwable {
+	@SuppressWarnings("unchecked")
+	@Around("pointcut()")
+	public Object process(ProceedingJoinPoint joinPoint) throws Throwable {
+		Object[] args = joinPoint.getArgs();
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
 
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
 		Method method = signature.getMethod();
@@ -64,5 +77,78 @@ public class ControllerMethodInterceptor {
 			logger.info(Constants.RETURN_VALUE_FAIL_CODE + ":" + Constants.RETURN_VALUE_FAIL_DESCRIPTION);
 			throw new Exception(Constants.RETURN_VALUE_FAIL_CODE + ":" + Constants.RETURN_VALUE_FAIL_DESCRIPTION);
 		}
+
+		// 构造翻页参数
+		String methodName = method.getName();
+		if (methodName.matches("^*listPage*")) {
+			double page = Double.parseDouble(request.getParameter("page"));
+			double limit = Double.parseDouble(request.getParameter("limit"));
+			int offset = (int) ((page - 1) * limit);
+			for (Object arg : args) {
+				if (arg instanceof Map<?, ?>) {
+					// 追加参数
+					((Map<String, Object>) arg).put("offset", offset);
+				}
+			}
+		}
+
+		return joinPoint.proceed(args);
 	}
+
+	// /**
+	// * 切入前点插入
+	// *
+	// * @param joinPoint
+	// * @throws Throwable
+	// */
+	// @Before("pointcut()")
+	// public void doBefore(JoinPoint joinPoint) throws Throwable {
+	//
+	// for (int i = 0; i < joinPoint.getArgs().length; i++) {
+	// System.err.println("参数：" + joinPoint.getArgs()[i]);
+	// }
+	//
+	// ServletRequestAttributes attributes = (ServletRequestAttributes)
+	// RequestContextHolder.getRequestAttributes();
+	// HttpServletRequest request = attributes.getRequest();
+	//
+	// MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+	// Method method = signature.getMethod();
+	//
+	// // 拦截方法返回值，如果不是String 和JsonResult 抛出异常
+	// // 当然这一步最好自定义注解方式在runtime的时候就拦截，这样的好处是
+	// // 不会在生成中出现,在开发中就规范了
+	// Class<?> clazz = method.getReturnType();
+	// StringBuilder sbBuilder = new StringBuilder();
+	// sbBuilder.append(String.class.getName()).append(",");
+	// sbBuilder.append(JsonResult.class.getName());
+	//
+	// if (!sbBuilder.toString().contains(clazz.getName())) {
+	// logger.info("控制器返回值不正确,返回值只能包括" + sbBuilder.toString());
+	// logger.info(Constants.RETURN_VALUE_FAIL_CODE + ":" +
+	// Constants.RETURN_VALUE_FAIL_DESCRIPTION);
+	// throw new Exception(Constants.RETURN_VALUE_FAIL_CODE + ":" +
+	// Constants.RETURN_VALUE_FAIL_DESCRIPTION);
+	// }
+	//
+	// // 构造翻页参数
+	// String methodName = method.getName();
+	// if (methodName.matches("^*listPage*")) {
+	// double page = Double.parseDouble(request.getParameter("page"));
+	// double limit = Double.parseDouble(request.getParameter("limit"));
+	//
+	// request.setAttribute("offset", (int) ((page - 1) * limit));
+	// }
+	// }
+
+	/**
+	 * 出现异常就会执行该方法
+	 * 
+	 * @param ex
+	 */
+	@AfterThrowing(pointcut = "pointcut()", throwing = "ex")
+	public void afterThrow(Exception ex) {
+		logger.info("麻蛋出现异常了， " + ex.getMessage());
+	}
+
 }

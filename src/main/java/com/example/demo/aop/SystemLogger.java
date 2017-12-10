@@ -1,6 +1,7 @@
 package com.example.demo.aop;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 零侵入做操作日志记录
+ * <p>
+ * 如需日志写入文件，在application.properties文件指定即可
  * 
  * @author QuiFar
  * @version V1.0
@@ -48,6 +51,7 @@ public class SystemLogger {
 		logger.info("请求方法 : " + request.getMethod());
 		logger.info("访问IP : " + request.getRemoteAddr());
 		logger.info("访问方法 : " + signature.getDeclaringTypeName() + "." + method.getName());
+		logger.info("请求方法参数：" + Arrays.toString(joinPoint.getArgs()));
 
 	}
 

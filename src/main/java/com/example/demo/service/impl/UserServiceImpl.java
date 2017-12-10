@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 		// 2.操作删除
 		return userMapper.remove(id);
 	}
-	
+
 	@Override
 	public int removeBatch(String[] ids) {
 		return userMapper.removeBatch(ids);
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> listPage(Map<String, Object> params) {
-		return userMapper.list(params);
+		return userMapper.listPage(params);
 	}
 
 	@Override

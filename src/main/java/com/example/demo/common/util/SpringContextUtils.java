@@ -3,9 +3,9 @@ package com.example.demo.common.util;
 import org.springframework.context.ApplicationContext;
 
 /**
- * @Description:
+ * spring 上下文工具类(还未注入值)
+ * 
  * @author QuiFar
- * @date 2017年12月9日 下午3:36:12
  * @version V1.0
  */
 public class SpringContextUtils {

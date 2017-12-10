@@ -57,10 +57,6 @@ public class RoleController {
 	@GetMapping("/listPage")
 	@ResponseBody
 	public JsonResult listPage(@RequestParam Map<String, Object> params) {
-		double page = Double.parseDouble(params.get("page").toString());
-		double limit = Double.parseDouble(params.get("limit").toString());
-		params.put("offset", (int) ((page - 1) * limit));
-
 		List<Role> list = roleService.listPage(params);
 		int countPage = roleService.countPage(params);
 
