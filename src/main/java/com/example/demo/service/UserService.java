@@ -6,9 +6,9 @@ import java.util.Map;
 import com.example.demo.entity.User;
 
 /**
- * @Description: 用户服务层接口
+ * 用户服务层接口
+ * 
  * @author QuiFar
- * @date 2017年11月11日 下午12:42:58
  * @version V1.0
  */
 public interface UserService {
@@ -20,7 +20,7 @@ public interface UserService {
 	 * @return
 	 */
 	Integer remove(Integer id);
-	
+
 	/**
 	 * 根据主键数据批量删除用户
 	 * 

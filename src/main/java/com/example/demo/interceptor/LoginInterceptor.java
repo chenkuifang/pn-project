@@ -79,7 +79,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		if (!Objects.isNull(ex)) {
 			// ex.printStackTrace();
-			// response.
 		}
 		super.afterCompletion(request, response, handler, ex);
 	}

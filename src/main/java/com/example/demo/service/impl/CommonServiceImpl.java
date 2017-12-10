@@ -13,9 +13,9 @@ import com.example.demo.mapper.CommonMapper;
 import com.example.demo.service.CommonService;
 
 /**
- * @Description: 系统公共方法服务层接口实现类
+ * 系统公共方法服务层接口实现类
+ * 
  * @author QuiFar
- * @date 2017年12月1日 上午 12:28:10
  * @version V1.0
  */
 @Service

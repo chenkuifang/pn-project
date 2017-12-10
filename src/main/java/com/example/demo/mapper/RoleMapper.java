@@ -9,10 +9,10 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.entity.Role;
 
 /**
+ * 角色映射接口
+ * 
  * @author QuiFar
  * @version V1.0
- * @Description: 角色映射接口
- * @date 2017年11月25日 上午9:57:33
  */
 @Mapper
 public interface RoleMapper {

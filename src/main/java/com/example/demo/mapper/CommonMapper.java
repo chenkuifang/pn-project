@@ -5,9 +5,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Description: 系统公共方法映射接口
+ * 系统公共方法映射接口
+ * 
  * @author QuiFar
- * @date 2017年12月1日 上午19:57:33
  * @version V1.0
  */
 @Mapper

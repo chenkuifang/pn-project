@@ -12,9 +12,9 @@ import com.example.demo.mapper.MenuMapper;
 import com.example.demo.service.MenuService;
 
 /**
- * @Description: 系统菜单服务层接口实现类
+ * 系统菜单服务层接口实现类
+ * 
  * @author QuiFar
- * @date 2017年11月25日 上午10:29:29
  * @version V1.0
  */
 @Service

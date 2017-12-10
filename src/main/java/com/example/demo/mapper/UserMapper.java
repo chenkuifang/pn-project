@@ -8,9 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.entity.User;
 
 /**
- * @Description: 用户表映射接口
+ * 用户表映射接口
+ * 
  * @author QuiFar
- * @date 2017年11月11日 下午12:35:58
  * @version V1.0
  */
 @Mapper
@@ -23,7 +23,7 @@ public interface UserMapper {
 	 * @return
 	 */
 	Integer remove(Integer id);
-	
+
 	/**
 	 * 根据主键数据批量删除用户
 	 * 

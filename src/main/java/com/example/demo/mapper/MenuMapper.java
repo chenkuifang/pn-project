@@ -8,9 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.entity.Menu;
 
 /**
- * @Description: 系统菜单映射接口
+ * 系统菜单映射接口
+ * 
  * @author QuiFar
- * @date 2017年11月25日 上午9:57:33
  * @version V1.0
  */
 @Mapper

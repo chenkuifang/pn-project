@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
 /**
- * @Description: 系统公共方法服务层接口
+ * 系统公共方法服务层接口
+ * 
  * @author QuiFar
- * @date 2017年11月25日 上午10:28:10
  * @version V1.0
  */
 public interface CommonService {

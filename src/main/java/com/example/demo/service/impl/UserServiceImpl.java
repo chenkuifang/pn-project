@@ -11,9 +11,9 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
 
 /**
- * @Description: 用户服务层接口实现类
+ * 用户服务层接口实现类
+ * 
  * @author QuiFar
- * @date 2017年11月11日 下午12:44:00
  * @version V1.0
  */
 @Service

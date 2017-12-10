@@ -6,9 +6,9 @@ import java.util.Map;
 import com.example.demo.entity.Menu;
 
 /**
- * @Description: 系统菜单服务层接口
+ * 系统菜单服务层接口
+ * 
  * @author QuiFar
- * @date 2017年11月25日 上午10:28:10
  * @version V1.0
  */
 public interface MenuService {
