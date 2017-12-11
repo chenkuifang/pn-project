@@ -121,40 +121,40 @@
 		update pn_user
 		<trim prefix="set" suffixOverrides=",">
 			<if test="userName!=null">
-			user_name=#{userName,jdbcType=VARCHAR},
+				user_name=#{userName,jdbcType=VARCHAR},
 			</if>
 			<if test="password!=null">
-			password=#{password,jdbcType=VARCHAR},
+				password=#{password,jdbcType=VARCHAR},
 			</if>
 			<if test="departmentId!=null">
-			departmentId=#{departmentId,jdbcType=NUMERIC},
+				departmentId=#{departmentId,jdbcType=NUMERIC},
 			</if>
 			<if test="roleId!=null">
-			role_id=#{roleId,jdbcType=NUMERIC},
+				role_id=#{roleId,jdbcType=NUMERIC},
 			</if>
 			<if test="userNike!=null">
-			user_nike=#{userNike,jdbcType=VARCHAR},
+				user_nike=#{userNike,jdbcType=VARCHAR},
 			</if>
 			<if test="email!=null">
-			email=#{email,jdbcType=VARCHAR},
+				email=#{email,jdbcType=VARCHAR},
 			</if>
 			<if test="mobile!=null">
-			mobile=#{mobile,jdbcType=VARCHAR},
+				mobile=#{mobile,jdbcType=VARCHAR},
 			</if>
 			<if test="sex!=null">
-			sex=#{sex,jdbcType=NUMERIC},
+				sex=#{sex,jdbcType=NUMERIC},
 			</if>
 			<if test="createId!=null">
-			create_id=#{createId,jdbcType=NUMERIC},
+				create_id=#{createId,jdbcType=NUMERIC},
 			</if>
 			<if test="createTime!=null">
-			create_time=#{createTime,jdbcType=TIMESTAMP},
+				create_time=#{createTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="updateTime!=null">
-			update_time=#{updateTime,jdbcType=TIMESTAMP},
+				update_time=#{updateTime,jdbcType=TIMESTAMP},
 			</if>
 			<if test="status!=null">
-			status=#{status,jdbcType=VARCHAR},
+				status=#{status,jdbcType=VARCHAR},
 			</if>
 		</trim>
 		where id=#{id}

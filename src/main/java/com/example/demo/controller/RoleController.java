@@ -97,7 +97,6 @@ public class RoleController {
 	/**
 	 * 保存
 	 *
-	 * @param session
 	 * @param role
 	 * @return
 	 */
@@ -105,7 +104,7 @@ public class RoleController {
 	@ResponseBody
 	public JsonResult save(Role role) {
 
-		int flag = 0;
+		int flag;
 		// 新增
 		if (role.getRoleId() == null) {
 			int roleId = commonService.getTableNewId("pn_role", "role_id", 10001);
@@ -115,7 +114,7 @@ public class RoleController {
 			role.setUpdateTime(new Date());
 			flag = roleService.add(role);
 		} else {
-			// role.setUpdateTime(new Date());
+			role.setUpdateTime(new Date());
 			flag = roleService.update(role);
 		}
 

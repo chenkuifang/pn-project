@@ -141,7 +141,7 @@ public class UserController {
             user.setUpdateTime(new Date());
             flag = userService.add(user);
         } else {
-            // role.setUpdateTime(new Date());
+            user.setUpdateTime(new Date());
             flag = userService.update(user);
         }
 

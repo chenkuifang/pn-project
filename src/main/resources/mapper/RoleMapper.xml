@@ -95,10 +95,7 @@
 			<if test="createId!=null">
 				create_id=#{createId,jdbcType=NUMERIC},
 			</if>
-			<if test="createTime!=null and createTime!=''">
-				create_time=#{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="updateTime!=null and updateTime!=''">
+			<if test="updateTime!=null">
 				update_time=#{updateTime,jdbcType=TIMESTAMP},
 			</if>
 			<!-- !=''是用来判断String类型的，如果Integer=0的情况下 ==''是一致的 -->

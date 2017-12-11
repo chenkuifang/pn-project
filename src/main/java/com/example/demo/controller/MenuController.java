@@ -122,7 +122,7 @@ public class MenuController {
             menu.setUpdateTime(new Date());
             flag = menuService.add(menu);
         } else {
-            // role.setUpdateTime(new Date());
+            menu.setUpdateTime(new Date());
             flag = menuService.update(menu);
         }
 

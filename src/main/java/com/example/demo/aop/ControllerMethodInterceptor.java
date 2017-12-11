@@ -50,7 +50,7 @@ public class ControllerMethodInterceptor {
 	 * <p>
 	 * Around增强处理可以决定目标方法在什么时候执行，如何执行，甚至可以完全阻止目标方法的执行
 	 * 
-	 * @param point
+	 * @param joinPoint
 	 * @return
 	 * @throws Throwable
 	 */
