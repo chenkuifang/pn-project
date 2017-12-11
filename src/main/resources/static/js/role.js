@@ -78,7 +78,7 @@ layui.use(['layer','jquery','table','form'],function(){
 	// 单个删除操作
 	$("body").on("click",".remove",function(){
 		var id = $(this).attr("data-id");
-		var index = layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
+		layer.confirm('确定删除吗?',{icon:3, title:'提示信息'},function(index){
 			$.ajax({
 	             type:"post",
 	             url:"/role/remove",
@@ -86,7 +86,7 @@ layui.use(['layer','jquery','table','form'],function(){
 	             success:function(result){
 	                 if(result["code"]===g.successCode){
 	                     window.location.reload();
-	                     layer.close(index);
+	                     layer.closeAll();
 	                 }
 	                 if(result["code"]===g.failCode){
 	                	 layer.msg(result["msg"]);
@@ -112,7 +112,7 @@ layui.use(['layer','jquery','table','form'],function(){
 			return;
 		}
 		
-		var index = layer.confirm('确定删除吗?',{icon:3, title:g.title},function(index){
+		layer.confirm('确定删除吗?',{icon:3, title:g.title},function(index){
 			$.ajax({
 	             type:"post",
 	             url:"/role/removeBatch",
@@ -123,7 +123,7 @@ layui.use(['layer','jquery','table','form'],function(){
 	             success:function(result){
 	                 if(result["code"]==g.successCode){
 	                     window.location.reload();
-	                     layer.close(index);
+	                     layer.closeAll;
 	                 }
 	                 if(result["code"]==g.failCode){
 	                	 layer.msg(result["msg"]);
@@ -142,7 +142,7 @@ layui.use(['layer','jquery','table','form'],function(){
              data: $("form").serialize(),//表单数据
              success:function(result){
                  if(result["code"]==g.successCode){
-                     layer.close(layer.index);
+                     layer.closeAll;
                      window.parent.location.reload();
                  }
                  if(result["code"]==g.failCode){

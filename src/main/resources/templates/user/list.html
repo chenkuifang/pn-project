@@ -10,14 +10,27 @@
 	<script type="text/javascript" src="/js/base.js"></script>
 </head>
 <body class="childrenBody">
-	
+<form class="layui-form">
 	<blockquote class="layui-elem-quote">
 		<div class="layui-inline">
 		    <div class="layui-input-inline">
 		    	<input type="text" id="userName" name="userName" placeholder="名称" class="layui-input"  />
 		    </div>
-		    <a class="layui-btn searchBtn"><i class="layui-icon">&#xe615;</i>查询</a>
 		</div>
+
+		<div class="layui-inline">
+			<div class="layui-input-inline">
+				<select name="roleId" id="roleId">
+					<option value="" >请选择角色</option>
+					<option th:each="item : ${roles}" th:value="${item.roleId}" th:text="${item.roleName}"></option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-inline">
+			<a class="layui-btn searchBtn"><i class="layui-icon">&#xe615;</i>查询</a>
+		</div>
+
 		<div class="layui-inline">
 			<a class="layui-btn layui-btn-normal add"><i class="layui-icon">&#xe608;</i>添加</a>
 		</div>
@@ -33,5 +46,6 @@
   		<a class="layui-btn layui-btn-xs edit" data-id='{{d.id}}'>编辑</a>
   		<a class="layui-btn layui-btn-danger layui-btn-xs remove" data-id='{{d.id}}'>删除</a>
 	</script>
+</form>
 </body>
 </html>

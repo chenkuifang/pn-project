@@ -59,9 +59,11 @@ layui.use(['form','layer','table','laydate'],function(){
     	// 搜索
     	$("body").on("click",".searchBtn",function(){
     		var userName = $("#userName").val();
+            var roleId = $("#roleId").val();
     		tableIns.reload({
     			where : {
-    				userName : userName
+    				userName : userName,
+					roleId :　roleId
     			}
     		});
     	});
