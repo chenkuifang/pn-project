@@ -58,6 +58,11 @@ public interface Constants {
 	String NO_INTERCEPTOR_PATH = ".*/((login)|(loginOut)|(resetPwd)|(code)).*";
 
 	/**
+	 * 不拦截的方法
+	 */
+	String NO_INTERCEPTOR_METHOD = "((login) | (loginPost))";
+
+	/**
 	 * 翻页参数拦截路径
 	 */
 	String PAGE_INTERCEPTOR_PATH = "^*listPage*";

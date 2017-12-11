@@ -190,7 +190,6 @@ public class UserController {
 	/**
 	 * 左边菜单列表
 	 *
-	 * @param session
 	 * @return
 	 */
 	@GetMapping("/listMenu")
@@ -206,7 +205,6 @@ public class UserController {
 	/**
 	 * 密码重置
 	 *
-	 * @param session
 	 * @return
 	 */
 	@GetMapping("/resetPwd")
