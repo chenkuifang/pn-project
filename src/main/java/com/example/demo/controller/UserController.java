@@ -30,10 +30,10 @@ import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
 
 /**
+ * 用户控制类
+ *
  * @author QuiFar
  * @version V1.0
- * @Description: 用户控制类
- * @date 2017年11月11日 下午1:38:51
  */
 @Controller
 @RequestMapping("/user")
