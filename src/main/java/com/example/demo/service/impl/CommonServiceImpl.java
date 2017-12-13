@@ -33,11 +33,12 @@ public class CommonServiceImpl implements CommonService {
 		// 结果集包含null
 		if (Objects.isNull(result) || !result.containsKey(field)) {
 			return initId;
-		} else {
-			// 原子操作
-			int id = StringUtils.parseInteger(result.get(field));
-			AtomicInteger atomicInteger = new AtomicInteger(id);
-			return atomicInteger.incrementAndGet();
 		}
+		
+		// 原子操作
+		int id = StringUtils.parseInteger(result.get(field));
+		AtomicInteger atomicInteger = new AtomicInteger(id);
+		return atomicInteger.incrementAndGet();
+
 	}
 }

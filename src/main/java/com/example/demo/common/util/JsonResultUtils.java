@@ -32,10 +32,11 @@ public class JsonResultUtils {
 		if (flag > 0) {
 			r.setCode(Constants.SUCCESS_CODE);
 			r.setMsg(Constants.SUCCESS_DESCRIPTION);
-		} else {
-			r.setCode(Constants.FAIL_CODE);
-			r.setMsg(Constants.FAIL_DESCRIPTION);
+			return r;
 		}
+		
+		r.setCode(Constants.FAIL_CODE);
+		r.setMsg(Constants.FAIL_DESCRIPTION);
 		return r;
 	}
 
@@ -108,5 +109,4 @@ public class JsonResultUtils {
 		r.setData(data);
 		return r;
 	}
-
 }
