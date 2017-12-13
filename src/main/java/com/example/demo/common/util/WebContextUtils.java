@@ -4,6 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import com.example.demo.common.Constants;
 import com.example.demo.common.WebContext;
 
@@ -15,7 +18,12 @@ import com.example.demo.common.WebContext;
  */
 public class WebContextUtils {
 
-	private static HttpSession session;
+	// 为解决并发问题把session存在到ThreadLocal中
+	private static ThreadLocal<HttpSession> session = new ThreadLocal<>();
+
+	public static String getUserName(@SessionAttribute WebContext webContext) {
+		return webContext.getUserName();
+	}
 
 	private WebContextUtils() {
 	}
@@ -29,30 +37,40 @@ public class WebContextUtils {
 	 * @param session
 	 */
 	public static void setSession(HttpSession session) {
-		WebContextUtils.session = session;
+		WebContextUtils.session.set(session);
+	}
+
+	/***
+	 * 返回session
+	 * 
+	 * @return
+	 */
+	public static HttpSession getSession() {
+		Assert.notNull(session, "session is must not be null");
+		return session.get();
 	}
 
 	/**
-	 * 获取sesion
-	 * 
-	 * @param session
+	 * 清空session对象
 	 */
-	public static HttpSession getSession() {
-		return session;
+	public static void clear() {
+		session.remove();
 	}
 
 	/**
 	 * 获取当前用户信息(session数据)
 	 */
 	public static WebContext getCurrentUser() {
-		return (WebContext) session.getAttribute(Constants.SESSION_USER);
+		Assert.notNull(session, "session is must not be null");
+		return (WebContext) session.get().getAttribute(Constants.SESSION_USER);
 	}
 
 	/**
 	 * 获取当前用户Id(session数据)
 	 */
 	public static int getCurrentUserId() {
-		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+		Assert.notNull(session, "session is must not be null");
+		WebContext webContext = (WebContext) session.get().getAttribute(Constants.SESSION_USER);
 		return webContext.getUserId();
 	}
 
@@ -60,7 +78,8 @@ public class WebContextUtils {
 	 * 获取当前用户名(session数据)
 	 */
 	public static String getCurrentUserName() {
-		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+		Assert.notNull(session, "session is must not be null");
+		WebContext webContext = (WebContext) session.get().getAttribute(Constants.SESSION_USER);
 		return webContext.getUserName();
 	}
 
@@ -68,7 +87,8 @@ public class WebContextUtils {
 	 * 获取当前用户角色Id(session数据)
 	 */
 	public static int getCurrentRoleId() {
-		WebContext webContext = (WebContext) session.getAttribute(Constants.SESSION_USER);
+		Assert.notNull(session, "session is must not be null");
+		WebContext webContext = (WebContext) session.get().getAttribute(Constants.SESSION_USER);
 		return webContext.getRoleId();
 	}
 

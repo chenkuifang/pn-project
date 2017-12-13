@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -24,6 +26,8 @@ import com.example.demo.common.util.WebContextUtils;
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
+	private static final Logger Logger = LoggerFactory.getLogger(LoginInterceptor.class);
+
 	/**
 	 * controller 执行之前调用,返回true 往下执行,否则不往下执行
 	 */
@@ -37,20 +41,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			HttpSession session = request.getSession();
 
 			Object obj = session.getAttribute(Constants.SESSION_USER);
-			if (Objects.isNull(obj)) {
-				response.sendRedirect(request.getContextPath() + "/login.html");
-				return false;
-			}
-			// 二次校验当前登录信息
-			WebContext webContext = (WebContext) obj;
-			if (Objects.isNull(webContext.getUserId())) {
+			if (Objects.isNull(obj) || !(obj instanceof WebContext) || ((WebContext) obj).getUserId() == null) {
+				WebContextUtils.clear();
 				response.sendRedirect(request.getContextPath() + "/login.html");
 				return false;
 			}
 
-			// 为web上下文赋值 (避免WebContextUtils.getSession的session非空，但session已无效，所以每次都赋值)
-			WebContextUtils.setSession(session);
+			Logger.info("当前sesseionId:" + session.getId());
 
+			// 为web上下文赋值 (保持session和内存的session有效期一致)
+			if (Objects.isNull(WebContextUtils.getSession())) {
+				WebContextUtils.setSession(session);
+			}
+			Logger.info("赋值后esseionId:" + WebContextUtils.getCurrentUserName());
 		}
 
 		return true;

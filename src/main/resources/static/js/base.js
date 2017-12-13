@@ -146,7 +146,7 @@ g = {
             	ret = text;
             },
             error: function () {
-                alert(g.title + ",服务器错误",);
+                alert(g.title + ",服务器错误");
             }
         });
 

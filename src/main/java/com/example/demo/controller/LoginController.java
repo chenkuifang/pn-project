@@ -77,6 +77,9 @@ public class LoginController {
 				webContext.setUserNike(user.getUserNike());
 				webContext.setRoleId(user.getRoleId());
 				session.setAttribute(Constants.SESSION_USER, webContext);
+
+				// 重新为内存的session 赋值，保证两个session对象一致
+				WebContextUtils.setSession(session);
 			}
 		}
 
