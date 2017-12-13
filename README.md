@@ -6,7 +6,7 @@
 
 <h2>第一次运行系统</h2>
 <ul>
-	<li>JDK1.8以上，Mysql5.7或以上</li>	
+	<li>JDK1.8或以上，Mysql5.7或以上</li>	
 	<li>运行pn_sql 数据库脚本</li>
 	<li>默认用户是全世界同类都懂的admin,123456</li>
         </ul>
