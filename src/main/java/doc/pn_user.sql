@@ -1,7 +1,7 @@
 ﻿
 SET FOREIGN_KEY_CHECKS=0;
 
-----------------创建数据库------------------------
+-- --------------创建数据库------------------------
 DROP DATABASE IF EXISTS pn;
 CREATE DATABASE pn;
 

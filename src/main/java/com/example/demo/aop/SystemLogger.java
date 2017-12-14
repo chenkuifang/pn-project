@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -46,11 +48,11 @@ public class SystemLogger {
         Method method = signature.getMethod();
 
         // 记录下请求内容
-        logger.info("请求路径 : " + request.getRequestURL().toString());
-        logger.info("请求方法 : " + request.getMethod());
-        logger.info("访问IP : " + request.getRemoteAddr());
-        logger.info("访问方法 : " + signature.getDeclaringTypeName() + "." + method.getName());
-        logger.info("请求方法参数：" + Arrays.toString(joinPoint.getArgs()));
+//        logger.info("请求路径 : " + request.getRequestURL().toString());
+//        logger.info("请求方法 : " + request.getMethod());
+//        logger.info("访问IP : " + request.getRemoteAddr());
+//        logger.info("访问方法 : " + signature.getDeclaringTypeName() + "." + method.getName());
+//        logger.info("请求方法参数：" + Arrays.toString(joinPoint.getArgs()));
 
         //当然这里也可以把这些记录插入数据库
     }
@@ -63,8 +65,8 @@ public class SystemLogger {
      */
     @AfterReturning(returning = "ret", pointcut = "pointcut()")
     public void doAfterReturning(Object ret) throws Throwable {
-        logger.info("响应数据 : " + ret);
-        logger.info("响应时间 : " + (System.currentTimeMillis() - startTime) + " ms");
+        //logger.info("响应数据 : " + JSON.toJSONString(ret));
+        //logger.info("响应时间 : " + (System.currentTimeMillis() - startTime) + " ms");
     }
 
 }
