@@ -128,6 +128,8 @@ public class UserController {
     @ResponseBody
     public JsonResult save(User user) throws Exception {
         int flag;
+        String operation;
+
         // 新增
         if (user.getId() == null) {
             int id = commonService.getTableNewId("pn_user", "id", 10001);
@@ -140,10 +142,17 @@ public class UserController {
             user.setCreateTime(new Date());
             user.setUpdateTime(new Date());
             flag = userService.add(user);
+
+            operation = "insert";
         } else {
             user.setUpdateTime(new Date());
             flag = userService.update(user);
+
+            operation = "update";
         }
+
+        // 日志操作
+        commonService.addLog(getClass(), "save()", operation, user);
 
         // 结果返回
         return JsonResultUtils.jsonResult(flag);
@@ -164,6 +173,9 @@ public class UserController {
             flag = userService.remove(id);
         }
 
+        // 日志操作
+        commonService.addLog(getClass(), "remove()", "delete", id);
+
         // 结果返回
         return JsonResultUtils.jsonResult(flag);
     }
@@ -182,6 +194,9 @@ public class UserController {
         if (!Arrays.asList(ids).contains("10001")) {
             flag = userService.removeBatch(ids);
         }
+
+        // 日志操作
+        commonService.addLog(getClass(), "removeBatch()", "delete", ids);
 
         // 结果返回
         return JsonResultUtils.jsonResult(flag);

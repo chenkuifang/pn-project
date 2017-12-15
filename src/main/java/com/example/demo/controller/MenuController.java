@@ -1,29 +1,17 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.example.demo.common.JsonResult;
 import com.example.demo.common.util.JsonResultUtils;
 import com.example.demo.common.util.StringUtils;
 import com.example.demo.entity.Menu;
 import com.example.demo.service.CommonService;
 import com.example.demo.service.MenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 /**
  * @author QuiFar
@@ -114,6 +102,8 @@ public class MenuController {
     @ResponseBody
     public JsonResult save(Menu menu) {
         int flag;
+        String operation;
+
         // 新增
         if (menu.getMenuId() == null) {
             int roleId = commonService.getTableNewId("pn_menu", "menu_id", 10001);
@@ -121,10 +111,17 @@ public class MenuController {
             menu.setCreateTime(new Date());
             menu.setUpdateTime(new Date());
             flag = menuService.add(menu);
+
+            operation = "insert";
         } else {
             menu.setUpdateTime(new Date());
             flag = menuService.update(menu);
+
+            operation = "update";
         }
+
+        // 日志操作
+        commonService.addLog(getClass(), "save()", operation, menu);
 
         // 结果返回
         return JsonResultUtils.jsonResult(flag);

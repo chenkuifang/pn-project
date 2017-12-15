@@ -13,7 +13,7 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
         cols: [[
             {field: 'userId', title: '操作用户ID', width: '10%'}
             , {field: 'userName', title: '操作用户名称', width: '10%'}
-            , {field: 'id', title: 'ip', width: '10%'}
+            , {field: 'ip', title: 'ip地址', width: '10%'}
             , {field: 'operation', title: '操作类型', width: '10%'}
             , {field: 'method', title: '操作方法', width: '10%'}
             , {field: 'params', title: '方法参数', width: '30%'}

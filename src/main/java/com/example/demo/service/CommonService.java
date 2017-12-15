@@ -25,9 +25,12 @@ public interface CommonService {
     /**
      * 系统操作日志添加
      *
-     * @param log
+     * @param clazz     操作类
+     * @param method    调用方法
+     * @param operation 操作方法类型
+     * @param params    方法参数
      */
-    void addLog(Log log);
+    void addLog(Class clazz, String method, String operation, Object params);
 
     /**
      * 系统日志翻页列表

@@ -77,4 +77,11 @@ public class WebContextUtils {
     public static int getCurrentRoleId() {
         return getCurrentUser().getRoleId();
     }
+
+    /**
+     * 获取当前用户角色IP(session数据)
+     */
+    public static String getRemoteAddr() {
+        return getCurrentUser().getIp();
+    }
 }

@@ -1,11 +1,9 @@
 package com.example.demo.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.example.demo.common.util.WebContextUtils;
 import com.example.demo.entity.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +42,17 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void addLog(Log log) {
+    public void addLog(Class clazz, String method, String operation, Object params) {
+        Log log = new Log();
+
+        log.setUserId(WebContextUtils.getCurrentUserId());
+        log.setUserName(WebContextUtils.getCurrentUserName());
+        log.setIp(WebContextUtils.getRemoteAddr());
+        log.setCreateTime(new Date());
+        log.setMethod(new StringBuilder(clazz.getSimpleName()).append(".").append(method).toString());
+        log.setOperation(operation);
+        log.setParams(Objects.toString(params));
+
         commonMapper.addLog(log);
     }
 
