@@ -2,6 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.CommonMapper">
 	<!-- 公共的Mapper -->
+	<!-- 系统日志 map 集合-->
+	<resultMap id="logMap" type="Log">
+		<id property="id" column="id" jdbcType="NUMERIC"/>
+		<id property="userId" column="user_id" jdbcType="NUMERIC"/>
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="operation" column="operation" jdbcType="VARCHAR"/>
+		<result property="method" column="method" jdbcType="VARCHAR"/>
+		<result property="params" column="params" jdbcType="VARCHAR"/>
+		<result property="ip" column="ip" jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
 
 	<!-- <select id="getTableNewId" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select ${field}
@@ -16,5 +28,49 @@
 		order by ${field} desc
 		limit 0,1
 	</select>
+
+	<!-- 获取系统日志列表信息 -->
+	<select id="listPageLog" parameterType="java.util.Map" resultMap="logMap">
+		select id,user_id,user_name,operation,method,params,ip,create_time
+		from pn_log
+		<where>
+			<if test="startTime != null">
+				create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="operation != null and operation !=''">
+				and operation = #{operation,jdbcType=VARCHAR}
+			</if>
+		</where>
+		limit ${offset},${limit}
+	</select>
+
+	<!-- 获取系统日志列表总数，提供分页使用 -->
+	<select id="countPageLog" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(1)
+		from pn_log
+		<where>
+			<if test="startTime != null">
+				create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="operation != null and operation !=''">
+				and operation = #{operation,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+
+	<insert id="addLog" parameterType="Log">
+		insert into pn_log
+		(user_id,user_name,operation,method,params,ip,create_time)
+		values
+		(#{userId,jdbcType=NUMERIC}, #{userName,jdbcType=VARCHAR},
+		#{operation,jdbcType=VARCHAR}, #{method,jdbcType=NUMERIC}, #{params,jdbcType=VARCHAR},
+		#{ip,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
 	
 </mapper>

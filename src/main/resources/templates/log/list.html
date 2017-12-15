@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>系统日志</title>
+	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
+	
+	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/log.js"></script>
+	<script type="text/javascript" src="/js/base.js"></script>
+</head>
+<body class="childrenBody">
+	<form class="layui-form">
+		<blockquote class="layui-elem-quote">
+			<div class="layui-inline">
+				<div class="layui-input-inline">
+					<select name="operation" id="operation" >
+						<option value="" >请选择操作类型</option>
+						<option value="create" >create</option>
+						<option value="update" >update</option>
+						<option value="delete" >delete</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">开始时间</label>
+				<div class="layui-input-inline">
+					<input type="text" id="startTime" name="startTime" class="layui-input" />
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<label class="layui-form-label">开始时间</label>
+				<div class="layui-input-inline">
+					<input type="text" id="endTime" name="endTime" class="layui-input" />
+				</div>
+			</div>
+
+			<div class="layui-inline">
+				<a class="layui-btn searchBtn"><i class="layui-icon">&#xe615;</i>查询</a>
+			</div>
+		</blockquote>
+	</form>
+	<table  class="layui-table" id="dataTable"></table>
+</body>
+</html>

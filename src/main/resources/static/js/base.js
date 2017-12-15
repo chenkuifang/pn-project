@@ -56,6 +56,7 @@ g = {
             + (('' + second).length < 2 ? '0' : '') + second;
     },
 
+    // 根据时间戳返回日期：2017-12-15
     dateFormat: function (o) {
         var d = new Date(o);
         if (isNaN(d)) {
@@ -69,6 +70,28 @@ g = {
 
         return d.getFullYear() + '-' + (('' + month).length < 2 ? '0' : '')
             + month + '-' + (('' + day).length < 2 ? '0' : '') + day;
+    },
+
+    // 获取当前+o天的时间
+    getAddDateTime : function (o) {
+        if(g.isEmpty(o) || !g.isNumber(o)){
+            return new Date();
+        }
+
+        var d = new Date();
+        d.setDate(d.getDate() + o);//获取AddDayCount天后的日期
+        return g.dateTimeFormat(d);
+     },
+
+    // 获取当前 -o天的时间
+    getSubDateTime : function (o) {
+        if(g.isEmpty(o) || !g.isNumber(o)){
+             return new Date();
+        }
+
+        var d = new Date();
+        d.setDate(d.getDate() - o);//获取AddDayCount天后的日期
+        return g.dateTimeFormat(d);
     },
 
     isEmpty: function (o) {
