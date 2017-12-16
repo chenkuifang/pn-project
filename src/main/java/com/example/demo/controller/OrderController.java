@@ -11,19 +11,18 @@ import org.springframework.web.servlet.ModelAndView;
  * @author QuiFar
  * @version V1.0
  */
-
 @Controller
 @RequestMapping("/order")
 public class OrderController {
 
-	/**
-	 * 访问首页
-	 *
-	 * @return
-	 */
-	@GetMapping("/list")
-	public ModelAndView list(ModelAndView mv) {
-		mv.setViewName("order/list");
-		return mv;
-	}
+    /**
+     * 访问首页
+     *
+     * @return
+     */
+    @GetMapping("/list")
+    public ModelAndView list(ModelAndView mv) {
+        mv.setViewName("order/list");
+        return mv;
+    }
 }

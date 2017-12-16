@@ -11,7 +11,7 @@ import com.example.demo.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MybatiesApplicationTests {
+public class MyApplicationTests {
 	@Autowired
 	UserService userService;
 

@@ -8,12 +8,10 @@ import com.example.demo.common.WebContext;
 import com.example.demo.common.util.WebContextUtils;
 
 /**
+ * 首页控制类
+ *
  * @author QuiFar
- * @version V1.0
- * @Description: 首页控制类
- * @date 2017年11月18日 下午4:21:41
  */
-
 @Controller
 public class IndexController {
 

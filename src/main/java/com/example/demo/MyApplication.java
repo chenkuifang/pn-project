@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 import com.example.demo.filter.XssFilter;
 
 @SpringBootApplication
-public class MybatiesApplication {
+public class MyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MybatiesApplication.class, args);
+        SpringApplication.run(MyApplication.class, args);
     }
 
     /**
