@@ -30,7 +30,7 @@ public interface CommonService {
      * @param operation 操作方法类型
      * @param params    方法参数
      */
-    void addLog(Class clazz, String method, String operation, Object params);
+    void addLog(Class<?> clazz, String method, String operation, Object params);
 
     /**
      * 系统日志翻页列表

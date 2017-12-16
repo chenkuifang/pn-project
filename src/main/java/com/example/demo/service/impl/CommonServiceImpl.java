@@ -42,7 +42,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void addLog(Class clazz, String method, String operation, Object params) {
+    public void addLog(Class<?> clazz, String method, String operation, Object params) {
         Log log = new Log();
 
         log.setUserId(WebContextUtils.getCurrentUserId());
