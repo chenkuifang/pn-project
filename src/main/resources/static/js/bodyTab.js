@@ -23,9 +23,7 @@ layui.define(["element","jquery"],function(exports){
 				var _this = this;
 				//读取数据
 				var navInfo = navBar(data);
-				console.log(navInfo);
 				$(".navBar").html(navInfo).height($(window).height()-230);
-				
 				element.init();  //初始化页面元素
 				$(window).resize(function(){
 					$(".navBar").height($(window).height()-230);
@@ -67,7 +65,7 @@ layui.define(["element","jquery"],function(exports){
 		return tabIndex;
 	}
 
-	//右侧内容tab操作
+	//左侧导航tab操作
 	var tabIdIndex = 0;
 	Tab.prototype.tabAdd = function(_this){
 		if(window.sessionStorage.getItem("menu")){
