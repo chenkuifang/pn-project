@@ -66,4 +66,18 @@ public interface Constants {
 	 * 翻页参数拦截路径
 	 */
 	String PAGE_INTERCEPTOR_PATH = "^*listPage*";
+
+	/**
+	 * 日志数据库操作动作
+	 */
+	String INSERT = "insert";
+
+	String UPDATE = "update";
+
+	String DELETE = "delete";
+
+	/**
+	 * 数据库操作动作数组
+	 */
+	String[] OPERATIONS = { INSERT, UPDATE, DELETE };
 }
