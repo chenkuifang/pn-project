@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.common.WebContext;
 import com.example.demo.common.util.WebContextUtils;
@@ -36,5 +37,10 @@ public class IndexController {
     @GetMapping("/main")
     public String main() {
         return "main";
+    }
+    
+    @RequestMapping("/test/list")
+    public String test() {
+    	return "/test/list";
     }
 }

@@ -7,13 +7,7 @@ layui.config({
 		element = layui.element();
 		$ = layui.jquery;
 		tab = layui.bodyTab();
-
-	// 添加新窗口
-	$(".layui-nav .layui-nav-item a").on("click",function(){
-		addTab($(this));
-		$(this).parent("li").siblings().removeClass("layui-nav-itemed");
-	})
-
+		
 	//刷新后还原打开的窗口
 	if(window.sessionStorage.getItem("menu") != null){
 		menu = JSON.parse(window.sessionStorage.getItem("menu"));

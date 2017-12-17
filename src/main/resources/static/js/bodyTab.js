@@ -16,25 +16,30 @@ layui.define(["element","jquery"],function(exports){
 			}
 		};
 		
-	//异步读取左边菜单数据
-	$(document).ready(function() {
-		$.get("/user/listMenu",function(data){
-			if( data != undefined) {
-				if($(".navBar").html() == '') {
-					var _this = this;
-					//读取数据
-					var navInfo = navBar(data);
-					$(".navBar").html(navInfo).height($(window).height()-230);
-					
-					element.init();  //初始化页面元素
-					$(window).resize(function(){
-						$(".navBar").height($(window).height()-230);
-					})
-				}
+	// 加载数据
+	$.get("/user/listMenu",function(data){
+		if( data != undefined) {
+			if($(".navBar").html() == '') {
+				var _this = this;
+				//读取数据
+				var navInfo = navBar(data);
+				console.log(navInfo);
+				$(".navBar").html(navInfo).height($(window).height()-230);
+				
+				element.init();  //初始化页面元素
+				$(window).resize(function(){
+					$(".navBar").height($(window).height()-230);
+				})
 			}
-		},"json");
-	});
-	
+		}
+	},"json").then(function(){
+		// 加载数据完成后绑定点击事件
+		$(".layui-nav .layui-nav-item a").on("click",function(){
+			addTab($(this));
+			$(this).parent("li").siblings().removeClass("layui-nav-itemed");
+		})
+	} );
+		
 	//参数设置
 	Tab.prototype.set = function(option) {
 		var _this = this;
@@ -88,6 +93,7 @@ layui.define(["element","jquery"],function(exports){
 					}
 					title += '<cite>'+_this.find("cite").text()+'</cite>';
 					title += '<i class="layui-icon layui-unselect layui-tab-close" data-id="'+tabIdIndex+'">&#x1006;</i>';
+					// 添加tab
 					element.tabAdd(tabFilter, {
 				        title : title,
 				        content :"<iframe src='"+_this.attr("data-url")+"' data-id='"+tabIdIndex+"'></frame>",
@@ -119,8 +125,9 @@ layui.define(["element","jquery"],function(exports){
 			}
 		// })
 	}
-	
+	// 删除tab 触发
 	$("body").on("click",".top_tab li",function(){
+		
 		//切换后获取当前窗口的内容
 		var curmenu = '';
 		var menu = JSON.parse(window.sessionStorage.getItem("menu"));
@@ -170,4 +177,62 @@ layui.define(["element","jquery"],function(exports){
 	exports("bodyTab",function(option){
 		return bodyTab.set(option);
 	});
-})
+});
+
+/**
+ * 左边导航内容拼接
+ * @param result
+ * @returns
+ */
+function navBar(result){
+	var ulHtml = '<ul class="layui-nav layui-nav-tree">';
+	var data = result.data;
+	var childData = data;
+	for(var i=0,len1=data.length; i<len1; i++){
+		var flag = 0; 
+		
+		//根目录
+		if(data[i].parentId == 0){
+			// 如果想不展开 把 layui-nav-itemed 删除即可
+			ulHtml += '<li class="layui-nav-item layui-nav-itemed">';
+			
+			for(var j=0,len2=childData.length;j<len2;j++){
+				if(data[i].menuId != childData[j].parentId) {
+					continue;
+				}
+				
+				flag += 1;
+				//如果是根目录，并且有子目录则拼接 nav-more 样式
+				if(flag == 1){
+					ulHtml += '<a href="javascript:;">';
+					//图标
+					ulHtml += '<i class="iconfont '+data[i].icon+'" data-icon="'+data[i].icon+'"></i>';
+					ulHtml += '<cite>'+data[i].name+'</cite>';
+					ulHtml += '<span class="layui-nav-more"></span>';
+					ulHtml += '</a>'
+					ulHtml += '<dl class="layui-nav-child">';
+				}
+				
+				ulHtml += '<dd><a href="javascript:;" data-url="'+childData[j].url+'">';
+				//子集图标
+				ulHtml += '<i class="iconfont '+childData[j].icon+'" data-icon="'+childData[j].icon+'"></i>';
+				ulHtml += '<cite>'+childData[j].name+'</cite></a></dd>';
+			}
+			ulHtml += "</dl>"
+		}else{ 
+			//去除子集作为根目录展示(随便一个>1的数)
+			flag = 99;
+		}
+		//无子集的根目录
+		if(flag == 0){
+			ulHtml += '<a href="javascript:;" data-url="'+data[i].url+'">';
+			ulHtml += '<i class="iconfont '+data[i].icon+'" data-icon="'+data[i].icon+'"></i>';
+			ulHtml += '<cite>'+data[i].name+'</cite></a>';
+		}
+		
+		ulHtml += '</li>'
+	}
+	ulHtml += '</ul>';
+	return ulHtml;
+}
+
