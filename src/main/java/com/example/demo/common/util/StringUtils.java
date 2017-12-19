@@ -62,11 +62,32 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             return result;
         }
 
+        // 判断是否包含非法字符
+        char[] chars = obj.toCharArray();
+        for (char aChar : chars) {
+            if (isChineseByScript(aChar)) {
+                return result;
+            }
+        }
+
         if (obj.substring(0, 1).equals("[") && obj.lastIndexOf("]") > 0) {
             String tem = obj.substring(1, obj.length() - 1);
             result = tem.replace(" ", "").split(",");
         }
         return result;
+    }
+
+    /**
+     * 判断是否包含中文标点符号
+     * @param c
+     * @return
+     */
+    public static boolean isChineseByScript(char c) {
+        Character.UnicodeScript sc = Character.UnicodeScript.of(c);
+        if (sc == Character.UnicodeScript.HAN) {
+            return true;
+        }
+        return false;
     }
 
 //	public static void main(String... args) {
