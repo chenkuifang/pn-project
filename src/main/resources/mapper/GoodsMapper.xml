@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.GoodsMapper">
+    <resultMap id="goodsMap" type="Goods">
+        <id property="id" column="id" jdbcType="NUMERIC"/>
+        <result property="goodsNum" column="goods_num" jdbcType="VARCHAR"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="salePrice" column="sale_price" jdbcType="NUMERIC"/>
+        <result property="discountPrice" column="discount_price" jdbcType="NUMERIC"/>
+        <result property="stock" column="stock" jdbcType="NUMERIC"/>
+        <result property="saleCount" column="sale_count" jdbcType="NUMERIC"/>
+        <result property="status" column="status" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <sql id="columns">
+		id,goods_num,goods_name,sale_price,discount_price,stock,sale_count,status
+	</sql>
+
+    <insert id="add" parameterType="Goods">
+        insert into pn_goods
+        (<include refid="columns"/>)
+        values
+        (
+        #{id,jdbcType=NUMERIC}, #{goodsNum,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR},
+        #{salePrice,jdbcType=NUMERIC}, #{discountPrice,jdbcType=NUMERIC}, #{stock,jdbcType=NUMERIC},
+        #{saleCount,jdbcType=NUMERIC}, #{status,jdbcType=NUMERIC}
+        )
+    </insert>
+
+    <select id="get" parameterType="java.lang.Integer" resultMap="goodsMap">
+        select
+        <include refid="columns"/>
+        from pn_goods
+        where
+        id=#{id}
+    </select>
+
+    <select id="list" parameterType="java.util.Map" resultMap="goodsMap">
+        select
+        <include refid="columns"/>
+        from pn_goods
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <choose>
+            <when test="orderSql!=null">
+                ORDER BY ${orderSql}
+            </when>
+            <otherwise>
+                ORDER BY id DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="listPage" parameterType="java.util.Map" resultMap="goodsMap">
+        select
+        <include refid="columns"/>
+        from pn_goods
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <choose>
+            <when test="orderSql!=null">
+                ORDER BY ${orderSql}
+            </when>
+            <otherwise>
+                ORDER BY id DESC
+            </otherwise>
+        </choose>
+        limit ${offset},${limit}
+    </select>
+
+    <!-- 根据条件获取所有行数，一般提供列表翻页使用，这一步也可以在mybatis拦截器中完成 -->
+    <select id="countPage" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1)
+        from pn_goods a
+        where a.status &lt; 64
+        <if test="goodsName != null and goodsName != ''">
+            and a.goods_name like '%${goodsName}%'
+        </if>
+    </select>
+
+    <select id="listByIds" parameterType="java.lang.Integer" resultMap="goodsMap">
+        select
+        <include refid="columns"/>
+        from pn_goods
+        where id in
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by id desc
+    </select>
+
+    <update id="update" parameterType="Goods">
+        update pn_goods
+        <trim prefix="set" suffixOverrides=",">
+            <if test="goodsNum!=null">
+                goods_num=#{goodsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName!=null">
+                goods_name=#{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="salePrice!=null">
+                sale_price=#{salePrice,jdbcType=NUMERIC},
+            </if>
+            <if test="discountPrice!=null">
+                discount_price=#{discountPrice,jdbcType=NUMERIC},
+            </if>
+            <if test="stock!=null">
+                stock=#{stock,jdbcType=NUMERIC},
+            </if>
+            <if test="saleCount!=null">
+                sale_count=#{saleCount,jdbcType=NUMERIC},
+            </if>
+            <if test="status!=null">
+                status=#{status,jdbcType=NUMERIC},
+            </if>
+        </trim>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="remove" parameterType="java.lang.Integer">
+		update pn_goods set status = status + 64
+		where id=#{goodsId}
+	</delete>
+
+</mapper>

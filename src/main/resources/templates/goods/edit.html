@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>商品信息添加</title>
+	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
+	
+	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
+	<script type="text/javascript" src="/js/goods.js"></script>
+	<script type="text/javascript" src="/js/base.js"></script>
+</head>
+<body class="childrenBody">
+	<form class="layui-form" style="width:80%;">
+		<div class="layui-row" style="margin-top: 20px;">
+		
+			<div class="layui-form-item">
+				<div class="layui-col-md4">
+					<label class="layui-form-label">商品编码</label>
+					<div class="layui-input-block">
+						<input type="hidden" id="id" name="id" th:value="${goods.id}" />
+						<input type="text" id="goodsNum" name="goodsNum" th:value="${goods.goodsNum}" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<label class="layui-form-label">商品名称</label>
+					<div class="layui-input-block">
+						<input type="text" id="goodsName" name="goodsName" th:value="${goods.goodsName}" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<label class="layui-form-label">销售价格</label>
+					<div class="layui-input-block">
+						<input type="text" id="salePrice" name="salePrice" th:value="${goods.goodsName}" class="layui-input"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-col-md4">
+					<label class="layui-form-label">折后价格</label>
+					<div class="layui-input-block">
+						<input type="text" id="discountPrice" name="discountPrice" th:value="${goods.discountPrice}" class="layui-input"/>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<label class="layui-form-label">库存</label>
+					<div class="layui-input-block">
+						<input type="text" id="stock" name="stock" th:value="${goods.stock}" class="layui-input"/>
+					</div>
+				</div>
+				<div class="layui-col-md4">
+					<label class="layui-form-label">销量</label>
+					<div class="layui-input-block">
+						<input type="text" id="saleCount" name="saleCount" th:value="${goods.saleCount}" class="layui-input" />
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<div class="layui-col-md4">
+					<label class="layui-form-label">状态</label>
+					<div class="layui-input-block">
+						<input type="radio" name="status" value="1" title="启用" th:checked="${goods.status == 1 ? 'true' : 'false'}" />
+						<input type="radio" name="status" value="0" title="暂停" th:checked="${goods.status == 0 ? 'true' : 'false'}" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn addSubmit">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			    </div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
