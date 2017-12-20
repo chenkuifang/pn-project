@@ -106,12 +106,13 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(ids),
                 traditional: true, //防止深度序列化
-                success: function (result) {
+                success: function (result) {debugger;
                     if (result["code"] == g.successCode) {
                         layer.close(index);
                         window.location.reload();
                     } else {
-                        layer.msg(result["msg"]);
+                        layer.alert(result["msg"]);
+                        return false;
                     }
                 }
             });
@@ -129,9 +130,9 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
                 if (result["code"] == g.successCode) {
                     window.parent.location.reload();
                     layer.closeAll;
-                }
-                if (result["code"] == g.failCode) {
-                    layer.msg(result["msg"]);
+                } else {
+                  layer.alert(result["msg"]);
+                  return false;
                 }
             }
         });

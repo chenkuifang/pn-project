@@ -84,4 +84,12 @@ public interface GoodsService {
      */
     Integer countPage(Map<String, Object> params);
 
+    /**
+     * 校验商品编码是否有效，商品编码唯一性
+     *
+     * @param goodsNum 商品编码
+     * @return true : 商品编码有效； false : 商品编码无效
+     */
+    boolean checkGoodsNum(String goodsNum);
+
 }

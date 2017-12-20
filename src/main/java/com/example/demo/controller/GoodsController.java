@@ -79,13 +79,18 @@ public class GoodsController {
      *
      * @param goods
      * @return
-     * @throws Exception
      */
     @PostMapping("/save")
     @ResponseBody
     public JsonResult save(Goods goods) {
-        int flag;
+        int flag = 0;
         String operation;
+
+        // 校验商品编码是否有效
+        boolean check = goodsService.checkGoodsNum(goods.getGoodsNum());
+        if (!check) {
+            return JsonResultUtils.jsonResult(Constants.FAIL_CODE, "商品编码不可用!");
+        }
 
         // 新增
         if (goods.getId() == null) {

@@ -55,6 +55,14 @@ public interface GoodsMapper {
     Goods get(Integer id);
 
     /**
+     * 根据商品编码获取有效商品信息(状态< 64 )
+     *
+     * @param goodsNum
+     * @return
+     */
+    Goods getByGoodsNum(String goodsNum);
+
+    /**
      * 根据条件获取菜单列表(非外链)
      *
      * @param whereSql 不为空 则根据该条件过滤

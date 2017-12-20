@@ -24,6 +24,14 @@
         a.id=#{id}
     </select>
 
+    <select id="getByGoodsNum" parameterType="java.lang.String" resultMap="goodsMap">
+        select
+        <include refid="columns"/>
+        from pn_goods a
+        where
+        a.goods_num=#{goodsNum} and a.status &lt; 64
+    </select>
+
     <select id="list" parameterType="java.util.Map" resultMap="goodsMap">
         select
         <include refid="columns"/>

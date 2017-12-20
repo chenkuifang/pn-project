@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 商品服务层接口实现
@@ -60,5 +61,14 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public Integer countPage(Map<String, Object> params) {
         return goodsMapper.countPage(params);
+    }
+
+    @Override
+    public boolean checkGoodsNum(String goodsNum) {
+        Goods goods = goodsMapper.getByGoodsNum(goodsNum);
+        if (Objects.isNull(goods)) {
+            return true;
+        }
+        return false;
     }
 }
