@@ -55,8 +55,10 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
     // 搜索
     $("body").on("click", ".searchBtn", function () {
         var goodsName = $("#goodsName").val();
+        var goodsNum = $("#goodsNum").val();
         tableIns.reload({
             where: {
+                goodsNum : goodsNum,
                 goodsName: goodsName
             }
         });
