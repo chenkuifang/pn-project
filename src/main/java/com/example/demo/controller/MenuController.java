@@ -151,6 +151,9 @@ public class MenuController {
 	public JsonResult remove(@RequestParam("menuId") Integer menuId) {
 		int flag = menuService.remove(menuId);
 
+		// 日志操作
+		commonService.addLog(getClass(), "remove()", Constants.DELETE, menuId);
+
 		// 结果返回
 		return JsonResultUtils.jsonResult(flag);
 	}
@@ -165,6 +168,9 @@ public class MenuController {
 	@ResponseBody
 	public JsonResult removeBatch(@RequestBody String[] ids) {
 		int flag = menuService.removeBatch(ids);
+
+		// 日志操作
+		commonService.addLog(getClass(), "removeBatch()", Constants.DELETE, ids);
 
 		// 结果返回
 		return JsonResultUtils.jsonResult(flag);

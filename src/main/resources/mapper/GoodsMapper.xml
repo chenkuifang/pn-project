@@ -13,43 +13,31 @@
     </resultMap>
 
     <sql id="columns">
-		id,goods_num,goods_name,sale_price,discount_price,stock,sale_count,status
+		a.id,a.goods_num,a.goods_name,a.sale_price,a.discount_price,a.stock,a.sale_count,a.status
 	</sql>
-
-    <insert id="add" parameterType="Goods">
-        insert into pn_goods
-        (<include refid="columns"/>)
-        values
-        (
-        #{id,jdbcType=NUMERIC}, #{goodsNum,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR},
-        #{salePrice,jdbcType=NUMERIC}, #{discountPrice,jdbcType=NUMERIC}, #{stock,jdbcType=NUMERIC},
-        #{saleCount,jdbcType=NUMERIC}, #{status,jdbcType=NUMERIC}
-        )
-    </insert>
 
     <select id="get" parameterType="java.lang.Integer" resultMap="goodsMap">
         select
         <include refid="columns"/>
-        from pn_goods
+        from pn_goods a
         where
-        id=#{id}
+        a.id=#{id}
     </select>
 
     <select id="list" parameterType="java.util.Map" resultMap="goodsMap">
         select
         <include refid="columns"/>
-        from pn_goods
-        <where>
-            <if test="whereSql!=null">
-                ${whereSql}
-            </if>
-        </where>
+        from pn_goods a
+        where a.status &lt; 64
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
         <choose>
             <when test="orderSql!=null">
                 ORDER BY ${orderSql}
             </when>
             <otherwise>
-                ORDER BY id DESC
+                ORDER BY a.id DESC
             </otherwise>
         </choose>
     </select>
@@ -57,18 +45,20 @@
     <select id="listPage" parameterType="java.util.Map" resultMap="goodsMap">
         select
         <include refid="columns"/>
-        from pn_goods
-        <where>
-            <if test="whereSql!=null">
-                ${whereSql}
-            </if>
-        </where>
+        from pn_goods a
+        where a.status &lt; 64
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
+        <if test="goodsName != null and goodsName != ''">
+            and a.goods_name like '%${goodsName}%'
+        </if>
         <choose>
             <when test="orderSql!=null">
                 ORDER BY ${orderSql}
             </when>
             <otherwise>
-                ORDER BY id DESC
+                ORDER BY a.id DESC
             </otherwise>
         </choose>
         limit ${offset},${limit}
@@ -79,6 +69,9 @@
         select count(1)
         from pn_goods a
         where a.status &lt; 64
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
         <if test="goodsName != null and goodsName != ''">
             and a.goods_name like '%${goodsName}%'
         </if>
@@ -87,13 +80,28 @@
     <select id="listByIds" parameterType="java.lang.Integer" resultMap="goodsMap">
         select
         <include refid="columns"/>
-        from pn_goods
-        where id in
+        from pn_goods a
+        where a.status &lt; 64 and a.id in
         <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>
-        order by id desc
+        order by a.id desc
     </select>
+
+    <insert id="add" parameterType="Goods">
+        insert into pn_goods
+        (
+            id,goods_num,goods_name
+            ,sale_price,discount_price
+            ,stock,sale_count,status
+        )
+        values
+        (
+            #{id,jdbcType=NUMERIC}, #{goodsNum,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR},
+            #{salePrice,jdbcType=NUMERIC}, #{discountPrice,jdbcType=NUMERIC}, #{stock,jdbcType=NUMERIC},
+            #{saleCount,jdbcType=NUMERIC}, #{status,jdbcType=NUMERIC}
+        )
+    </insert>
 
     <update id="update" parameterType="Goods">
         update pn_goods
@@ -121,12 +129,20 @@
             </if>
         </trim>
         where
-        id=#{id}
+        id=#{id} and status &lt; 64
     </update>
 
     <delete id="remove" parameterType="java.lang.Integer">
 		update pn_goods set status = status + 64
 		where id=#{goodsId}
 	</delete>
+
+    <delete id="removeBatch" parameterType="java.lang.String">
+        update pn_goods set status = status + 64
+        where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
 </mapper>

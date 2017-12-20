@@ -3,10 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.common.Constants;
 import com.example.demo.common.JsonResult;
 import com.example.demo.common.util.JsonResultUtils;
-import com.example.demo.common.util.MDUtils;
-import com.example.demo.common.util.WebContextUtils;
 import com.example.demo.entity.Goods;
-import com.example.demo.entity.User;
 import com.example.demo.service.CommonService;
 import com.example.demo.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +71,7 @@ public class GoodsController {
     public String edit(@PathVariable("id") int id, Model model) {
         Goods goods = goodsService.get(id);
         model.addAttribute("goods", goods);
-        return "/menu/edit";
+        return "/goods/edit";
     }
 
     /**
@@ -87,7 +83,7 @@ public class GoodsController {
      */
     @PostMapping("/save")
     @ResponseBody
-    public JsonResult save(Goods goods) throws Exception {
+    public JsonResult save(Goods goods) {
         int flag;
         String operation;
 
@@ -106,6 +102,42 @@ public class GoodsController {
 
         // 日志操作
         commonService.addLog(getClass(), "save()", operation, goods);
+
+        // 结果返回
+        return JsonResultUtils.jsonResult(flag);
+    }
+
+    /**
+     * 根据ID移除单个对象
+     *
+     * @param id
+     * @return
+     */
+    @PostMapping("/remove")
+    @ResponseBody
+    public JsonResult remove(@RequestParam("id") Integer id) {
+        int flag = goodsService.remove(id);
+
+        // 日志操作
+        commonService.addLog(getClass(), "remove()", Constants.DELETE, id);
+
+        // 结果返回
+        return JsonResultUtils.jsonResult(flag);
+    }
+
+    /**
+     * id数组批量删除
+     *
+     * @param ids
+     * @return
+     */
+    @PostMapping("/removeBatch")
+    @ResponseBody
+    public JsonResult removeBatch(@RequestBody String[] ids) {
+        int flag = goodsService.removeBatch(ids);
+
+        // 日志操作
+        commonService.addLog(getClass(), "removeBatch()", Constants.DELETE, ids);
 
         // 结果返回
         return JsonResultUtils.jsonResult(flag);

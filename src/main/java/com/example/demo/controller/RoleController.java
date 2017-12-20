@@ -142,6 +142,9 @@ public class RoleController {
 	public JsonResult remove(@RequestParam("roleId") Integer roleId) {
 		int flag = roleService.remove(roleId);
 
+		// 日志操作
+		commonService.addLog(getClass(), "remove()", Constants.DELETE, roleId);
+
 		// 结果返回
 		return JsonResultUtils.jsonResult(flag);
 	}
@@ -156,6 +159,9 @@ public class RoleController {
 	@ResponseBody
 	public JsonResult removeBatch(@RequestBody String[] ids) {
 		int flag = roleService.removeBatch(ids);
+
+		// 日志操作
+		commonService.addLog(getClass(), "removeBatch()", Constants.DELETE, ids);
 
 		// 结果返回
 		return JsonResultUtils.jsonResult(flag);

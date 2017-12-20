@@ -67,6 +67,10 @@ INSERT INTO `pn_menu` VALUES (10002, 10001, '菜单设置', '/menu/list', 1, 'ic
 INSERT INTO `pn_menu` VALUES (10003, 10001, '角色设置', '/role/list', 1, 'icon-text', 3, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
 INSERT INTO `pn_menu` VALUES (10004, 10001, '用户管理', 'user/list', 1, 'icon-text', 4, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
 INSERT INTO `pn_menu` VALUES (10005, 10001, '系统日志', 'log/list', 1, 'icon-text', 4, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
+INSERT INTO `pn_menu` VALUES (10006, 0, '商品管理', '', 1, 'icon-text', 1, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
+INSERT INTO `pn_menu` VALUES (10007, 10006, '商品列表', 'goods/list', 1, 'icon-text', 2, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
+INSERT INTO `pn_menu` VALUES (10008, 0, '订单管理', '', 1, 'icon-text', 1, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
+INSERT INTO `pn_menu` VALUES (10009, 10008, '订单列表', 'goods/list', 1, 'icon-text', 2, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
 
 -- 用户角色 -- 
 DROP TABLE IF EXISTS `pn_role`;
@@ -98,6 +102,10 @@ INSERT INTO `pn_role_menu` VALUES (10002, 10001, 10002);
 INSERT INTO `pn_role_menu` VALUES (10003, 10001, 10003);
 INSERT INTO `pn_role_menu` VALUES (10004, 10001, 10004);
 INSERT INTO `pn_role_menu` VALUES (10005, 10001, 10005);
+INSERT INTO `pn_role_menu` VALUES (10006, 10001, 10006);
+INSERT INTO `pn_role_menu` VALUES (10007, 10001, 10007);
+INSERT INTO `pn_role_menu` VALUES (10008, 10001, 10008);
+INSERT INTO `pn_role_menu` VALUES (10009, 10001, 10009);
 
 -- 商品信息表 --
 DROP TABLE IF EXISTS `pn_goods`;

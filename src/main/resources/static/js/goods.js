@@ -69,13 +69,12 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
             $.ajax({
                 type: "post",
                 url: "/goods/remove",
-                data: {roleId: id},
+                data: {id: id},
                 success: function (result) {
                     if (result["code"] === g.successCode) {
                         window.location.reload();
                         layer.closeAll();
-                    }
-                    if (result["code"] === g.failCode) {
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -91,7 +90,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         var data = checkStatus.data;
         var ids = [];
         $.each(data, function (i, item) {
-            ids.push(item.roleId);
+            ids.push(item.id);
         });
         //layer.alert(JSON.stringify(checkStatus.data));
 
@@ -111,8 +110,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
                     if (result["code"] == g.successCode) {
                         layer.close(index);
                         window.location.reload();
-                    }
-                    if (result["code"] == g.failCode) {
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
