@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.OrderMapper">
+    <resultMap id="orderMap" type="Order">
+        <id property="id" column="id" jdbcType="NUMERIC"/>
+        <result property="goodsNum" column="goods_num" jdbcType="VARCHAR"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="payPrice" column="pay_price" jdbcType="NUMERIC"/>
+        <result property="amount" column="amount" jdbcType="NUMERIC"/>
+        <result property="buyerName" column="buyer_name" jdbcType="VARCHAR"/>
+        <result property="buyerAddress" column="buyer_address" jdbcType="VARCHAR"/>
+        <result property="buyerPhone" column="buyer_phone" jdbcType="VARCHAR"/>
+        <result property="createId" column="create_id" jdbcType="NUMERIC"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <sql id="columns">
+		id,goods_num,goods_name,price,pay_price,amount,buyer_name,buyer_address,buyer_phone,create_id,create_time,update_time,status
+	</sql>
+
+    <insert id="create" parameterType="Order">
+        insert into pn_order
+        (<include refid="columns"/>)
+        values
+        (#{id,jdbcType=NUMERIC}, #{goodsNum,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{price,jdbcType=NUMERIC},
+        #{payPrice,jdbcType=NUMERIC}, #{amount,jdbcType=NUMERIC}, #{buyerName,jdbcType=VARCHAR},
+        #{buyerAddress,jdbcType=VARCHAR}, #{buyerPhone,jdbcType=VARCHAR}, #{createId,jdbcType=NUMERIC},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=NUMERIC})
+    </insert>
+
+    <select id="get" parameterType="java.lang.String" resultMap="Order">
+        select
+        <include refid="columns"/>
+        from pn_order
+        where
+        id=#{id}
+    </select>
+
+
+    <select id="query" parameterType="java.util.Map" resultMap="orderMap">
+        select
+        <include refid="columns"/>
+        from pn_order
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+            <if test="status!=null">
+                and status = #{status}
+            </if>
+        </where>
+        <choose>
+            <when test="orderSql!=null">
+                ORDER BY ${orderSql}
+            </when>
+            <otherwise>
+                ORDER BY id DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findByIds" resultMap="orderMap">
+        select
+        <include refid="columns"/>
+        from pn_order
+        where id in
+        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by id desc
+    </select>
+
+    <update id="update" parameterType="Order">
+        update pn_order
+        <trim prefix="set" suffixOverrides=",">
+            <if test="goodsNum!=null">
+                goods_num=#{goodsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="goodsName!=null">
+                goods_name=#{goodsName,jdbcType=VARCHAR},
+            </if>
+            <if test="price!=null">
+                price=#{price,jdbcType=NUMERIC},
+            </if>
+            <if test="payPrice!=null">
+                pay_price=#{payPrice,jdbcType=NUMERIC},
+            </if>
+            <if test="amount!=null">
+                amount=#{amount,jdbcType=NUMERIC},
+            </if>
+            <if test="buyerName!=null">
+                buyer_name=#{buyerName,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerAddress!=null">
+                buyer_address=#{buyerAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerPhone!=null">
+                buyer_phone=#{buyerPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createId!=null">
+                create_id=#{createId,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status!=null">
+                status=#{status,jdbcType=NUMERIC},
+            </if>
+        </trim>
+        where
+        id=#{id}
+    </update>
+
+    <delete id="remove" parameterType="java.lang.String">
+		delete from pn_order 
+		where
+		id=#{id}
+	</delete>
+
+</mapper>
