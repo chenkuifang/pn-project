@@ -79,11 +79,10 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
                 url: "/user/remove",
                 data: {id: id},
                 success: function (result) {
-                    if (result["code"] === g.successCode) {
-                        window.location.reload();
+                    if (result["code"] == g.successCode) {
                         layer.closeAll();
-                    }
-                    if (result["code"] === g.failCode) {
+                        window.location.reload();
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -117,10 +116,9 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
                 traditional: true, //防止深度序列化
                 success: function (result) {
                     if (result["code"] == g.successCode) {
-                        window.location.reload();
                         layer.closeAll();
-                    }
-                    if (result["code"] == g.failCode) {
+                        window.location.reload();
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -143,22 +141,23 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
         }
     });
 
-    // 添加提交
-    $("body").on("click", ".addSubmit", function () {
+    //监听提交
+    form.on('submit(saveSubmit)', function (data) {
         $.ajax({
             type: "post",
             url: "/user/save",
-            data: $("form").serialize(),//表单数据
+            data: data.field,//表单数据
             success: function (result) {
                 if (result["code"] == g.successCode) {
-                    layer.closeAll();
                     window.parent.location.reload();
-                }
-                if (result["code"] == g.failCode) {
-                    layer.msg(result["msg"]);
+                    layer.closeAll;
+                } else {
+                    layer.alert(result["msg"]);
+                    return false;
                 }
             }
         });
+        return false;
     });
 
     //监听submit事件,修改密码提交

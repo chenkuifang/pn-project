@@ -86,10 +86,13 @@ public interface GoodsService {
 
     /**
      * 校验商品编码是否有效，商品编码唯一性
+     * 1.新增时候校验，Id值为null，用法：checkGoodsNum("123456","");
+     * 2.修改时候校验，用法: checkGoodsNum("123456","10001");
      *
      * @param goodsNum 商品编码
+     * @param id       商品ID
      * @return true : 商品编码有效； false : 商品编码无效
      */
-    boolean checkGoodsNum(String goodsNum);
+    boolean checkGoodsNum(String goodsNum, Integer id);
 
 }

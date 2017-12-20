@@ -64,11 +64,17 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public boolean checkGoodsNum(String goodsNum) {
+    public boolean checkGoodsNum(String goodsNum, Integer id) {
         Goods goods = goodsMapper.getByGoodsNum(goodsNum);
         if (Objects.isNull(goods)) {
             return true;
         }
+
+        // update时的校验
+        if (!Objects.isNull(id))
+            if (id.equals(goods.getId()))
+                return true;
+
         return false;
     }
 }

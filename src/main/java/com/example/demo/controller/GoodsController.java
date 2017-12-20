@@ -87,7 +87,7 @@ public class GoodsController {
         String operation;
 
         // 校验商品编码是否有效
-        boolean check = goodsService.checkGoodsNum(goods.getGoodsNum());
+        boolean check = goodsService.checkGoodsNum(goods.getGoodsNum(), goods.getId());
         if (!check) {
             return JsonResultUtils.jsonResult(Constants.FAIL_CODE, "商品编码不可用!");
         }

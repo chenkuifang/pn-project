@@ -17,14 +17,14 @@
 				<div class="layui-col-md4">
 					<label class="layui-form-label">菜单名称</label>
 					<div class="layui-input-block">
-						<input type="hidden" id="menuId" name="menuId" th:value="${menu.menuId}" />
-						<input type="text" id="name" name="name" th:value="${menu.name}" class="layui-input" />
+						<input type="hidden" name="menuId" th:value="${menu.menuId}" />
+						<input type="text" name="name" th:value="${menu.name}" class="layui-input" lay-verify="required" />
 					</div>
 				</div>
 				<div class="layui-col-md8">
 					<label class="layui-form-label">链接</label>
 					<div class="layui-input-block">
-						<input type="text" id="url" name="url" th:value="${menu.url}" class="layui-input"/>
+						<input type="text" name="url" th:value="${menu.url}" class="layui-input"/>
 					</div>
 				</div>
 			</div>
@@ -54,7 +54,7 @@
 				<div class="layui-col-md4">
 					<label class="layui-form-label">排序</label>
 					<div class="layui-input-block">
-						<input type="text" id="orderNum" name="orderNum" th:value="${menu.orderNum}" class="layui-input" />
+						<input type="text" name="orderNum" th:value="${menu.orderNum}" class="layui-input" lay-verify="required|number" />
 					</div>
 				</div>
 			</div>
@@ -63,7 +63,7 @@
 				<div class="layui-col-md4">
 					<label class="layui-form-label">图标</label>
 					<div class="layui-input-block">
-						<input type="text" id="icon" name="icon" th:value="${menu.icon}" th:readonly="true" class="layui-input layui-disabled" />
+						<input type="text" name="icon" th:value="${menu.icon}" th:readonly="true" class="layui-input layui-disabled" />
 					</div>
 				</div>
 				
@@ -84,7 +84,7 @@
 			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
-					<button class="layui-btn addSubmit">立即提交</button>
+					<button class="layui-btn" lay-submit="" lay-filter="saveSubmit">立即提交</button>
 					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			    </div>
 			</div>

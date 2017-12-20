@@ -87,11 +87,10 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
                 url: "/role/remove",
                 data: {roleId: id},
                 success: function (result) {
-                    if (result["code"] === g.successCode) {
+                    if (result["code"] == g.successCode) {
                         window.location.reload();
                         layer.closeAll();
-                    }
-                    if (result["code"] === g.failCode) {
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -115,7 +114,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
             return;
         }
 
-        layer.confirm('确定删除吗?', {icon: 3, title: g.title}, function (index) {
+        layer.confirm('确定删除吗?', {icon: 3, title: g.title}, function () {
             $.ajax({
                 type: "post",
                 url: "/role/removeBatch",
@@ -125,10 +124,9 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
                 traditional: true, //防止深度序列化
                 success: function (result) {
                     if (result["code"] == g.successCode) {
-                        layer.close(index);
                         window.location.reload();
-                    }
-                    if (result["code"] == g.failCode) {
+                        layer.closeAll();
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -137,22 +135,23 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
 
     });
 
-    // 添加提交
-    $("body").on("click", ".addSubmit", function () {
+    //监听提交
+    form.on('submit(saveSubmit)', function (data) {
         $.ajax({
             type: "post",
             url: "/role/save",
-            data: $("form").serialize(),//表单数据
+            data: data.field,//表单数据
             success: function (result) {
                 if (result["code"] == g.successCode) {
                     window.parent.location.reload();
                     layer.closeAll;
-                }
-                if (result["code"] == g.failCode) {
-                    layer.msg(result["msg"]);
+                } else {
+                    layer.alert(result["msg"]);
+                    return false;
                 }
             }
         });
+        return false;
     });
 
 });

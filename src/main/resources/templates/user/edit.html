@@ -18,23 +18,23 @@
 				<div class="layui-col-md4">
 					<label class="layui-form-label">用户名称</label>
 					<div class="layui-input-block">
-						<input type="hidden" id="Id" name="Id" th:value="${user.Id}" />
-						<input type="text" th:if="${action == 'add'}" id="userName" name="userName" th:value="${user.userName}" class="layui-input" />
-						<input type="text" th:if="${action == 'edit'}" id="userName" name="userName" th:value="${user.userName}" 
-							th:readonly="true" class="layui-input layui-disabled" />
+						<input type="hidden" name="Id" th:value="${user.Id}" />
+						<input type="text" th:if="${action == 'add'}" name="userName" th:value="${user.userName}" class="layui-input" lay-verify="required" />
+						<input type="text" th:if="${action == 'edit'}" name="userName" th:value="${user.userName}"
+							th:readonly="true" class="layui-input layui-disabled"/>
 					</div>
 				</div>
 				<div class="layui-col-md4">
 					<label class="layui-form-label">用户昵称</label>
 					<div class="layui-input-block">
-						<input type="text" id="userNike" name="userNike" th:value="${user.userNike}" class="layui-input"/>
+						<input type="text" name="userNike" th:value="${user.userNike}" class="layui-input" lay-verify="required"/>
 					</div>
 				</div>
 				
 				<div class="layui-col-md4">
 					<label class="layui-form-label">用户角色</label>
 					<div class="layui-input-block">
-						<select name="roleId" id="roleId">
+						<select name="roleId">
 						  	 <option th:each="item : ${roles}" th:value="${item.roleId}" th:text="${item.roleName}"
 						  	 	th:selected="${user.roleId == item.roleId ? 'true' : 'false'}"></option>
 						</select>
@@ -46,13 +46,13 @@
 				<div class="layui-col-md4">
 					<label class="layui-form-label">手机号码</label>
 					<div class="layui-input-block">
-						<input type="text" id="mobile" name="mobile" th:value="${user.mobile}" class="layui-input" />
+						<input type="text" name="mobile" th:value="${user.mobile}" class="layui-input" lay-verify="required|phone"/>
 					</div>
 				</div>
 				<div class="layui-col-md4">
 					<label class="layui-form-label">电子邮件</label>
 					<div class="layui-input-block">
-						<input type="text" id="email" name="email" th:value="${user.email}" class="layui-input" />
+						<input type="text" name="email" th:value="${user.email}" class="layui-input" lay-verify="required|email"/>
 					</div>
 					 
 				</div>
@@ -101,7 +101,7 @@
 			
 			<div class="layui-form-item">
 				<div class="layui-input-block">
-					<button class="layui-btn addSubmit">立即提交</button>
+					<button class="layui-btn" lay-submit="" lay-filter="saveSubmit">立即提交</button>
 					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 			    </div>
 			</div>

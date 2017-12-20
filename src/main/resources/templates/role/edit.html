@@ -15,8 +15,8 @@
 			<div class="layui-inline">
 				<label class="layui-form-label">角色名称</label>
 				<div class="layui-input-block">
-					<input type="hidden" id="roleId" name="roleId" th:value="${role.roleId}" />
-					<input type="text" id="roleName" name="roleName" th:value="${role.roleName}" class="layui-input" lay-verify="required" />
+					<input type="hidden" name="roleId" th:value="${role.roleId}" />
+					<input type="text" name="roleName" th:value="${role.roleName}" class="layui-input" lay-verify="required" />
 				</div>
 			</div>
 			<div class="layui-inline" th:if="${action == 'edit'}">
@@ -45,12 +45,12 @@
 		<div class="layui-form-item">
 			<label class="layui-form-label">备注</label>
 			<div class="layui-input-block">
-				<textarea id="remark" name="remark" th:text="${role.remark}" class="layui-textarea"></textarea>
+				<textarea name="remark" th:text="${role.remark}" class="layui-textarea"></textarea>
 			</div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				<button class="layui-btn addSubmit" >立即提交</button>
+				<button class="layui-btn" lay-submit="" lay-filter="saveSubmit">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 		    </div>
 		</div>

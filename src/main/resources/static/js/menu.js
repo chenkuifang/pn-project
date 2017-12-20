@@ -16,8 +16,18 @@ layui.use(['form', 'layer', 'jquery', 'table'], function () {
             , {field: 'url', title: '链接地址', width: '20%'}
             , {field: 'type', title: '类型', width: '5%', templet: '<div>{{typeFormat(d.type)}}</div>'}
             , {field: 'orderNum', title: '排序', width: '5%'}
-            , {field: 'createTime', title: '创建时间', width: '20%', templet: '<div>{{g.dateTimeFormat(d.createTime)}}</div>'}
-            , {field: 'updateTime', title: '最后修改时间', width: '20%', templet: '<div>{{g.dateTimeFormat(d.updateTime)}}</div>'}
+            , {
+                field: 'createTime',
+                title: '创建时间',
+                width: '20%',
+                templet: '<div>{{g.dateTimeFormat(d.createTime)}}</div>'
+            }
+            , {
+                field: 'updateTime',
+                title: '最后修改时间',
+                width: '20%',
+                templet: '<div>{{g.dateTimeFormat(d.updateTime)}}</div>'
+            }
             , {title: '操作', templet: '#operationTemplet', width: '15%'}
         ]],
         page: true
@@ -74,11 +84,10 @@ layui.use(['form', 'layer', 'jquery', 'table'], function () {
                 url: "/menu/remove",
                 data: {menuId: id},
                 success: function (result) {
-                    if (result["code"] === g.successCode) {
+                    if (result["code"] == g.successCode) {
                         window.location.reload();
                         layer.closeAll();
-                    }
-                    if (result["code"] === g.failCode) {
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -113,8 +122,7 @@ layui.use(['form', 'layer', 'jquery', 'table'], function () {
                     if (result["code"] == g.successCode) {
                         window.location.reload();
                         layer.closeAll();
-                    }
-                    if (result["code"] == g.failCode) {
+                    } else {
                         layer.msg(result["msg"]);
                     }
                 }
@@ -123,48 +131,24 @@ layui.use(['form', 'layer', 'jquery', 'table'], function () {
 
     });
 
-    // 添加提交
-    $("body").on("click", ".addSubmit", function () {
-        if (!checkData()) {
-            return false;
-        }
+    //监听提交
+    form.on('submit(saveSubmit)', function (data) {
         $.ajax({
             type: "post",
             url: "/menu/save",
-            data: $("form").serialize(),//表单数据
+            data: data.field,//表单数据
             success: function (result) {
                 if (result["code"] == g.successCode) {
                     window.parent.location.reload();
-                    layer.closeAll();
-                }
-                if (result["code"] == g.failCode) {
-                    layer.msg(result["msg"]);
+                    layer.closeAll;
+                } else {
+                    layer.alert(result["msg"]);
+                    return false;
                 }
             }
         });
+        return false;
     });
-
-    function checkData() {
-        var name = $("#name").val();
-        var parentId = $("#parentId").val();
-        var orderNum = $("#orderNum").val();
-
-        if (g.isEmpty(name)) {
-            layer.msg("名称不能为空！");
-            return false;
-        }
-
-        if (g.isEmpty(parentId) || !g.isNumber(parentId)) {
-            layer.msg("菜单父级输入格式不正确！");
-            return false;
-        }
-
-        if (g.isEmpty(orderNum) || !g.isNumber(orderNum)) {
-            layer.msg("排序输入格式不正确！");
-            return false;
-        }
-        return true;
-    }
 
 });
 
