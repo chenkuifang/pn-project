@@ -15,7 +15,8 @@ import java.math.BigDecimal;
  */
 public class Order implements Serializable {
 
-    private Integer id; 		/*id*/
+    private Integer orderId; 		/*订单编码*/
+    private String orderSid;        /*订单号*/
     private String goodsNum; 		/*商品编码*/
     private String goodsName; 		/*商品名称*/
     private BigDecimal price; 		/*拍下价格*/
@@ -29,15 +30,20 @@ public class Order implements Serializable {
     private java.util.Date updateTime; 		/*订单最后修改时间*/
     private Integer status; 		/*订单状态 0:未付款，1：已付款，2：已发货，3：已完成，4：取消订单*/
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    /**
-     * 返回 id
-     */
-    public Integer getId() {
-        return this.id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderSid() {
+        return orderSid;
+    }
+
+    public void setOrderSid(String orderSid) {
+        this.orderSid = orderSid;
     }
 
     public void setGoodsNum(String goodsNum) {
@@ -177,7 +183,8 @@ public class Order implements Serializable {
      */
     public String toString() {
         return new ToStringBuilder(this)
-                .append("id", this.id)
+                .append("orderId", this.orderId)
+                .append("orderSid", this.orderSid)
                 .append("goodsNum", this.goodsNum)
                 .append("goodsName", this.goodsName)
                 .append("price", this.price)

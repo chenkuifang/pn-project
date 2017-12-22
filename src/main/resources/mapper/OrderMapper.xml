@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.OrderMapper">
     <resultMap id="orderMap" type="Order">
-        <id property="id" column="id" jdbcType="NUMERIC"/>
+        <id property="orderId" column="order_id" jdbcType="NUMERIC"/>
+        <result property="orderSid" column="order_sid" jdbcType="VARCHAR"/>
         <result property="goodsNum" column="goods_num" jdbcType="VARCHAR"/>
         <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
         <result property="price" column="price" jdbcType="NUMERIC"/>
@@ -18,59 +19,101 @@
     </resultMap>
 
     <sql id="columns">
-		id,goods_num,goods_name,price,pay_price,amount,buyer_name,buyer_address,buyer_phone,create_id,create_time,update_time,status
+        a.order_id,a.order_sid,a.goods_num,a.goods_name,a.price,a.pay_price
+        ,a.amount,a.buyer_name,a.buyer_address,a.buyer_phone,a.create_id,a.create_time
+        ,a.update_time,a.status
 	</sql>
 
     <insert id="create" parameterType="Order">
         insert into pn_order
-        (<include refid="columns"/>)
+        (
+            order_id,order_sid,goods_num,goods_name,price,pay_price
+            ,amount,buyer_name,buyer_address,buyer_phone,create_id,create_time
+            ,update_time,status
+        )
         values
-        (#{id,jdbcType=NUMERIC}, #{goodsNum,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{price,jdbcType=NUMERIC},
-        #{payPrice,jdbcType=NUMERIC}, #{amount,jdbcType=NUMERIC}, #{buyerName,jdbcType=VARCHAR},
-        #{buyerAddress,jdbcType=VARCHAR}, #{buyerPhone,jdbcType=VARCHAR}, #{createId,jdbcType=NUMERIC},
-        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=NUMERIC})
+        (
+            #{orderId,jdbcType=NUMERIC}, #{orderSid,jdbcType=VARCHAR}, #{goodsNum,jdbcType=VARCHAR},
+            #{goodsName,jdbcType=VARCHAR}, #{price,jdbcType=NUMERIC}, #{payPrice,jdbcType=NUMERIC},
+            #{amount,jdbcType=NUMERIC}, #{buyerName,jdbcType=VARCHAR}, #{buyerAddress,jdbcType=VARCHAR},
+            #{buyerPhone,jdbcType=VARCHAR}, #{createId,jdbcType=NUMERIC}, #{createTime,jdbcType=TIMESTAMP},
+            #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=NUMERIC}
+        )
     </insert>
 
-    <select id="get" parameterType="java.lang.String" resultMap="Order">
+    <select id="get" parameterType="java.lang.Integer" resultMap="orderMap">
         select
         <include refid="columns"/>
-        from pn_order
+        from pn_order a
         where
-        id=#{id}
+        order_id=#{orderId}
     </select>
 
-
-    <select id="query" parameterType="java.util.Map" resultMap="orderMap">
+    <select id="listPage" parameterType="java.util.Map" resultMap="orderMap">
         select
         <include refid="columns"/>
-        from pn_order
-        <where>
-            <if test="whereSql!=null">
-                ${whereSql}
-            </if>
-            <if test="status!=null">
-                and status = #{status}
-            </if>
-        </where>
+        from pn_order a
+        where a.status &lt; 64
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
+        <if test="orderSid != null and orderSid != ''">
+            and a.order_sid like '%${orderSid}%'
+        </if>
+        <if test="goodsName != null and goodsName != ''">
+            and a.goods_name like '%${goodsName}%'
+        </if>
+        <if test="buyerName != null and buyerName != ''">
+            and a.buyer_name like '%${buyerName}%'
+        </if>
         <choose>
             <when test="orderSql!=null">
                 ORDER BY ${orderSql}
             </when>
             <otherwise>
-                ORDER BY id DESC
+                ORDER BY a.id DESC
             </otherwise>
         </choose>
+        limit ${offset},${limit}
     </select>
 
-    <select id="findByIds" resultMap="orderMap">
+    <!-- 根据条件获取所有行数，一般提供列表翻页使用，这一步也可以在mybatis拦截器中完成 -->
+    <select id="countPage" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1)
+        from pn_order a
+        where a.status &lt; 64
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
+        <if test="orderSid != null and orderSid != ''">
+            and a.order_sid like '%${orderSid}%'
+        </if>
+        <if test="goodsName != null and goodsName != ''">
+            and a.goods_name like '%${goodsName}%'
+        </if>
+        <if test="buyerName != null and buyerName != ''">
+            and a.buyer_name like '%${buyerName}%'
+        </if>
+        <choose>
+            <when test="orderSql!=null">
+                ORDER BY ${orderSql}
+            </when>
+            <otherwise>
+                ORDER BY a.id DESC
+            </otherwise>
+        </choose>
+        limit ${offset},${limit}
+    </select>
+
+    <select id="getByIds" parameterType="java.lang.String" resultMap="orderMap">
         select
         <include refid="columns"/>
-        from pn_order
-        where id in
-        <foreach item="id" index="index" collection="ids" open="(" separator="," close=")">
-            #{id}
+        from pn_order a
+        where a.order_sid in
+        <foreach item="orderSid" index="index" collection="sids" open="(" separator="," close=")">
+            #{orderSid}
         </foreach>
-        order by id desc
+        order by order_id desc
     </select>
 
     <update id="update" parameterType="Order">
@@ -100,12 +143,6 @@
             <if test="buyerPhone!=null">
                 buyer_phone=#{buyerPhone,jdbcType=VARCHAR},
             </if>
-            <if test="createId!=null">
-                create_id=#{createId,jdbcType=NUMERIC},
-            </if>
-            <if test="createTime!=null">
-                create_time=#{createTime,jdbcType=TIMESTAMP},
-            </if>
             <if test="updateTime!=null">
                 update_time=#{updateTime,jdbcType=TIMESTAMP},
             </if>
@@ -114,13 +151,7 @@
             </if>
         </trim>
         where
-        id=#{id}
+        order_id=#{orderId}
     </update>
-
-    <delete id="remove" parameterType="java.lang.String">
-		delete from pn_order 
-		where
-		id=#{id}
-	</delete>
 
 </mapper>

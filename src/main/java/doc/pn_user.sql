@@ -125,7 +125,8 @@ CREATE TABLE `pn_goods` (
 -- 订单信息表 --
 DROP TABLE IF EXISTS `pn_order`;
 CREATE TABLE `pn_order` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单编码',
+  `order_sid` varchar(40) NOT NULL COMMENT '订单号',
   `goods_num` varchar(40) DEFAULT NULL COMMENT '商品编码',
   `goods_name` varchar(80) DEFAULT NULL COMMENT '商品名称',
   `price` decimal(20,2) DEFAULT '0.0000' COMMENT '拍下价格',
@@ -138,5 +139,5 @@ CREATE TABLE `pn_order` (
   `create_time` datetime DEFAULT NULL COMMENT '订单创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '订单最后修改时间',
   `status` int(11) DEFAULT '0' COMMENT '订单状态 0:未付款，1：已付款，2：已发货，3：已完成，4：取消订单',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单信息表';
