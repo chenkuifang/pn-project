@@ -38,6 +38,14 @@ public interface GoodsMapper {
     int update(Goods goods);
 
     /**
+     * 修改商品库存和销量
+     *
+     * @param params 参数包括 goodsNum,amount
+     * @return
+     */
+    int updateStockAndSaleCount(Map<String, Object> params);
+
+    /**
      * 新增
      *
      * @param goods

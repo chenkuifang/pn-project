@@ -14,8 +14,9 @@ import java.math.BigDecimal;
  * @author ：QuiFar
  */
 public class Goods implements Serializable {
-
-    private Integer id; 		/*id*/
+	private static final long serialVersionUID = 903598773132953830L;
+	
+	private Integer id; 		/*id*/
     private String goodsNum; 		/*商品编码*/
     private String goodsName; 		/*商品名称*/
     private BigDecimal salePrice; 		/*销售价格*/

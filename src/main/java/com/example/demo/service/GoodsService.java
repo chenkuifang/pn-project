@@ -1,10 +1,9 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Goods;
-import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
 import java.util.Map;
+
+import com.example.demo.entity.Goods;
 
 /**
  * 商品信息服务层接口
@@ -37,6 +36,15 @@ public interface GoodsService {
     int update(Goods goods);
 
     /**
+     * 修改商品库存和销量
+     *
+     * @param goodsNum
+     * @param amount
+     * @return
+     */
+    int updateStockAndSaleCount(String goodsNum, int amount);
+
+    /**
      * 新增
      *
      * @param goods
@@ -51,6 +59,22 @@ public interface GoodsService {
      * @return
      */
     Goods get(Integer id);
+
+    /**
+     * 根据商品编码获取商品信息
+     *
+     * @param goodsNum
+     * @return
+     */
+    Goods get(String goodsNum);
+
+    /**
+     * 根据商品编码获取可下单的商品
+     *
+     * @param goodsNum 商品编码
+     * @return 返回null表示获取不到可下单的商品
+     */
+    Goods getCanCreateOrder(String goodsNum);
 
     /**
      * 根据条件获取菜单列表(非外链)

@@ -24,7 +24,7 @@
         ,a.update_time,a.status
 	</sql>
 
-    <insert id="create" parameterType="Order">
+    <insert id="add" parameterType="Order">
         insert into pn_order
         (
             order_id,order_sid,goods_num,goods_name,price,pay_price
@@ -49,6 +49,17 @@
         order_id=#{orderId}
     </select>
 
+    <!-- 获取当天最新订单号 -->
+    <select id="getLastSid" parameterType="java.util.Map" resultType="java.lang.String">
+        select
+          a.order_sid
+        from pn_order a
+        where
+          order_sid like '${orderPrefix,jdbcType=VARCHAR}%'
+        order by order_sid desc
+        limit 1
+    </select>
+
     <select id="listPage" parameterType="java.util.Map" resultMap="orderMap">
         select
         <include refid="columns"/>
@@ -66,12 +77,18 @@
         <if test="buyerName != null and buyerName != ''">
             and a.buyer_name like '%${buyerName}%'
         </if>
+        <if test="startTime != null">
+            and a.create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and a.create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
         <choose>
             <when test="orderSql!=null">
                 ORDER BY ${orderSql}
             </when>
             <otherwise>
-                ORDER BY a.id DESC
+                ORDER BY a.order_id DESC
             </otherwise>
         </choose>
         limit ${offset},${limit}
@@ -94,15 +111,12 @@
         <if test="buyerName != null and buyerName != ''">
             and a.buyer_name like '%${buyerName}%'
         </if>
-        <choose>
-            <when test="orderSql!=null">
-                ORDER BY ${orderSql}
-            </when>
-            <otherwise>
-                ORDER BY a.id DESC
-            </otherwise>
-        </choose>
-        limit ${offset},${limit}
+        <if test="startTime != null">
+            and a.create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and a.create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+        </if>
     </select>
 
     <select id="getByIds" parameterType="java.lang.String" resultMap="orderMap">

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.common.JsonResult;
 import com.example.demo.entity.Order;
 
 import java.util.List;
@@ -29,12 +30,28 @@ public interface OrderService {
     int add(Order order);
 
     /**
+     * 创建订单
+     *
+     * @param order
+     * @return
+     */
+    JsonResult createOrderOpt(Order order);
+
+    /**
      * 根据主键获取商品信息
      *
      * @param id
      * @return
      */
     Order get(Integer id);
+
+    /**
+     * 获取新订单号
+     *
+     * @param orderPrefix 订单前缀
+     * @return
+     */
+    String getNewSid(String orderPrefix);
 
     /**
      * 根据条件获取菜单列表(非外链)

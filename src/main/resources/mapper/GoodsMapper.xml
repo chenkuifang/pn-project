@@ -146,6 +146,14 @@
         id=#{id} and status &lt; 64
     </update>
 
+    <update id="updateStockAndSaleCount" parameterType="java.util.Map">
+        update pn_goods set
+            stock = stock - #{amount,jdbcType=NUMERIC},
+            sale_count = sale_count + #{amount,jdbcType=NUMERIC}
+        where
+          goods_num=#{goodsNum} and status &lt; 64
+    </update>
+
     <delete id="remove" parameterType="java.lang.Integer">
 		update pn_goods set status = status + 64
 		where id=#{goodsId}

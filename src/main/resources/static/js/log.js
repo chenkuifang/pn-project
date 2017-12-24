@@ -24,16 +24,16 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
 
     //开始时间选择器
     laydate.render({
-      elem: '#startTime'
-      ,type: 'datetime'
-      ,value: g.getSubDateTime(7)
+        elem: '#startTime'
+        , type: 'datetime'
+        , value: g.getSubDateTime(7)
     });
 
     //结束时间选择器
     laydate.render({
-      elem: '#endTime'
-      ,type: 'datetime'
-      ,value: g.getAddDateTime(7)
+        elem: '#endTime'
+        , type: 'datetime'
+        , value: g.getAddDateTime(7)
     });
 
     // 搜索

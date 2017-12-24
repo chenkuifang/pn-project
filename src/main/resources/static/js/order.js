@@ -1,8 +1,10 @@
-layui.use(['layer', 'jquery', 'table', 'form'], function () {
+var $;
+layui.use(['layer', 'jquery', 'table', 'form', 'laydate'], function () {
     var layer = parent.layer === undefined ? layui.layer : parent.layer,
         form = layui.form,
         table = layui.table,
-        $ = layui.jquery;
+        laydate = layui.laydate;
+    $ = layui.jquery;
 
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
@@ -10,32 +12,52 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         url: '/order/listPage',
         cols: [[
             {type: 'checkbox', widht: '5%'}
-            , {field: 'goodsNum', title: '商品编码', width: '10%'}
-            , {field: 'goodsName', title: '商品名称', width: '35%'}
-            , {field: 'salePrice', title: '销售价格', width: '10%'}
-            , {field: 'discountPrice', title: '折后价格', width: '10%'}
-            , {field: 'stock', title: '库存', width: '5%'}
-            , {field: 'saleCount', title: '销量', width: '5%'}
+            , {field: 'orderSid', title: '订单号', width: '10%'}
+            , {field: 'goodsName', title: '商品名称', width: '25%'}
+            , {field: 'price', title: '拍下价格', width: '10%'}
+            , {field: 'payPrice', title: '支付价格', width: '10%'}
+            , {field: 'amount', title: '数量', width: '5%'}
+            , {field: 'buyerName', title: '收货人', width: '5%'}
+            , {
+                field: 'createTime',
+                title: '创建时间',
+                width: '15%',
+                templet: '<div>{{g.dateTimeFormat(d.createTime)}}</div>'
+            }
             , {field: 'status', title: '状态', width: '5%', templet: '<div>{{statusFormat(d.status)}}</div>'}
-            , {title: '操作', templet: '#operationTemplet', width: '15%'}
+            , {title: '操作', templet: '#operationTemplet', width: '10%'}
         ]],
         page: true
     });
 
-    // 添加
-    $(".add").click(function () {
-        //当前层索引
-        var index = layui.layer.open({
-            title: "添加商品信息",
-            type: 2,
-            content: "/goods/add"
-        });
+    //开始时间选择器
+    laydate.render({
+        elem: '#startTime'
+        , type: 'datetime'
+        , value: g.getSubDateTime(7)
+    });
 
-        $(window).resize(function () {
-            layui.layer.full(index);
+    //结束时间选择器
+    laydate.render({
+        elem: '#endTime'
+        , type: 'datetime'
+        , value: g.getAddDateTime(7)
+    });
+
+    // 创建订单
+    $(".add").click(function () {
+        $.ajax({
+            type: "post",
+            url: "/order/createOrder",
+            success: function (result) {
+                if (result["code"] === g.successCode) {
+                    layer.msg("创建订单成功");
+                } else {
+                    layer.msg(result["msg"]);
+                }
+            }
         });
-        layui.layer.full(index);
-    })
+    });
 
     // 编辑操作
     $("body").on("click", ".edit", function () {
@@ -57,70 +79,17 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         var orderSid = $("#orderSid").val();
         var goodsName = $("#goodsName").val();
         var buyerName = $("#buyerName").val();
+        var startTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
         tableIns.reload({
             where: {
-                orderSid : orderSid,
-                buyerName : buyerName,
-                goodsName: goodsName
+                orderSid: orderSid,
+                buyerName: buyerName,
+                goodsName: goodsName,
+                startTime: startTime,
+                endTime: endTime
             }
         });
-    });
-
-    // 单个删除操作
-    $("body").on("click", ".remove", function () {
-        var id = $(this).attr("data-id");
-        layer.confirm('确定删除吗?', {icon: 3, title: '提示信息'}, function () {
-            $.ajax({
-                type: "post",
-                url: "/goods/remove",
-                data: {id: id},
-                success: function (result) {
-                    if (result["code"] === g.successCode) {
-                        window.location.reload();
-                        layer.closeAll();
-                    } else {
-                        layer.msg(result["msg"]);
-                    }
-                }
-            });
-        });
-
-    });
-
-    // 批量删除
-    $("body").on("click", ".removeBatch", function () {
-        // 获取表格选中的所有行数据数组
-        var checkStatus = table.checkStatus('dataTable');
-        var data = checkStatus.data;
-        var ids = [];
-        $.each(data, function (i, item) {
-            ids.push(item.id);
-        });
-        //layer.alert(JSON.stringify(checkStatus.data));
-
-        if (ids == null || ids.length == 0) {
-            return;
-        }
-
-        layer.confirm('确定删除吗?', {icon: 3, title: g.title}, function () {
-            $.ajax({
-                type: "post",
-                url: "/goods/removeBatch",
-                async: false,
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(ids),
-                traditional: true, //防止深度序列化
-                success: function (result) {
-                    if (result["code"] == g.successCode) {
-                        layer.closeAll();
-                        window.location.reload();
-                    } else {
-                        layer.msg(result["msg"]);
-                    }
-                }
-            });
-        });
-
     });
 
     //监听提交
@@ -147,10 +116,17 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
 // 状态转换
 function statusFormat(o) {
     var value = "未知";
-    if (o == 0) {
-        value = "下架";
+    if (o === 0) {
+        value = "未付款";
     } else if (o == 1) {
-        value = "正常";
+        value = "已付款";
+    } else if (o == 2) {
+        value = "已发货";
+    } else if (o == 3) {
+        value = "已完成";
+    } else if (o == 4) {
+        value = "取消订单";
     }
+
     return value;
 }
