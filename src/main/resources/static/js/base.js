@@ -94,6 +94,40 @@ g = {
         return g.dateTimeFormat(d);
     },
 
+    // 获取当前+o天的日期
+    getAddDate : function (o) {
+        if(g.isEmpty(o) || !g.isNumber(o)){
+            return new Date();
+        }
+
+        var d = new Date();
+        d.setDate(d.getDate() + o);//获取AddDayCount天后的日期
+        return g.dateFormat(d);
+     },
+
+    // 获取当前 -o天的日期
+    getSubDate : function (o) {
+        if(g.isEmpty(o) || !g.isNumber(o)){
+             return new Date();
+        }
+
+        var d = new Date();
+        d.setDate(d.getDate() - o);//获取AddDayCount天后的日期
+        return g.dateFormat(d);
+    },
+
+    // 获取当天最后时间
+    getTodayEndTime : function() {
+        var result = g.dateFormat(new Date().getTime());
+        return result+' 23:59:59';
+    },
+
+    // 获取当天开始时间
+    getTodayStartTime : function() {
+        var result = g.dateFormat(new Date().getTime());
+        return result+' 00:00:00';
+    },
+
     isEmpty: function (o) {
         if (o === undefined)
             return true;
