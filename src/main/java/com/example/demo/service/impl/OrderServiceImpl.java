@@ -88,14 +88,4 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.countPage(params);
     }
 
-    /**
-     * 创建订单
-     *
-     * @return
-     */
-    private int createOrder() {
-        return 0;
-    }
-
-
 }

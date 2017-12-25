@@ -102,7 +102,7 @@ public class OrderController {
         // 订单信息构建
         Order order = new Order();
         order.setGoodsNum("100001");
-        order.setBuyerName("quifar");
+        order.setBuyerName(Thread.currentThread().getName());
         order.setBuyerAddress("广州萝岗区");
         order.setBuyerPhone("15817864015");
         order.setPrice(new BigDecimal(100.5));
