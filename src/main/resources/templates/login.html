@@ -45,6 +45,11 @@
 	<div th:include="include::footer"></div>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			<!--iframe目标不一致刷新location-->
+			if (top.location !== self.location) {
+      			top.location = self.location;
+    	 	}
+
 			//绑定登陆事件
 			$("#loginBtn").click(function() {
 				if (checkData()) {
