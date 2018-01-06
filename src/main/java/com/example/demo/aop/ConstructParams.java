@@ -18,7 +18,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.JsonResult;
 
 /**
  * 控制器方法拦截器，该拦截器的作用主要有1.规范控制器方法返回值 2.为listPage请求添加offset参数
@@ -31,9 +30,9 @@ import com.example.demo.common.JsonResult;
  */
 @Aspect
 @Component
-public class ControllerMethodInterceptor {
+public class ConstructParams {
 
-    private static final Logger logger = LoggerFactory.getLogger(ControllerMethodInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConstructParams.class);
 
     /**
      * 切入点；拦截controller包下面的所有类中含有@RequestMapping(已包括GETxxxx,POSTxxxx注解)注解的方法。
