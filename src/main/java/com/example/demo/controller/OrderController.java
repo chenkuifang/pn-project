@@ -1,5 +1,18 @@
 package com.example.demo.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.example.demo.common.Constants;
 import com.example.demo.common.JsonResult;
 import com.example.demo.common.util.JsonResultUtils;
@@ -11,16 +24,6 @@ import com.example.demo.entity.User;
 import com.example.demo.service.GoodsService;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 订单控制类
