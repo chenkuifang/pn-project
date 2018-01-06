@@ -9,8 +9,8 @@
 	<script type="text/javascript" src="/js/role.js"></script>
 	<script type="text/javascript" src="/js/base.js"></script>
 </head>
-<body class="childrenBody">
-	<form class="layui-form" style="width:80%;">
+<body>
+	<form class="layui-form">
 		<div class="layui-form-item" style="margin-top: 20px;">
 			<div class="layui-inline">
 				<label class="layui-form-label">角色名称</label>
@@ -42,12 +42,18 @@
 			    </div>
 		    </div>
 		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">备注</label>
-			<div class="layui-input-block">
-				<textarea name="remark" th:text="${role.remark}" class="layui-textarea"></textarea>
+
+		<div class="layui-row">
+			<div class="layui-col-md8">
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">备注</label>
+					<div class="layui-input-block">
+						<textarea name="remark" th:text="${role.remark}" class="layui-textarea"></textarea>
+					</div>
+				</div>
 			</div>
 		</div>
+
 		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="saveSubmit">立即提交</button>

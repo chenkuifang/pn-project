@@ -64,20 +64,6 @@ public class ControllerMethodInterceptor {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 
-        Class<?> clazz = method.getReturnType();
-        // 拦截方法返回值，如果不是String 和JsonResult 抛出异常
-        // 当然这一步最好自定义注解方式在runtime的时候就拦截，这样的好处是
-        // 不会在生成中出现,在开发中就规范了
-        StringBuilder sbBuilder = new StringBuilder();
-        sbBuilder.append(String.class.getName()).append(",");
-        sbBuilder.append(JsonResult.class.getName());
-
-        if (!sbBuilder.toString().contains(clazz.getName())) {
-            logger.info("控制器返回值不正确,返回值只能包括" + sbBuilder.toString());
-            logger.info(Constants.RETURN_VALUE_FAIL_CODE + ":" + Constants.RETURN_VALUE_FAIL_DESCRIPTION);
-            throw new Exception(Constants.RETURN_VALUE_FAIL_CODE + ":" + Constants.RETURN_VALUE_FAIL_DESCRIPTION);
-        }
-
         // 构造翻页参数
         String methodName = method.getName();
         if (methodName.matches(Constants.PAGE_INTERCEPTOR_PATH)) {
@@ -94,52 +80,6 @@ public class ControllerMethodInterceptor {
 
         return joinPoint.proceed(args);
     }
-
-    // /**
-    // * 切入前点插入
-    // *
-    // * @param joinPoint
-    // * @throws Throwable
-    // */
-    // @Before("pointcut()")
-    // public void doBefore(JoinPoint joinPoint) throws Throwable {
-    //
-    // for (int i = 0; i < joinPoint.getArgs().length; i++) {
-    // System.err.println("参数：" + joinPoint.getArgs()[i]);
-    // }
-    //
-    // ServletRequestAttributes attributes = (ServletRequestAttributes)
-    // RequestContextHolder.getRequestAttributes();
-    // HttpServletRequest request = attributes.getRequest();
-    //
-    // MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-    // Method method = signature.getMethod();
-    //
-    // // 拦截方法返回值，如果不是String 和JsonResult 抛出异常
-    // // 当然这一步最好自定义注解方式在runtime的时候就拦截，这样的好处是
-    // // 不会在生成中出现,在开发中就规范了
-    // Class<?> clazz = method.getReturnType();
-    // StringBuilder sbBuilder = new StringBuilder();
-    // sbBuilder.append(String.class.getName()).append(",");
-    // sbBuilder.append(JsonResult.class.getName());
-    //
-    // if (!sbBuilder.toString().contains(clazz.getName())) {
-    // logger.info("控制器返回值不正确,返回值只能包括" + sbBuilder.toString());
-    // logger.info(Constants.RETURN_VALUE_FAIL_CODE + ":" +
-    // Constants.RETURN_VALUE_FAIL_DESCRIPTION);
-    // throw new Exception(Constants.RETURN_VALUE_FAIL_CODE + ":" +
-    // Constants.RETURN_VALUE_FAIL_DESCRIPTION);
-    // }
-    //
-    // // 构造翻页参数
-    // String methodName = method.getName();
-    // if (methodName.matches("^*listPage*")) {
-    // double page = Double.parseDouble(request.getParameter("page"));
-    // double limit = Double.parseDouble(request.getParameter("limit"));
-    //
-    // request.setAttribute("offset", (int) ((page - 1) * limit));
-    // }
-    // }
 
     /**
      * 出现异常就会执行该方法
