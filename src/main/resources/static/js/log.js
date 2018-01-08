@@ -6,10 +6,32 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
         laydate = layui.laydate;
         $ = layui.jquery;
 
+    //开始时间选择器
+    laydate.render({
+        elem: '#startTime'
+        , type: 'datetime'
+        , value: new Date(g.getSubDate(7)+' 00:00:00')
+    });
+
+    //结束时间选择器
+    laydate.render({
+        elem: '#endTime'
+        , type: 'datetime'
+        , value: g.getTodayEndTime()
+    });
+
+    // 初始化时间
+    var startTime = $("#startTime").val();
+    var endTime = $("#endTime").val();
+
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/log/listPage',
+        url: "/log/listPage",
+        where: {
+            startTime: startTime,
+            endTime: endTime
+        },
         cols: [[
             {field: 'userId', title: '操作用户ID', width: '10%'}
             , {field: 'userName', title: '操作用户名称', width: '10%'}
@@ -20,20 +42,6 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
             , {field: 'createTime', title: '创建时间', width: '20%', templet: '<div>{{g.dateTimeFormat(d.createTime)}}</div>'}
         ]],
         page: true
-    });
-
-    //开始时间选择器
-    laydate.render({
-        elem: '#startTime'
-        , type: 'datetime'
-        , value: g.getSubDateTime(7)
-    });
-
-    //结束时间选择器
-    laydate.render({
-        elem: '#endTime'
-        , type: 'datetime'
-        , value: g.getAddDateTime(7)
     });
 
     // 搜索

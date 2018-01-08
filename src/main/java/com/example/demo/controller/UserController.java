@@ -213,9 +213,12 @@ public class UserController {
     @ResponseBody
     public JsonResult listMenu() {
         // 当前登录信息
-        int roleId = WebContextUtils.getCurrentRoleId();
+        int userId = WebContextUtils.getCurrentUserId();
+
+        User user = userService.get(userId);
+
         // 获取该角色的系统菜单列表
-        List<Menu> menus = menuService.listByRoleId(roleId);
+        List<Menu> menus = menuService.listByRoleId(user.getRoleId());
         return JsonResultUtils.jsonResult(menus);
     }
 
