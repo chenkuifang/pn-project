@@ -98,7 +98,7 @@ public final class JsonResultUtils {
 	 * @return
 	 */
 	public static JsonResult jsonPageResult(List<?> data, int countPage) {
-		return jsonResult(Constants.SUCCESS_CODE, Constants.SUCCESS_DESCRIPTION, data, countPage);
+		return jsonResult("0", "ok", data, countPage);
 	}
 
 	/**

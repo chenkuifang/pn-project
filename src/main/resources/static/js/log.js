@@ -9,7 +9,7 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/log/listPage',
+        url: g.rootPath + '/log/listPage',
         cols: [[
             {field: 'userId', title: '操作用户ID', width: '10%'}
             , {field: 'userName', title: '操作用户名称', width: '10%'}
@@ -26,14 +26,14 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
     laydate.render({
         elem: '#startTime'
         , type: 'datetime'
-        , value: g.getSubDateTime(7)
+        , value: g.getSubDateStartTime(7)
     });
 
     //结束时间选择器
     laydate.render({
         elem: '#endTime'
         , type: 'datetime'
-        , value: g.getAddDateTime(7)
+        , value: g.getTodayEndTime()
     });
 
     // 搜索
@@ -46,6 +46,9 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
                 operation: operation,
                 startTime : startTime,
                 endTime : endTime
+            },
+            page: {
+                curr: 1
             }
         });
     });

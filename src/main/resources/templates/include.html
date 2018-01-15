@@ -1,12 +1,12 @@
 <head th:fragment="header">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" th:href="@{{path}/layui/css/layui.css(path=${contextPath})}" media="all" />
 
-<link rel="stylesheet" th:href="@{bootstrap/bootstrap.min.css}" />
+	<script th:src="@{{path}/js/jquery-3.2.1.min.js(path=${contextPath})}"></script>
+	<script th:src="@{{path}js/base.js(path=${contextPath})}"></script>
 </head>
 <div th:fragment="footer">
-	<script th:src="@{js/jquery-3.2.1.min.js}"></script>
-	<script th:src="@{bootstrap/bootstrap.min.js}"></script>
-	<script th:src="@{bootstrap/bootbox.min.js}"></script>
-	<script th:src="@{js/base.js}"></script>
+	<!--<script th:src="@{{path}/js/jquery-3.2.1.min.js(path=${contextPath})}"></script>-->
+	<!--<script th:src="@{{path}js/base.js(path=${contextPath})}"></script>-->
 </div>

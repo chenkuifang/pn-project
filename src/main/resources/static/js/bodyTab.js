@@ -17,7 +17,7 @@ layui.define(["element","jquery"],function(exports){
 		};
 		
 	// 加载数据
-	$.get("/user/listMenu",function(data){
+    $.get(g.rootPath + "/user/listMenu",function(data){
 		if( data != undefined) {
 			if($(".navBar").html() == '') {
 				var _this = this;

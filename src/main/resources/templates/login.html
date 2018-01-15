@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <title>登陆界面</title>
-
 <head th:include="include :: header"></head>
-<link rel="stylesheet" th:href="@{css/login.css}" />
-
+<!--/*@thymesVar id="contextPath" type=""*/-->
+<link rel="stylesheet" th:href="@{{path}/css/login.css(path=${contextPath})}" />
 <body>
 	<div id="loginPanel">
 		<div class="container">
@@ -41,9 +38,18 @@
 			<img src="images/loading-16.gif" style="margin-right: 5px;" /><span>正在登陆系统，请稍后...</span>
 		</div>
 	</div>
-	<!-- 引入js 文件 -->
-	<div th:include="include::footer"></div>
+
 	<script type="text/javascript">
+
+        $(document).keypress(function(e) {
+            var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+            if (eCode == 13){
+                if (checkData()) {
+                    login();
+                }
+            }
+        });
+
 		$(document).ready(function() {
 			<!--iframe目标不一致刷新location-->
 			if (top.location !== self.location) {
@@ -64,11 +70,11 @@
 			msg.text("");
 			$.ajax({
 				type : "post",
-				url : "/loginPost",
+                url : g.rootPath + "/loginPost",
 				data : $("#loginForm").serialize(),
 				success : function(r) {
 					if (r.code == g.successCode) {
-						parent.location.href = '/index';
+						parent.location.href = g.rootPath + '/index';
 					} else {
 						msg.text(r.msg);
 					}

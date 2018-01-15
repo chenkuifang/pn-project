@@ -12,13 +12,15 @@
 	<meta name="apple--web-app-status-bar-style" content="black" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="format-detection" content="telephone=no" />
-	
-	<link rel="stylesheet" href="layui/css/layui.css" media="all" />
-	<link rel="stylesheet" href="css/font_eolqem241z66flxr.css" media="all" />
-	<link rel="stylesheet" href="css/main.css" media="all" />
-	
-	<script type="text/javascript" src="layui/layui.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
+
+	<link rel="shortcut icon" th:href="@{{path}/images/index.ico(path=${contextPath})}" />
+	<link rel="stylesheet" th:href="@{{path}/layui/css/layui.css(path=${contextPath})}" media="all" />
+	<link rel="stylesheet" th:href="@{{path}/css/font_eolqem241z66flxr.css(path=${contextPath})}" media="all" />
+	<link rel="stylesheet" th:href="@{{path}/css/main.css(path=${contextPath})}" media="all" />
+
+	<script type="text/javascript" th:src="@{{path}/layui/layui.js(path=${contextPath})}"></script>
+	<script type="text/javascript" th:src="@{{path}/js/index.js(path=${contextPath})}"></script>
+	<script th:src="@{{path}/js/base.js(path=${contextPath})}"></script>
 </head>
 <body class="main_body">
 	<div class="layui-layout layui-layout-admin">
@@ -30,15 +32,18 @@
 			    <!-- 顶部右侧菜单 -->
 			    <ul class="layui-nav top_menu">
 			    	<li class="layui-nav-item" >
-			    		<a th:href="@{/loginOut}"><i class="iconfont icon-loginout"></i> 退出</a>
+						<a th:href="@{{path}/loginOut(path=${contextPath})}"><i class="iconfont icon-loginout"></i> 退出</a>
 			    	</li>
 					<li class="layui-nav-item" >
 						<a href="javascript:;">
 							<cite th:text="${webContext.userNike}"></cite>
 						</a>
 						<dl class="layui-nav-child">
-							<dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-							<dd><a href="javascript:;" data-url="/changePwd"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+							<dd>
+								<a href="javascript:;" th:attr="data-url=@{{path}/user/changePwd(path=${contextPath})}">
+									<i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i>
+									<cite>修改密码</cite></a>
+							</dd>
 						</dl>
 					</li>
 				</ul>

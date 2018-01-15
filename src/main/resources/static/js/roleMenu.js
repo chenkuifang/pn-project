@@ -21,7 +21,7 @@ var setting = {
 function init(roleId) {
     $.ajax({
         type: "post",
-        url: "/menu/listMenu/" + roleId,
+        url: g.rootPath + "/menu/listMenu/" + roleId,
         async: false,
         success: function (result) {
             var data = result.data;
@@ -64,7 +64,7 @@ $(document).ready(function () {
         $.ajax({
             type: "post",
             contentType: "application/json; charset=utf-8",
-            url: "/role/saveRoleMenu",
+            url: g.rootPath + "/role/saveRoleMenu",
             async: false,
             data: JSON.stringify(data),
             success: function (result) {

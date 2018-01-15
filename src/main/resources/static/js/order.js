@@ -9,7 +9,7 @@ layui.use(['layer', 'jquery', 'table', 'form', 'laydate'], function () {
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/order/listPage',
+        url: g.rootPath + '/order/listPage',
         cols: [[
             {type: 'checkbox', widht: '5%'}
             , {field: 'orderSid', title: '订单号', width: '10%'}
@@ -65,7 +65,7 @@ layui.use(['layer', 'jquery', 'table', 'form', 'laydate'], function () {
         var index = layui.layer.open({
             title: "编辑商品信息",
             type: 2,
-            content: "/goods/edit/" + id
+            content: g.rootPath + "/goods/edit/" + id
         });
 
         $(window).resize(function () {
@@ -88,6 +88,9 @@ layui.use(['layer', 'jquery', 'table', 'form', 'laydate'], function () {
                 goodsName: goodsName,
                 startTime: startTime,
                 endTime: endTime
+            },
+            page: {
+                curr: 1
             }
         });
     });
@@ -96,7 +99,7 @@ layui.use(['layer', 'jquery', 'table', 'form', 'laydate'], function () {
     form.on('submit(saveSubmit)', function (data) {
         $.ajax({
             type: "post",
-            url: "/goods/save",
+            url: g.rootPath + "/goods/save",
             data: data.field,//表单数据
             success: function (result) {
                 if (result["code"] == g.successCode) {

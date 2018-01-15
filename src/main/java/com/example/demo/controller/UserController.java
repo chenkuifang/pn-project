@@ -60,7 +60,7 @@ public class UserController {
         List<Role> roles = roleService.listByStatus(1);
 
         model.addAttribute("roles", roles);
-        return "/user/list";
+        return "user/list";
     }
 
     /**
@@ -96,7 +96,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", roles);
         model.addAttribute("action", "add");
-        return "/user/edit";
+        return "user/edit";
     }
 
     /**
@@ -115,7 +115,7 @@ public class UserController {
         model.addAttribute("roles", roles);
         model.addAttribute("user", user);
         model.addAttribute("action", "edit");
-        return "/user/edit";
+        return "user/edit";
     }
 
     /**
