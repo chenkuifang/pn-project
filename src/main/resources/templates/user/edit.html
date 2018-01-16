@@ -30,15 +30,18 @@
 						<input type="text" name="userNike" th:value="${user.userNike}" class="layui-input" lay-verify="required"/>
 					</div>
 				</div>
-				
+
 				<div class="layui-col-md4">
 					<label class="layui-form-label">用户角色</label>
-					<div class="layui-input-block">
-						<select name="roleId">
-						  	 <option th:each="item : ${roles}" th:value="${item.roleId}" th:text="${item.roleName}"
-						  	 	th:selected="${user.roleId == item.roleId ? 'true' : 'false'}"></option>
+					<div th:switch="${user.Id}" class="layui-input-block">
+						<input th:case="10001" th:value="${user.role.roleName}" th:readonly="true" class="layui-input layui-disabled" />
+
+						<select  th:case="*" name="roleId" lay-search="" lay-verify="required">
+							<option value="">直接选择或搜索选择</option>
+							<option th:each="item : ${roles}" th:value="${item.roleId}" th:text="${item.roleName}"
+									th:selected="${user.roleId == item.roleId ? 'true' : 'false'}"></option>
 						</select>
-					</div>	
+					</div>
 				</div>
 			</div>
 			
