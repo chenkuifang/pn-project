@@ -295,12 +295,12 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 #logining{
-	display:none;
+    display:none;
 	margin:0 auto;
 	position:absolute;
-	top:200px;
+	top:400px;
 	left:50%;
-	wdith:350px;
+	width:350px;
 	margin-left:-175px;
 	z-index:200;
 }

@@ -33,7 +33,7 @@
 		</div>
 	</div>
 
-	<div class="container" id="logining">
+	<div id="logining">
 		<div class="login">
 			<img src="images/loading-16.gif" style="margin-right: 5px;" /><span>正在登陆系统，请稍后...</span>
 		</div>
@@ -66,6 +66,9 @@
 		
 		//登陆
 		function login() {
+			// 设置不可用，防止多次登录
+			$("#loginBtn").attr("disabled", true);
+			$("#logining").show();
 			var msg = $("#loginResult");
 			msg.text("");
 			$.ajax({
@@ -73,9 +76,11 @@
                 url : g.rootPath + "/loginPost",
 				data : $("#loginForm").serialize(),
 				success : function(r) {
+					$("#logining").hide();
 					if (r.code == g.successCode) {
 						parent.location.href = g.rootPath + '/index';
 					} else {
+						$("#loginBtn").removeAttr("disabled");
 						msg.text(r.msg);
 					}
 				}
