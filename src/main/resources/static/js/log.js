@@ -26,7 +26,7 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
     laydate.render({
         elem: '#startTime'
         , type: 'datetime'
-        , value: g.getSubDateStartTime(7)
+        , value: g.getStartSubDateTime(7)
     });
 
     //结束时间选择器

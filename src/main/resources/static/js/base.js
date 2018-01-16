@@ -129,17 +129,17 @@ g = {
         return result+' 00:00:00';
     },
 
-    //获取今天减去o天的初始时间
-    getSubDateStartTime : function (o) {
+    // 获取当前 -o天的时间
+    getStartSubDateTime : function (o) {
         if(g.isEmpty(o) || !g.isNumber(o)){
-            return new Date();
+             return new Date();
         }
 
         var d = new Date();
-        d.setDate(d.getDate() - o);//获取AddDayCount天后的日期
-        var result = d + ' 00:00:00';
-        result = g.dateTimeFormat(result);
-        return result;
+        d.setDate(d.getDate() - o);
+
+        var result = g.dateFormat(d);
+        return result+' 00:00:00';
     },
 
     isEmpty: function (o) {

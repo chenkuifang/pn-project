@@ -163,8 +163,26 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
         return false;
     });
 
-    //监听submit事件,修改密码提交
-    form.on("submit(changePwd)");
+   //监听提交
+   form.on('submit(changePwd)', function (data) {
+       $.ajax({
+           type: "post",
+           url: g.rootPath + "/user/changePwdPost",
+           data: data.field,//表单数据
+           success: function (result) {
+               if (result["code"] == g.successCode) {
+                    layer.alert('操作'+result["msg"]+',请重新登录', {icon: 1, title: g.title}, function (index) {
+                         parent.location.href = g.rootPath + '/login';
+                         layer.close(index);
+                    });
+               } else {
+                   layer.alert(result["msg"]);
+                   return false;
+               }
+           }
+       });
+       return false;
+   });
 
 });
 

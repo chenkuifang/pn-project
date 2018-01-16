@@ -1,9 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +26,8 @@ import com.example.demo.service.CommonService;
 import com.example.demo.service.MenuService;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 用户控制类
@@ -220,6 +219,62 @@ public class UserController {
         // 获取该角色的系统菜单列表
         List<Menu> menus = menuService.listByRoleId(user.getRoleId());
         return JsonResultUtils.jsonResult(menus);
+    }
+
+    /**
+     * 修改密码初始化视图
+     *
+     * @return
+     */
+    @GetMapping("/changePwd")
+    public String changePwd(Model model) {
+        String userName = WebContextUtils.getCurrentUserName();
+        model.addAttribute("userName", userName);
+        return "user/changePwd";
+    }
+
+    /**
+     * 获取修改密码操作
+     *
+     * @param userName 用户名
+     * @param oldPwd   旧密码
+     * @param newPwd   新密码
+     * @param model    需要返回的数据
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/changePwdPost")
+    @ResponseBody
+    public JsonResult changePwdPost(@RequestParam String userName, @RequestParam String oldPwd,
+                                    @RequestParam String newPwd, HttpSession session, Model model) throws Exception {
+        int flag = 0;
+
+        // 根据用户名获取用户信息
+        User user = userService.getByUserName(userName);
+        String encodePwd = MDUtils.encodeMD5(oldPwd);
+        if (user != null && user.getPassword().equals(encodePwd)) {
+            User newUser = new User();
+            newUser.setId(user.getId());
+            newUser.setPassword(MDUtils.encodeMD5(newPwd));
+
+            // 修改密码
+            flag = userService.update(newUser);
+        } else {
+            // 密码错误
+            return JsonResultUtils.jsonResult("密码错误");
+        }
+
+        // 成修改后 清空session
+        if (flag >= 1) {
+            // 清除session
+            Enumeration<String> em = session.getAttributeNames();
+            while (em.hasMoreElements()) {
+                session.removeAttribute(em.nextElement());
+            }
+        }
+
+        model.addAttribute("userName", userName);
+        return JsonResultUtils.jsonResult(flag);
     }
 
     /**

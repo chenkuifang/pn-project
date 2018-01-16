@@ -8,9 +8,11 @@
 
 	<script type="text/javascript" th:src="@{{path}/layui.2.2.3/layui/layui.js(path=${contextPath})}"></script>
 	<script type="text/javascript" th:src="@{{path}/js/user.js(path=${contextPath})}"></script>
+	<script type="text/javascript" th:src="@{{path}/js/base.js(path=${contextPath})}"></script>
+
 </head>
 <body class="childrenBody">
-	<form class="layui-form changePwd" action="/changePwdPost" method="post" >
+	<form class="layui-form">
 		<div style="margin:0 0 15px 110px;color:#f00;" th:text="${result}"></div>
 		<div class="layui-form-item">
 		    <label class="layui-form-label">用户名</label>
