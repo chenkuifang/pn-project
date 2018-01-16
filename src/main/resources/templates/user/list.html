@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 	<meta charset="utf-8" />
 	<title>用户管理</title>
-	<link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all" />
-	
-	<script type="text/javascript" src="/layui.2.2.3/layui/layui.js"></script>
-	<script type="text/javascript" src="/js/user/user.js"></script>
-	<script type="text/javascript" src="/js/base.js"></script>
+	<link rel="stylesheet" th:href="@{{path}/layui.2.2.3/layui/css/layui.css(path=${contextPath})}" media="all"/>
+
+	<script type="text/javascript" th:src="@{{path}/layui.2.2.3/layui/layui.js(path=${contextPath})}"></script>
+	<script type="text/javascript" th:src="@{{path}/js/user.js(path=${contextPath})}"></script>
+	<script type="text/javascript" th:src="@{{path}/js/base.js(path=${contextPath})}"></script>
 </head>
 <body class="childrenBody">
 <form class="layui-form">

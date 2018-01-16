@@ -16,6 +16,7 @@ g = {
     successCode : '100',
     failCode : '101',
     is_debug: true,
+    rootPath : '/pn',
 
     setCookie: function (key, value) {
         var expires = new Date();
@@ -126,6 +127,19 @@ g = {
     getTodayStartTime : function() {
         var result = g.dateFormat(new Date().getTime());
         return result+' 00:00:00';
+    },
+
+    //获取今天减去o天的初始时间
+    getSubDateStartTime : function (o) {
+        if(g.isEmpty(o) || !g.isNumber(o)){
+            return new Date();
+        }
+
+        var d = new Date();
+        d.setDate(d.getDate() - o);//获取AddDayCount天后的日期
+        var result = d + ' 00:00:00';
+        result = g.dateTimeFormat(result);
+        return result;
     },
 
     isEmpty: function (o) {

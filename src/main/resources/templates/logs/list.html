@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<meta charset="utf-8" />
+	<title>日志输出页面</title>
+	<link rel="stylesheet" th:href="@{{path}/layui.2.2.3/layui/css/layui.css(path=${contextPath})}" media="all"/>
+	
+	<script type="text/javascript" th:src="@{{path}/layui.2.2.3/layui/layui.js(path=${contextPath})}"></script>
+	<script type="text/javascript" th:src="@{{path}/js/log.js(path=${contextPath})}"></script>
+	<script type="text/javascript" th:src="@{{path}/js/base.js(path=${contextPath})}"></script>
+</head>
+<body class="childrenBody">
+	<form class="layui-form">
+		<div class="layui-row" style="margin-top:20px;padding-left:20px;">
+			<div style="float:left;margin-left:20px;font-size:20px;" th:each="item : ${data}">
+				<a th:text="${item.key}" 
+		      		th:href="@{{path}/logs/detail/{fileName}(path=${contextPath},fileName=${item.key})}" target="_blank"></a>
+			</div>
+    		
+    	</div>
+		<!-- <table class="layui-table">
+		  <thead>
+		    <tr>
+		      <th>日志名称</th>
+		    </tr> 
+		  </thead>
+		  <tbody>
+		    <tr th:each="item : ${data}">
+		      <td>
+		      	<a th:text="${item.key}" 
+		      		th:href="@{{path}/logs/detail/{fileName}(path=${contextPath},fileName=${item.key})}" target="_blank"></a>
+		      </td>
+		    </tr>
+		  </tbody>
+		</table> -->
+	</form>
+</body>
+</html>

@@ -12,7 +12,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/user/listPage',
+        url: g.rootPath + '/user/listPage',
         cols: [[
             {type: 'checkbox', widht: '5%'}
             , {field: 'userName', title: '用户名称', width: '10%'}
@@ -34,7 +34,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
         var index = layui.layer.open({
             title: "添加用户信息",
             type: 2,
-            content: "/user/add"
+            content: g.rootPath + "/user/add"
         });
 
         $(window).resize(function () {
@@ -49,7 +49,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
         var index = layui.layer.open({
             title: "编辑用户信息",
             type: 2,
-            content: "/user/edit/" + id
+            content: g.rootPath + "/user/edit/" + id
         });
 
         $(window).resize(function () {
@@ -66,6 +66,9 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
             where: {
                 userName: userName,
                 roleId: roleId
+            },
+            page: {
+                curr: 1
             }
         });
     });
@@ -76,7 +79,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
         layer.confirm('确定删除吗?', {icon: 3, title: '提示信息'}, function () {
             $.ajax({
                 type: "post",
-                url: "/user/remove",
+                url: g.rootPath + "/user/remove",
                 data: {id: id},
                 success: function (result) {
                     if (result["code"] == g.successCode) {
@@ -109,7 +112,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
         layer.confirm('确定删除吗?', {icon: 3, title: g.title}, function () {
             $.ajax({
                 type: "post",
-                url: "/user/removeBatch",
+                url: g.rootPath + "/user/removeBatch",
                 async: false,
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(ids),
@@ -145,7 +148,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function () {
     form.on('submit(saveSubmit)', function (data) {
         $.ajax({
             type: "post",
-            url: "/user/save",
+            url: g.rootPath + "/user/save",
             data: data.field,//表单数据
             success: function (result) {
                 if (result["code"] == g.successCode) {

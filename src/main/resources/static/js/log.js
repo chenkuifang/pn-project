@@ -6,32 +6,10 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
         laydate = layui.laydate;
         $ = layui.jquery;
 
-    //开始时间选择器
-    laydate.render({
-        elem: '#startTime'
-        , type: 'datetime'
-        , value: new Date(g.getSubDate(7)+' 00:00:00')
-    });
-
-    //结束时间选择器
-    laydate.render({
-        elem: '#endTime'
-        , type: 'datetime'
-        , value: g.getTodayEndTime()
-    });
-
-    // 初始化时间
-    var startTime = $("#startTime").val();
-    var endTime = $("#endTime").val();
-
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
         elem: '#dataTable',
-        url: "/log/listPage",
-        where: {
-            startTime: startTime,
-            endTime: endTime
-        },
+        url: g.rootPath + '/log/listPage',
         cols: [[
             {field: 'userId', title: '操作用户ID', width: '10%'}
             , {field: 'userName', title: '操作用户名称', width: '10%'}
@@ -44,6 +22,20 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
         page: true
     });
 
+    //开始时间选择器
+    laydate.render({
+        elem: '#startTime'
+        , type: 'datetime'
+        , value: g.getSubDateStartTime(7)
+    });
+
+    //结束时间选择器
+    laydate.render({
+        elem: '#endTime'
+        , type: 'datetime'
+        , value: g.getTodayEndTime()
+    });
+
     // 搜索
     $("body").on("click", ".searchBtn", function () {
         var operation = $("#operation").val();
@@ -54,6 +46,9 @@ layui.use(['form', 'layer', 'jquery', 'table','laydate'], function () {
                 operation: operation,
                 startTime : startTime,
                 endTime : endTime
+            },
+            page: {
+                curr: 1
             }
         });
     });

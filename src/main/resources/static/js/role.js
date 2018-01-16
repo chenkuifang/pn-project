@@ -7,7 +7,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
     // 数据渲染(templet遵守laytpl 模板规则 )
     var tableIns = table.render({
         elem: '#dataTable',
-        url: '/role/listPage',
+        url: g.rootPath + '/role/listPage',
         cols: [[
             {type: 'checkbox', widht: '5%'}
             //,{field:'menuId', title: 'ID',widht:'5%'}
@@ -28,7 +28,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         var index = layui.layer.open({
             title: "添加角色信息",
             type: 2,
-            content: "/role/add"
+            content: g.rootPath + "/role/add"
         });
 
         $(window).resize(function () {
@@ -43,7 +43,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         var index = layui.layer.open({
             title: "编辑角色信息",
             type: 2,
-            content: "/role/edit/" + roleId
+            content: g.rootPath + "/role/edit/" + roleId
         });
 
         $(window).resize(function () {
@@ -59,7 +59,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         var index = layui.layer.open({
             title: "正在为 【" + roleName + "】 编辑角色菜单信息",
             type: 2,
-            content: "/role/editMenu/" + roleId
+            content: g.rootPath + "/role/editMenu/" + roleId
         });
 
         $(window).resize(function () {
@@ -74,6 +74,9 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         tableIns.reload({
             where: {
                 roleName: roleName
+            },
+            page: {
+                curr: 1
             }
         });
     });
@@ -84,7 +87,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         layer.confirm('确定删除吗?', {icon: 3, title: '提示信息'}, function () {
             $.ajax({
                 type: "post",
-                url: "/role/remove",
+                url: g.rootPath + "/role/remove",
                 data: {roleId: id},
                 success: function (result) {
                     if (result["code"] == g.successCode) {
@@ -117,7 +120,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
         layer.confirm('确定删除吗?', {icon: 3, title: g.title}, function () {
             $.ajax({
                 type: "post",
-                url: "/role/removeBatch",
+                url: g.rootPath + "/role/removeBatch",
                 async: false,
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(ids),
@@ -139,7 +142,7 @@ layui.use(['layer', 'jquery', 'table', 'form'], function () {
     form.on('submit(saveSubmit)', function (data) {
         $.ajax({
             type: "post",
-            url: "/role/save",
+            url: g.rootPath + "/role/save",
             data: data.field,//表单数据
             success: function (result) {
                 if (result["code"] == g.successCode) {

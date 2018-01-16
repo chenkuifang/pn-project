@@ -1,23 +1,23 @@
 package com.example.demo.aop;
 
-import com.example.demo.annotation.RequestLimit;
-import com.example.demo.exception.RequestLimitException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import com.example.demo.annotation.RequestLimit;
+import com.example.demo.exception.RequestLimitException;
 
 /**
  * @author Administrator
@@ -35,8 +35,8 @@ public class RequestLimitAspect {
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
+//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+//        Method method = signature.getMethod();
 
 
         String ip = request.getLocalAddr();

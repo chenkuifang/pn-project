@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="utf-8"/>
     <title>菜单权限设置</title>
-    <link rel="stylesheet" href="/layui.2.2.3/layui/css/layui.css" media="all"/>
-    <link rel="stylesheet" href="/zTreeStyle/zTreeStyle.css"/>
+    <link rel="stylesheet" th:href="@{{path}/layui.2.2.3/layui/css/layui.css(path=${contextPath})}" media="all"/>
+    <link rel="stylesheet" th:href="@{{path}/zTreeStyle/zTreeStyle.css(path=${contextPath})}"/>
 
-    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="/ztree/jquery.ztree.all.min.js"></script>
-    <script type="text/javascript" src="/js/roleMenu.js"></script>
-    <script type="text/javascript" src="/js/base.js"></script>
-    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" th:src="@{{path}/js/jquery-3.2.1.min.js(path=${contextPath})}"></script>
+    <script type="text/javascript" th:src="@{{path}/ztree/jquery.ztree.all.min.js(path=${contextPath})}"></script>
+    <script type="text/javascript" th:src="@{{path}/js/roleMenu.js(path=${contextPath})}"></script>
+    <script type="text/javascript" th:src="@{{path}/js/base.js(path=${contextPath})}"></script>
+    <script type="text/javascript" th:src="@{{path}/layer/layer.js(path=${contextPath})}"></script>
 </head>
 <body class="childrenBody">
     <div class="layui-form" style="width:80%;">
