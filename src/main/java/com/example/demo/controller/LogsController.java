@@ -47,7 +47,10 @@ public class LogsController {
      */
     @GetMapping("/detail/{fileName}")
     public String get(@PathVariable("fileName") String fileName, Model model) {
-        String sfilePath = logFilePath.concat("\\").concat(fileName).concat(".log");
+        // 根据系统获取文件分隔符
+        String fileSeparator = System.getProperty("file.separator");
+        System.err.println(fileSeparator);
+        String sfilePath = logFilePath.concat(fileSeparator).concat(fileName).concat(".log");
         List<String> data = FileUtils.readFileByLines(sfilePath);
         model.addAttribute("data", data);
         return "logs/detail";

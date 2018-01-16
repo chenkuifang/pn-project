@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 文件读取工具类
+ *
  * @author QuiFar
  * @version V1.0
- * @Description: 文件读取工具类
  */
 public class FileUtils {
     private FileUtils() {
@@ -27,7 +28,6 @@ public class FileUtils {
         File file = new File(fileName);
         BufferedReader reader = null;
         try {
-            System.out.println("以行为单位读取文件内容，一次读一整行：");
             reader = new BufferedReader(new FileReader(file));
             String tempString = null;
 
@@ -56,7 +56,7 @@ public class FileUtils {
      * @param strPath 文件夹路径
      * @return
      */
-    public static List<File> getFileList(String strPath) {
+    private static List<File> getFileList(String strPath) {
         List<File> filelist = new ArrayList<>();
         File dir = new File(strPath);
         File[] files = dir.listFiles(); // 该文件目录下文件全部放入数组
@@ -66,11 +66,7 @@ public class FileUtils {
                 if (files[i].isDirectory()) { // 判断是文件还是文件夹
                     getFileList(files[i].getAbsolutePath()); // 获取文件绝对路径
                 } else if (fileName.endsWith("log")) { // 判断文件名是否以.avi结尾
-                    String strFileName = files[i].getAbsolutePath();
-                    System.out.println("---" + strFileName);
                     filelist.add(files[i]);
-                } else {
-                    continue;
                 }
             }
 
