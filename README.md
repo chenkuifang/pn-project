@@ -3,7 +3,7 @@
 <p>后面我会集成更多现在既流行又实用的技术，包括shiro或 spring security的签名授权、dubbo、利用REST风格的前后端分离、spring cloud等。</p>
 <p>为了提供套路简单，逻辑清晰，我没少花时间，就是为了能让更多人能看懂，很多地方都是经过多次考虑而使用最简单的实现方式。</p>
 <p>望各位同学能多多支持，在学习或使用该框架的时候如果发现那里做的不够好的，希望不吝赐教，最后别忘了start一下项目哦，如果有兴趣也可Fork该仓库，也期待你的代码贡献，哈哈.....</p>
-
+<p>为了更好水平扩展，开发了基于JWT的无状态类似项目，这样再也生产环境不怕重启session丢失了。<a href="https://github.com/chenkuifang/pn-project-jwt">pn-project-jwt</a></p>
 <h2>第一次运行系统</h2>
 <ul>
 	<li>JDK1.8或以上，Mysql5.7或以上</li>	
