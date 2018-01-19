@@ -1,39 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <title>登陆界面</title>
-<head th:include="include :: header"></head>
-<!--/*@thymesVar id="contextPath" type=""*/-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<link rel="shortcut icon" th:href="@{{path}/images/index.ico(path=${contextPath})}" />
 <link rel="stylesheet" th:href="@{{path}/css/login.css(path=${contextPath})}" />
+
+<script th:src="@{{path}/js/jquery-3.2.1.min.js(path=${contextPath})}"></script>
+<script th:src="@{{path}/js/base.js(path=${contextPath})}"></script>
 <body>
-	<div id="loginPanel">
-		<div class="container">
-			<div class="login">
-				<h1>PN管理平台</h1>
-				<form method="post" id="loginForm">
-					<p>
-						<input type="text" name="userName" id="userName" placeholder="用户名" />
-					</p>
-					<p>
-						<input type="password" name="password" id="password" placeholder="密码" />
-					</p>
-					<p class="remember_me">
-						<label><input type="checkbox" name="autoLogin" id="autoLogin" />自动登录</label>
-					</p>
-					<p class="submit">
-						<input type="button" id="loginBtn" value="登陆" />
-					</p>
-					<p class="error" id="loginResult"></p>
-				</form>
-			</div>
-			<div class="login-help">
-				<p>
-					忘记密码？ <a href="user/resetPwd.html">重新设置密码</a>。
-				</p>
-			</div>
+	<div class="logins">
+		<div class="message">pnphone后台管理</div>
+		<div id="darkbannerwrap"></div>
+		<form method="post" id="loginForm" >
+			<input name="action" value="login" type="hidden" />
+			<input type="text" name="userName" id="userName" placeholder="用户名" />
+			<hr class="hr15"/>
+			<input type="password" name="password" id="password" placeholder="密码" />
+			<hr class="hr15"/>
+			<input value="登录" style="width:100%;" type="button" id="loginBtn1" />
+			<hr class="hr20" />
+		</form>
+		<div style="float:left;height:40px;width:100%;">
+			<p class="error" id="loginResult"></p>
 		</div>
 	</div>
 
-	<div id="logining">
+	<div class="container" id="logining">
 		<div class="login">
 			<img src="images/loading-16.gif" style="margin-right: 5px;" /><span>正在登陆系统，请稍后...</span>
 		</div>
@@ -50,62 +45,58 @@
             }
         });
 
-		$(document).ready(function() {
-			<!--iframe目标不一致刷新location-->
-			if (top.location !== self.location) {
-      			top.location = self.location;
-    	 	}
+        $(document).ready(function() {
 
-			//绑定登陆事件
-			$("#loginBtn").click(function() {
-				if (checkData()) {
-					login();
-				}
-			});
-		});
-		
-		//登陆
-		function login() {
-			// 设置不可用，防止多次登录
-			$("#loginBtn").attr("disabled", true);
-			$("#logining").show();
-			var msg = $("#loginResult");
-			msg.text("");
-			$.ajax({
-				type : "post",
+            <!--iframe目标不一致刷新location-->
+            if (top.location !== self.location) {
+                top.location = self.location;
+            }
+
+            //绑定登陆事件
+            $("#loginBtn1").click(function() {
+                if (checkData()) {
+                    login();
+                }
+            });
+        });
+
+        //登陆
+        function login() {
+            var msg = $("#loginResult");
+            msg.text("");
+            $.ajax({
+                type : "post",
                 url : g.rootPath + "/loginPost",
-				data : $("#loginForm").serialize(),
-				success : function(r) {
-					$("#logining").hide();
-					if (r.code == g.successCode) {
-						parent.location.href = g.rootPath + '/index';
-					} else {
-						$("#loginBtn").removeAttr("disabled");
-						msg.text(r.msg);
-					}
-				}
-			});
-		}
+                data : $("#loginForm").serialize(),
+                success : function(r) {
+                    if (r.code == g.successCode) {
+                        parent.location.href = g.rootPath + '/index';
+                    } else {
+                        msg.text(r.msg);
+                    }
+                }
+            });
+        }
 
-		//校验数据非空
-		function checkData() {
-			var userName = $("#userName").val();
-			var password = $("#password").val();
-			var msg = $("#loginResult");
-			msg.text("");
+        //校验数据非空
+        function checkData() {
+            var userName = $("#userName").val();
+            var password = $("#password").val();
+            var msg = $("#loginResult");
+            msg.text("");
 
-			if (g.isEmpty(userName)) {
-				msg.text("用户名不能为空!");
-				return false;
-			}
+            if (g.isEmpty(userName)) {
+                msg.text("用户名不能为空!");
+                return false;
+            }
 
-			if (g.isEmpty(password)) {
-				msg.text("密码不能为空!");
-				return false;
-			}
+            if (g.isEmpty(password)) {
+                msg.text("密码不能为空!");
+                return false;
+            }
 
-			return true;
-		}
+            return true;
+        }
 		
 	</script>
 </body>
