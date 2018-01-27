@@ -38,12 +38,12 @@ public class JedisUtils {
      * 初始化线程池
      */
     static {
-        JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxTotal(MAX_ACTIVE);
-        config.setMaxIdle(MAX_IDLE);
-        config.setMaxWaitMillis(MAX_WAIT);
-        config.setTestOnBorrow(BORROW);
-        jedisPool = new JedisPool(config, HOST, PORT, TIMEOUT, AUTH);
+//        JedisPoolConfig config = new JedisPoolConfig();
+//        config.setMaxTotal(MAX_ACTIVE);
+//        config.setMaxIdle(MAX_IDLE);
+//        config.setMaxWaitMillis(MAX_WAIT);
+//        config.setTestOnBorrow(BORROW);
+      //  jedisPool = new JedisPool(config, HOST, PORT, TIMEOUT, AUTH);
     }
 
     /**

@@ -133,7 +133,7 @@ public class UserController {
 
         // 新增
         if (user.getId() == null) {
-            int id = commonService.getTableNewId("pn_user", "id", 10001);
+            int id = commonService.getTableNewId("pn_user", "id");
             user.setId(id);
             // 暂时没有部门信息
             user.setDepartmentId(10001);

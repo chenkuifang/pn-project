@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Goods;
+
 import java.util.List;
 import java.util.Map;
-
-import com.example.demo.entity.Goods;
 
 /**
  * 商品信息服务层接口
@@ -38,9 +38,9 @@ public interface GoodsService {
     /**
      * 修改商品库存和销量
      *
-     * @param goodsNum
-     * @param amount
-     * @return
+     * @param goodsNum 商品编码
+     * @param amount   销量
+     * @return 返回修改成功行数
      */
     int updateStockAndSaleCount(String goodsNum, int amount);
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  *
  * @QuiFar
  */
-@Component
+//@Component
 public class Scheduler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
