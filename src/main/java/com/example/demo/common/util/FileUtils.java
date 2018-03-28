@@ -1,5 +1,8 @@
 package com.example.demo.common.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,15 +18,14 @@ import java.util.Map;
  * @author QuiFar
  * @version V1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils {
-    private FileUtils() {
-    }
 
     /**
      * 以行为单位读取文件，常用于读面向行的格式化文件
      */
     public static List<String> readFileByLines(String fileName) {
-        List<String> data = new ArrayList<String>();
+        List<String> data = new ArrayList<>();
 
         File file = new File(fileName);
         BufferedReader reader = null;

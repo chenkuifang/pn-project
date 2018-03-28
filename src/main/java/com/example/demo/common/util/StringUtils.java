@@ -1,5 +1,8 @@
 package com.example.demo.common.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,10 +13,8 @@ import java.util.regex.Pattern;
  * @author QuiFar
  * @version V1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
-
-    private StringUtils() {
-    }
 
     /**
      * 判断是否是有效手机号码

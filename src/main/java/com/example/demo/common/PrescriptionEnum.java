@@ -1,5 +1,8 @@
 package com.example.demo.common;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 处方类型枚举类
  *
@@ -15,24 +18,13 @@ public enum PrescriptionEnum {
     POWDER("散剂", 5),
     SOUP_PACKAGE("汤包", 6);
 
+    @Setter
+    @Getter
     private String name;
+    @Setter
+    @Getter
     private int intVal;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getIntVal() {
-        return intVal;
-    }
-
-    public void setIntVal(int intVal) {
-        this.intVal = intVal;
-    }
 
     PrescriptionEnum(String name, int intVal) {
         this.name = name;

@@ -2,6 +2,8 @@ package com.example.demo.common.util;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.WebContext;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +16,11 @@ import javax.servlet.http.HttpSession;
  * @author QuiFar
  * @version V1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WebContextUtils {
 
     // 为解决并发问题把session存在到ThreadLocal中
     private static ThreadLocal<HttpSession> session = new ThreadLocal<>();
-
-    private WebContextUtils() {
-    }
 
     /**
      * 设置sesion,此方法在LoginInterceptor中调用赋值

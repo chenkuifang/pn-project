@@ -3,6 +3,9 @@ package com.example.demo.common.util;
 import java.util.List;
 import java.util.Set;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,34 +20,11 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author QuiFar
  * @version V1.0
  */
+@Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JedisUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(JedisUtils.class);
-
-    private static final String HOST = "192.168.211.137"; // ip
-    private static final int PORT = 6379; // 端口
-    private static final String AUTH = "123456"; // 密码(原始默认是没有密码)
-    private static int MAX_ACTIVE = 1024; // 最大连接数
-    private static int MAX_IDLE = 200; // 设置最大空闲数
-    private static int MAX_WAIT = 10000; // 最大连接时间
-    private static int TIMEOUT = 10000; // 超时时间
-    private static boolean BORROW = true; // 在borrow一个事例时是否提前进行validate操作
-    private static JedisPool jedisPool = null;
-
-    // private static JedisPool jedisPool =
-    // SpringContextUtils.getBean(JedisPool.class);
-
-    /**
-     * 初始化线程池
-     */
-    static {
-//        JedisPoolConfig config = new JedisPoolConfig();
-//        config.setMaxTotal(MAX_ACTIVE);
-//        config.setMaxIdle(MAX_IDLE);
-//        config.setMaxWaitMillis(MAX_WAIT);
-//        config.setTestOnBorrow(BORROW);
-      //  jedisPool = new JedisPool(config, HOST, PORT, TIMEOUT, AUTH);
-    }
+    private static JedisPool jedisPool = SpringContextUtils.getBean(JedisPool.class);
 
     /**
      * 获取连接
@@ -54,9 +34,9 @@ public class JedisUtils {
             if (jedisPool != null) {
                 return jedisPool.getResource();
             }
-            logger.info("jedisPool为null,连接池连接异常");
+            log.info("jedisPool为null,连接池连接异常");
         } catch (Exception e) {
-            logger.info("连接池连接异常");
+            log.info("连接池连接异常");
             return null;
         }
         return null;
@@ -76,10 +56,10 @@ public class JedisUtils {
             if (jedis.exists(key)) {
                 value = jedis.get(key);
                 value = StringUtils.isNotBlank(value) && !"nil".equalsIgnoreCase(value) ? value : null;
-                logger.debug("get {} = {}", key, value);
+                log.debug("get {} = {}", key, value);
             }
         } catch (Exception e) {
-            logger.warn("get {} = {}", key, value, e);
+            log.warn("get {} = {}", key, value, e);
         } finally {
             jedisColse(jedis);
         }
@@ -103,9 +83,9 @@ public class JedisUtils {
             if (cacheSeconds != 0) {
                 jedis.expire(key, cacheSeconds);
             }
-            logger.debug("set {} = {}", key, value);
+            log.debug("set {} = {}", key, value);
         } catch (Exception e) {
-            logger.warn("set {} = {}", key, value, e);
+            log.warn("set {} = {}", key, value, e);
         } finally {
             jedisColse(jedis);
         }
@@ -132,9 +112,9 @@ public class JedisUtils {
             if (cacheSeconds != 0) {
                 jedis.expire(key, cacheSeconds);
             }
-            logger.debug("setList {} = {}", key, value);
+            log.debug("setList {} = {}", key, value);
         } catch (Exception e) {
-            logger.warn("setList {} = {}", key, value, e);
+            log.warn("setList {} = {}", key, value, e);
         } finally {
             jedisColse(jedis);
         }
@@ -161,9 +141,9 @@ public class JedisUtils {
             if (cacheSeconds != 0) {
                 jedis.expire(key, cacheSeconds);
             }
-            logger.debug("setSet {} = {}", key, value);
+            log.debug("setSet {} = {}", key, value);
         } catch (Exception e) {
-            logger.warn("setSet {} = {}", key, value, e);
+            log.warn("setSet {} = {}", key, value, e);
         } finally {
             jedisColse(jedis);
         }
@@ -183,9 +163,9 @@ public class JedisUtils {
         try {
             jedis = getJedis();
             result = jedis.rpush(key, value);
-            logger.debug("listAdd {} = {}", key, value);
+            log.debug("listAdd {} = {}", key, value);
         } catch (Exception e) {
-            logger.warn("listAdd {} = {}", key, value, e);
+            log.warn("listAdd {} = {}", key, value, e);
         } finally {
             jedisColse(jedis);
         }
