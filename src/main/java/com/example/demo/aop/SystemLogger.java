@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -30,9 +31,9 @@ import com.alibaba.fastjson.JSON;
  */
 @Aspect
 @Component
+@Slf4j
 public class SystemLogger {
 
-	private static final Logger logger = LoggerFactory.getLogger(SystemLogger.class);
 	//是否打印请求日志，一般开发环境为true，生产环境为false
 	@Value("${pn.isLogger}")
 	private boolean isLogger;
@@ -55,11 +56,11 @@ public class SystemLogger {
 			Method method = signature.getMethod();
 
 			// 记录下请求内容
-			logger.info("请求路径 : " + request.getRequestURL().toString());
-			logger.info("请求方法 : " + request.getMethod());
-			logger.info("访问IP : " + request.getRemoteAddr());
-			logger.info("访问方法 : " + signature.getDeclaringTypeName() + "." + method.getName());
-			logger.info("请求方法参数：" + Arrays.toString(joinPoint.getArgs()));
+			log.info("请求路径 : " + request.getRequestURL().toString());
+			log.info("请求方法 : " + request.getMethod());
+			log.info("访问IP : " + request.getRemoteAddr());
+			log.info("访问方法 : " + signature.getDeclaringTypeName() + "." + method.getName());
+			log.info("请求方法参数：" + Arrays.toString(joinPoint.getArgs()));
 
 			// 当然这里也可以把这些记录插入数据库
 		}
@@ -75,8 +76,8 @@ public class SystemLogger {
 	@AfterReturning(returning = "ret", pointcut = "pointcut()")
 	public void doAfterReturning(Object ret) throws Throwable {
 		if (isLogger) {
-			logger.info("响应数据 : " + JSON.toJSONString(ret));
-			logger.info("响应时间 : " + (System.currentTimeMillis() - startTime) + " ms");
+			log.info("响应数据 : " + JSON.toJSONString(ret));
+			log.info("响应时间 : " + (System.currentTimeMillis() - startTime) + " ms");
 		}
 	}
 

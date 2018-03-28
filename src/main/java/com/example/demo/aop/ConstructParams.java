@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
@@ -30,9 +31,8 @@ import com.example.demo.common.Constants;
  */
 @Aspect
 @Component
+@Slf4j
 public class ConstructParams {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConstructParams.class);
 
     /**
      * 切入点；拦截controller包下面的所有类中含有@RequestMapping(已包括GETxxxx,POSTxxxx注解)注解的方法。
@@ -87,7 +87,7 @@ public class ConstructParams {
      */
     @AfterThrowing(pointcut = "pointcut()", throwing = "ex")
     public void afterThrow(Exception ex) {
-        logger.info("麻蛋出现异常了， " + ex.getMessage());
+        log.info("麻蛋出现异常了， " + ex.getMessage());
     }
 
 }

@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -26,8 +27,8 @@ import com.example.demo.exception.RequestLimitException;
  */
 @Aspect
 @Component
+@Slf4j
 public class RequestLimitAspect {
-    private static final Logger logger = LoggerFactory.getLogger("RequestLimitAspect");
     private Map<String, Integer> redisTemplate = new HashMap<>();
 
     @Before("within(@org.springframework.stereotype.Controller *) && @annotation(limit)")
@@ -62,7 +63,7 @@ public class RequestLimitAspect {
             timer.schedule(timerTask, limit.time());
         }
         if (count > limit.count()) {
-            logger.info("用户IP[" + ip + "]访问地址[" + url + "]超过了限定的次数[" + limit.count() + "]");
+            log.info("用户IP[" + ip + "]访问地址[" + url + "]超过了限定的次数[" + limit.count() + "]");
             throw new RequestLimitException();
         }
 

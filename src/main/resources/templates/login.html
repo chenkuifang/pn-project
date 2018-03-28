@@ -74,7 +74,10 @@
                     } else {
                         msg.text(r.msg);
                     }
-                }
+                },
+				error : function() {
+                   msg.text("服务器忙，请稍后再操作。");
+				}
             });
         }
 
