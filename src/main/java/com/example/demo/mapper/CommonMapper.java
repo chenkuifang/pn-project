@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.demo.entity.Log;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 系统公共方法映射接口
@@ -19,9 +20,9 @@ public interface CommonMapper {
      *
      * @param tableName 需要创建ID的数据库表名称,如"pn_user"
      * @param field     数据表字段,如Id,user_id,menu_id等
-     * @return 因为会存在null 的情况下，所以返回类型用Map
+     * @return 返回最前field 字段值
      */
-    Map<String, Object> getTableNewId(Map<String, Object> params);
+    Object getTableNewId(@Param("tableName") String tableName, @Param("field") String field);
 
     /**
      * 系统操作日志添加

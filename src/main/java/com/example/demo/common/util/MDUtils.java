@@ -1,5 +1,8 @@
 package com.example.demo.common.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.security.MessageDigest;
 
 /**
@@ -8,10 +11,8 @@ import java.security.MessageDigest;
  * @Description: MD 不可逆加密
  * @date 2017年11月11日 下午10:28:35
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MDUtils {
-
-	private MDUtils() {
-	}
 
 	/***
 	 * 默认字符集 {@link CharEncoding#UTF_8}

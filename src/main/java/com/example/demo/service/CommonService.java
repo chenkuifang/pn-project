@@ -23,6 +23,17 @@ public interface CommonService {
     int getTableNewId(String tableName, String field, Integer initId);
 
     /**
+     * 获取一个数据表的新ID,默认从10001开始
+     *
+     * @param tableName 需要创建ID的数据库表名称,如"pn_user"
+     * @param field     数据表字段,如Id,user_id,menu_id等
+     * @return
+     */
+    int getTableNewId(String tableName, String field);
+
+    //String getTableNewStringId(String tableName, String field);
+
+    /**
      * 系统操作日志添加
      *
      * @param clazz     操作类

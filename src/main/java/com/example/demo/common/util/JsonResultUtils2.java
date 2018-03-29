@@ -2,6 +2,8 @@ package com.example.demo.common.util;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.JsonResult;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -14,10 +16,8 @@ import java.util.List;
  * @author QuiFar
  * @version V1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class JsonResultUtils2 {
-
-    private JsonResultUtils2() {
-    }
 
     /**
      * 返回普通json结果,只有code和msg属性值,返回："成功" 或者 "失败"

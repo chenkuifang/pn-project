@@ -2,6 +2,10 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -10,6 +14,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @date 2017年11月11日 下午12:21:01
  * @version V1.0
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -7846848632214306244L;
@@ -34,204 +42,4 @@ public class User implements Serializable {
 	// 创建者
 	private User user;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * 返回 id
-	 * 
-	 * @return
-	 */
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	/**
-	 * 返回 登陆用户名
-	 * 
-	 * @return
-	 */
-	public String getUserName() {
-		return this.userName;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * 返回 登陆密码
-	 * 
-	 * @return
-	 */
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
-	}
-
-	/**
-	 * 返回 所属部门
-	 * 
-	 * @return
-	 */
-	public Integer getDepartmentId() {
-		return this.departmentId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	/**
-	 * 返回 用户所属角色id
-	 * 
-	 * @return
-	 */
-	public Integer getRoleId() {
-		return this.roleId;
-	}
-
-	public void setUserNike(String userNike) {
-		this.userNike = userNike;
-	}
-
-	/**
-	 * 返回 昵称
-	 * 
-	 * @return
-	 */
-	public String getUserNike() {
-		return this.userNike;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	/**
-	 * 返回 电子邮件
-	 * 
-	 * @return
-	 */
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	/**
-	 * 返回 手机
-	 * 
-	 * @return
-	 */
-	public String getMobile() {
-		return this.mobile;
-	}
-
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
-
-	/**
-	 * 返回 性别
-	 * 
-	 * @return
-	 */
-	public Integer getSex() {
-		return this.sex;
-	}
-
-	public void setCreateId(Integer createId) {
-		this.createId = createId;
-	}
-
-	/**
-	 * 返回 创建者
-	 * 
-	 * @return
-	 */
-	public Integer getCreateId() {
-		return this.createId;
-	}
-
-	public void setCreateTime(java.util.Date createTime) {
-		this.createTime = createTime;
-	}
-
-	/**
-	 * 返回 创建时间
-	 * 
-	 * @return
-	 */
-	public java.util.Date getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setUpdateTime(java.util.Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	/**
-	 * 返回 修改时间
-	 * 
-	 * @return
-	 */
-	public java.util.Date getUpdateTime() {
-		return this.updateTime;
-	}
-
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	/**
-	 * 返回 状态 1 正常, 0 停用
-	 * 
-	 * @return
-	 */
-	public Integer getStatus() {
-		return this.status;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		return new ToStringBuilder(this).append("id", this.id).append("userName", this.userName)
-				.append("password", this.password).append("departmentId", this.departmentId)
-				.append("roleId", this.roleId).append("userNike", this.userNike).append("email", this.email)
-				.append("mobile", this.mobile).append("sex", this.sex).append("createId", this.createId)
-				.append("createTime", this.createTime).append("updateTime", this.updateTime)
-				.append("status", this.status).append("role", this.role).toString();
-	}
 }

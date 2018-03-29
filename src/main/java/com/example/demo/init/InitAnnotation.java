@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,13 +32,12 @@ import com.example.demo.common.JsonResult;
  * @version V1.0
  */
 @Component
+@Slf4j
 public class InitAnnotation {
 
 	// 是否执行检查代码，一般开发过程中为true，生产环境为false
 	@Value("${pn.isCheckCode}")
 	private boolean isCheckCode;
-
-	private static final Logger logger = LoggerFactory.getLogger(InitAnnotation.class);
 
 	// 规定方法的返回值
 	private String str = String.class.getName() + " , " + JsonResult.class.getName();
@@ -72,7 +72,7 @@ public class InitAnnotation {
 				Method[] methods = cName.getDeclaredMethods();
 				boolean flag = isContailsAnnotation(methods);
 				if (!flag) {
-					logger.error(cName.getSimpleName() + "出错啦,启动失败！");
+					log.error(cName.getSimpleName() + "出错啦,启动失败！");
 					// 方法一、关闭JVM，调用shutdown hooks,正常关闭
 					System.exit(0);
 					// 方法二
@@ -100,8 +100,8 @@ public class InitAnnotation {
 				Class<?> returnType = m.getReturnType();
 
 				if (!str.contains(returnType.getName())) {
-					logger.error(m.getName() + "方法返回值不正确,返回值只能包括" + str);
-					logger.error(Constants.RETURN_VALUE_FAIL_CODE + ":" + Constants.RETURN_VALUE_FAIL_DESCRIPTION);
+					log.error(m.getName() + "方法返回值不正确,返回值只能包括" + str);
+					log.error(Constants.RETURN_VALUE_FAIL_CODE + ":" + Constants.RETURN_VALUE_FAIL_DESCRIPTION);
 					return false;
 				}
 			}

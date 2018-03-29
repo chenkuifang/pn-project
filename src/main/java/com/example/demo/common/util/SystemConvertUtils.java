@@ -2,6 +2,8 @@ package com.example.demo.common.util;
 
 
 import com.example.demo.common.PrescriptionEnum;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * 系统值转换工具类
@@ -9,10 +11,8 @@ import com.example.demo.common.PrescriptionEnum;
  * @author QuiFar
  * @version V1.0
  **/
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SystemConvertUtils {
-    private SystemConvertUtils() {
-    }
-
     /**
      * 处方类型转换
      *

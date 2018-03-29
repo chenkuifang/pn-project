@@ -1,5 +1,7 @@
 package com.example.demo.common.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -11,10 +13,8 @@ import org.springframework.stereotype.Component;
  * @version V1.0
  */
 @Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpringContextUtils implements ApplicationContextAware {
-
-    private SpringContextUtils() {
-    }
 
     private static ApplicationContext applicationContext;
 

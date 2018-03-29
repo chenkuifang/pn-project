@@ -1,6 +1,9 @@
 package com.example.demo.common.util;
 
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * Object 帮助类
  * <p>
@@ -9,11 +12,8 @@ package com.example.demo.common.util;
  *
  * @author QuiFar
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
-
-    private ObjectUtils() {
-    }
-
     /**
      * object 类型转doublel类型
      * 如果参数为null 或转换出异常均返回0

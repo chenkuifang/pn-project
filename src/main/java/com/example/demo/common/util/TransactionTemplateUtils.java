@@ -5,6 +5,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,11 +22,9 @@ import org.springframework.transaction.support.TransactionTemplate;
  * @author QuiFar
  * @version V1.0
  **/
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Slf4j
 public class TransactionTemplateUtils {
-    private TransactionTemplateUtils() {
-    }
-
-    private static Logger logger = LoggerFactory.getLogger(TransactionTemplateUtils.class);
     // 数据源
     private static String oracleDS = "java:OracleDS";
     private static DataSource dataSource = null;
@@ -33,7 +34,7 @@ public class TransactionTemplateUtils {
             Context context = new InitialContext();
             dataSource = (DataSource) context.lookup(oracleDS);
         } catch (NamingException e) {
-            logger.info("查找数据源失败···", e);
+            log.info("查找数据源失败···", e);
         }
     }
 

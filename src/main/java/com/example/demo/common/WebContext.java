@@ -1,5 +1,10 @@
 package com.example.demo.common;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +13,10 @@ import java.io.Serializable;
  * @author QuiFar
  * @version V1.0
  */
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 public class WebContext implements Serializable {
 
     private static final long serialVersionUID = -8809214340534494050L;
@@ -34,49 +43,4 @@ public class WebContext implements Serializable {
      */
     private String ip;
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserNike() {
-        return userNike;
-    }
-
-    public void setUserNike(String userNike) {
-        this.userNike = userNike;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    @Override
-    public String toString() {
-        return "WebContext{" + "userId=" + userId + ", userName='" + userName + '\'' +
-                ", userNike='" + userNike + '\'' + ", roleId=" + roleId + ", ip='" + ip + '\'' + '}';
-    }
 }
