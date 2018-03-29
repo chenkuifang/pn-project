@@ -3,11 +3,9 @@
 package com.example.demo.entity;
 
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -20,7 +18,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 public class Goods implements Serializable {
 	private static final long serialVersionUID = 903598773132953830L;
 	
