@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +15,6 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 public class RoleMenu implements Serializable {
 
 	private static final long serialVersionUID = -7183763306339320615L;

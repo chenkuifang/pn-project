@@ -70,7 +70,7 @@ INSERT INTO `pn_menu` VALUES (10005, 10001, '系统日志', 'log/list', 1, 'icon
 INSERT INTO `pn_menu` VALUES (10006, 0, '商品管理', '', 1, 'icon-text', 1, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
 INSERT INTO `pn_menu` VALUES (10007, 10006, '商品列表', 'goods/list', 1, 'icon-text', 2, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
 INSERT INTO `pn_menu` VALUES (10008, 0, '订单管理', '', 1, 'icon-text', 1, '2017-11-28 12:00:00', '2017-11-28 12:00:00',1);
-INSERT INTO `pn_menu` VALUES (10009, 10008, '订单列表', 'goods/list', 1, 'icon-text', 2, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
+INSERT INTO `pn_menu` VALUES (10009, 10008, '订单列表', 'order/list', 1, 'icon-text', 2, '2017-11-29 15:00:03', '2017-11-29 15:00:05',1);
 
 -- 用户角色 -- 
 DROP TABLE IF EXISTS `pn_role`;
