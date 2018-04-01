@@ -5,7 +5,9 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.config.MyDefinedConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +32,14 @@ import com.example.demo.service.UserService;
  */
 @Controller
 public class LoginController {
+    @Autowired
+    private MyDefinedConfiguration myDefinedConfiguration;
 
     @Autowired
     private UserService UserService;
+
+    @Value("${author.other.age}")
+    private int age;
 
     /**
      * 获取登陆初始化页面
@@ -41,6 +48,8 @@ public class LoginController {
      */
     @GetMapping("/login")
     public String login() {
+        //System.err.println("author.name: " + myDefinedConfiguration.getName());
+        //System.err.println("author.other.age: " + age);
         return "login";
     }
 
