@@ -20,7 +20,7 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @ConfigurationProperties(prefix = "author")
-@PropertySource(value = "classpath:config/my-defined.properties", encoding = "GBK")
+@PropertySource(value = "classpath:config/my-defined.properties", encoding = "UTF-8")
 public class MyDefinedConfiguration {
     private String name;
 
