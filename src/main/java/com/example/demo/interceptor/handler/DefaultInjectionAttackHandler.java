@@ -183,8 +183,9 @@ public class DefaultInjectionAttackHandler implements InjectionAttackHandler {
 			JSONObject result = new JSONObject();
 			result.put("code", "0");
 			result.put("msg", "ok");
-			result.put("count", "1");
-			result.put("data", "输入的参数包含非法字符");
+			result.put("error", "输入的参数包含非法字符");
+			result.put("count", "0");
+			result.put("data", "");
 			out.println(result);
 		}
 	}
