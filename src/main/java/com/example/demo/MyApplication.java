@@ -20,14 +20,4 @@ public class MyApplication {
 //    StringRedisTemplate stringRedisTemplate() {
 //        return new StringRedisTemplate();
 //    }
-
-    /**
-     * 把Filter bean 注册到内嵌的Servlet容器中(Servlets 和Listeners的注册方式一样)
-     *
-     * @return
-     */
-    @Bean
-    FilterRegistrationBean myFilterRegistration() {
-        return new FilterRegistrationBean(new XssFilter());
-    }
 }
