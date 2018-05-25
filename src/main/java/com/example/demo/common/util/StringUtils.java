@@ -80,15 +80,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 判断是否包含中文标点符号
+     *
      * @param c
      * @return
      */
     public static boolean isChineseByScript(char c) {
         Character.UnicodeScript sc = Character.UnicodeScript.of(c);
-        if (sc == Character.UnicodeScript.HAN) {
-            return true;
-        }
-        return false;
+        return (sc == Character.UnicodeScript.HAN);
     }
 
 //	public static void main(String... args) {
