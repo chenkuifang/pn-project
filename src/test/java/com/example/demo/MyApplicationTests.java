@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.jasypt.encryption.StringEncryptor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,33 +19,51 @@ import com.example.demo.service.UserService;
 @SpringBootTest
 public class MyApplicationTests {
 
-	@Autowired
-	private WebApplicationContext context;
-	@Autowired
-	UserService userService;
+    @Autowired
+    private WebApplicationContext context;
+    @Autowired
+    UserService userService;
+    @Autowired
+    StringEncryptor stringEncryptor;
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Before
-	public void setUp() throws Exception {
-		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-	}
+    @Before
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
 
-	@Test
-	public void contextLoads() {
-		// User pnUser = userService.get(10001);
-		// System.err.println(pnUser.toString());
-	}
+    @Test
+    public void contextLoads() {
+        // User pnUser = userService.get(10001);
+        // System.err.println(pnUser.toString());
+    }
 
-	@Test
-	public void creatOrder() throws Exception {
+    @Test
+    public void creatOrder() throws Exception {
 
-		mockMvc.perform(MockMvcRequestBuilders
-				.post("order/createOrder")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON_UTF8)
-				);
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("order/createOrder")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        );
 
-	}
+    }
+
+    /***
+     * 加密
+     */
+    @Test
+    public void getEncrypt() {
+        System.err.println(stringEncryptor.encrypt("localhost:3306/pn"));
+    }
+
+    /**
+     * 解密
+     */
+    @Test
+    public void getDecrypt() {
+        System.err.println(stringEncryptor.decrypt("6fnuhHR6fbClsjkLdo7QXQ=="));
+    }
 
 }
