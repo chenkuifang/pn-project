@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -33,6 +36,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         String path = request.getServletPath();
+        System.err.println(path);
         if (path.matches(Constants.NO_INTERCEPTOR_PATH)) {
             return true;
         } else {
@@ -46,6 +50,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
             // 这样维护一个本地对象，获取session方便，但每个线程都要维护该对象,但还好HttpSession的实现类不是final的，这个利和弊由开发者决定
             WebContextUtils.setSession(session);
+
+            ServletRequestAttributes attributes = new ServletRequestAttributes(request);
+            request.setAttribute("myWebContent", "你好，quifar");
+            LocaleContextHolder.setLocale(request.getLocale());
+            RequestContextHolder.setRequestAttributes(attributes);
+
+            RequestContextHolder.setRequestAttributes(attributes);
         }
 
         return true;

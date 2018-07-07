@@ -239,8 +239,8 @@ public abstract class RequestUtils {
 			// parameters.append(IOUtils.toString(request.getInputStream(),
 			// StandardCharsets.UTF_8.displayName()));
 		} else {
-			request.getParameterMap().forEach((String key, String[] values) -> parameters.append(key).append("=")
-					.append(Arrays.toString(values)).append("\t"));
+			//request.getParameterMap().forEach((String key, String[] values) -> parameters.append(key).append("=")
+			//		.append(Arrays.toString(values)).append("\t"));
 		}
 		return parameters.toString();
 	}

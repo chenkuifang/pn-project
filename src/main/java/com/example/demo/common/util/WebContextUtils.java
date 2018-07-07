@@ -19,8 +19,19 @@ import javax.servlet.http.HttpSession;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class WebContextUtils {
 
+    // 参考RequestContextHolder做法
     // 为解决并发问题把session存在到ThreadLocal中
-    private static ThreadLocal<HttpSession> session = new ThreadLocal<>();
+    private final static ThreadLocal<HttpSession> session = new ThreadLocal<>();
+
+    /***
+     * 返回session
+     *
+     * @return
+     */
+    public static HttpSession getSession() {
+        Assert.notNull(session, "session is must not be null");
+        return session.get();
+    }
 
     /**
      * 设置sesion,此方法在LoginInterceptor中调用赋值
@@ -31,16 +42,6 @@ public class WebContextUtils {
      */
     public static void setSession(HttpSession session) {
         WebContextUtils.session.set(session);
-    }
-
-    /***
-     * 返回session
-     *
-     * @return
-     */
-    public static HttpSession getSession() {
-        Assert.notNull(session, "session is must not be null");
-        return session.get();
     }
 
     /**

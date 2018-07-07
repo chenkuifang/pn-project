@@ -24,7 +24,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter {
         // excludePathPatterns 用户排除拦截
         registry.addInterceptor(new InjectionAttackInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/login/**")
-                .excludePathPatterns("/resetPwd/**");
+                .excludePathPatterns("/resetPwd/**").excludePathPatterns("/loginPost/**");
 
         super.addInterceptors(registry);
     }
