@@ -49,7 +49,7 @@ public class ConstructParams {
      * <p>
      * Around增强处理可以决定目标方法在什么时候执行，如何执行，甚至可以完全阻止目标方法的执行
      *
-     * @param joinPoint
+     * @param joinPoint joinPoint.proceed() 切面真正执行的方法，这里可以拿到该方法的参数，方法返回值等，但是拿不到原始请求
      * @return
      * @throws Throwable
      */

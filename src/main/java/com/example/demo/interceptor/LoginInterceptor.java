@@ -31,6 +31,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * controller 执行之前调用,返回true 往下执行,否则不往下执行
+     * <p>
+     * note:这里的handler拿不到真正执行方法的实际参数(args)
+     * 注意filter、interceptor、aop方式的方法对比
+     *
+     * @param request  原始请求
+     * @param response 原始响应
+     * @param handler  拦击后真正执行的方法处理
+     * @return
+     * @throws Exception
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
