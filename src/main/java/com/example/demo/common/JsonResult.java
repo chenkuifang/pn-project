@@ -38,5 +38,4 @@ public final class JsonResult implements Serializable {
      * 数据列表
      */
     private List<?> data;
-
 }
