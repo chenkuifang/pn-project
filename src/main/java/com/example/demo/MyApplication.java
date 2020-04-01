@@ -1,11 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.filter.XssFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 @SpringBootApplication
 //@EnableScheduling 开启spring任务调度

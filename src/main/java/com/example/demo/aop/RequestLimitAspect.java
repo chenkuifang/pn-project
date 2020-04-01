@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,6 +29,7 @@ import com.example.demo.exception.RequestLimitException;
 @Aspect
 @Component
 @Slf4j
+@EnableAspectJAutoProxy
 public class RequestLimitAspect {
     private Map<String, Integer> redisTemplate = new HashMap<>();
 

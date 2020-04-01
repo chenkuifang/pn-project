@@ -22,8 +22,6 @@ import java.util.List;
 public final class JsonResult implements Serializable {
 
     private static final long serialVersionUID = -4908915966053299827L;
-    private static JsonResult resultBean = null;
-    private static List<?> list = new ArrayList<>();
     /**
      * 编码
      */
@@ -40,40 +38,5 @@ public final class JsonResult implements Serializable {
      * 数据列表
      */
     private List<?> data;
-
-    /***
-     * 获取单例(双重检查锁定) 懒汉单例
-     *
-     * @return
-     */
-    public static JsonResult getInstance() {
-        if (resultBean == null) {
-            synchronized (JsonResult.class) {
-                if (resultBean == null) {
-                    resultBean = new JsonResult();
-                }
-            }
-        }
-
-        initList();
-
-        return resultBean;
-    }
-
-    /**
-     * 初始化对象
-     */
-    private static void initList() {
-        if (list == null) {
-            list = new ArrayList<>();
-        } else {
-            list.clear();
-        }
-//		resultBean.setCode("");
-//		resultBean.setMsg("");
-//		resultBean.setCount(0);
-        resultBean.setData(list);
-    }
-
 
 }
